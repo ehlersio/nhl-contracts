@@ -34,7 +34,7 @@ def test_two_players_in_one_story_are_two_contracts(teams):
 def test_normalize_all_end_to_end(stories, espn_payload, teams):
     espn_rows = [{"key": str(i), "date": t["date"], "team_abbrev": t["team"]["abbreviation"],
                   "description": t["description"]} for i, t in enumerate(espn_payload["transactions"])]
-    claims, sources, merged = normalize_all(stories, espn_rows, teams)
+    claims, sources, merged, seasons = normalize_all(stories, espn_rows, teams)
     assert len(merged) < len(claims)
     assert {s.kind for s in sources} == {"nhl_forge", "espn_transactions"}
     # an ESPN row and a club release about the same signing land in one contract row

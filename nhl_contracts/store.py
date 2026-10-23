@@ -114,7 +114,7 @@ class Store:
     def __init__(self, path: Path | str) -> None:
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.conn = sqlite3.connect(self.path)
+        self.conn = sqlite3.connect(self.path, timeout=120)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(SCHEMA)
 

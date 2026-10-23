@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import logging
 import re
+from collections.abc import Iterable
 from datetime import UTC, datetime
 from typing import Any
 
@@ -87,47 +88,86 @@ def list_queries(team_ids: list[int]) -> list[str]:
     return queries
 
 
+def _poll_list(store: Store, client: Client, query: str, seen: set[str], counters: dict[str, int],
+               max_stories: int | None) -> None:
+    """Poll one Forge list, mark every item seen and fetch new or updated candidate stories.
+
+    ``counters`` gets ``requests`` and ``new`` added in place; ``seen`` holds the slugs
+    already handled in this run, so a story listed by several queries is fetched once."""
+    try:
+        payload = client.get_json(FORGE_STORIES, {"tags.slug": query})
+    except RuntimeError as exc:
+        log.error("list %s failed: %s", query, exc)
+        return
+    counters["requests"] += 1
+    for item in payload.get("items", []):
+        slug = item.get("slug")
+        if not slug or slug in seen:
+            continue
+        seen.add(slug)
+        candidate = is_candidate(item)
+        now = datetime.now(UTC).isoformat()
+        store.mark_seen(slug, query, item.get("contentDate") or "",
+                        item.get("headline") or "", candidate, now)
+        if not candidate:
+            continue
+        known = store.story_last_updated(slug)
+        if store.has_story(slug) and (known or "") >= (item.get("lastUpdatedDate") or ""):
+            continue
+        if max_stories is not None and counters["new"] >= max_stories:
+            continue
+        try:
+            full = client.get_json(f"{FORGE_STORIES}/{slug}")
+        except RuntimeError as exc:
+            log.error("story %s failed: %s", slug, exc)
+            continue
+        counters["requests"] += 1
+        store.upsert_story(story_from_payload(full, now))
+        counters["new"] += 1
+    store.commit()
+
+
+def _poll(store: Store, client: Client, collector: str, queries: Iterable[str], max_stories: int | None,
+          note: str | None = None) -> dict[str, int]:
+    """Run bookkeeping around :func:`_poll_list` for a sequence of list queries."""
+    run_id = store.start_run(collector, datetime.now(UTC).isoformat())
+    counters = {"requests": 0, "new": 0}
+    seen: set[str] = set()
+    n_lists = 0
+    for query in queries:
+        _poll_list(store, client, query, seen, counters, max_stories)
+        n_lists += 1
+    store.finish_run(run_id, datetime.now(UTC).isoformat(), counters["requests"], counters["new"], note)
+    store.commit()
+    log.info("%s: %d lists, %d requests, %d new/updated stories, %d listed",
+             collector, n_lists, counters["requests"], counters["new"], len(seen))
+    return {**counters, "listed": len(seen), "lists": n_lists}
+
+
 def collect(store: Store, client: Client, team_ids: list[int], *, max_stories: int | None = None
             ) -> dict[str, int]:
     """Poll every list, fetch new candidate stories, store them. Returns counters."""
-    started = datetime.now(UTC).isoformat()
-    run_id = store.start_run("nhl_forge", started)
-    requests = 0
-    new = 0
-    seen: set[str] = set()
-    for query in list_queries(team_ids):
-        try:
-            payload = client.get_json(FORGE_STORIES, {"tags.slug": query})
-        except RuntimeError as exc:
-            log.error("list %s failed: %s", query, exc)
-            continue
-        requests += 1
-        for item in payload.get("items", []):
-            slug = item.get("slug")
-            if not slug or slug in seen:
-                continue
-            seen.add(slug)
-            candidate = is_candidate(item)
-            now = datetime.now(UTC).isoformat()
-            store.mark_seen(slug, query, item.get("contentDate") or "",
-                            item.get("headline") or "", candidate, now)
-            if not candidate:
-                continue
-            known = store.story_last_updated(slug)
-            if store.has_story(slug) and (known or "") >= (item.get("lastUpdatedDate") or ""):
-                continue
-            if max_stories is not None and new >= max_stories:
-                continue
-            try:
-                full = client.get_json(f"{FORGE_STORIES}/{slug}")
-            except RuntimeError as exc:
-                log.error("story %s failed: %s", slug, exc)
-                continue
-            requests += 1
-            store.upsert_story(story_from_payload(full, now))
-            new += 1
-        store.commit()
-    store.finish_run(run_id, datetime.now(UTC).isoformat(), requests, new)
-    store.commit()
-    log.info("forge: %d requests, %d new/updated stories, %d listed", requests, new, len(seen))
-    return {"requests": requests, "new": new, "listed": len(seen)}
+    out = _poll(store, client, "nhl_forge", list_queries(team_ids), max_stories)
+    return {k: out[k] for k in ("requests", "new", "listed")}
+
+
+def player_query(player_id: int) -> str:
+    return f"playerid-{player_id}"
+
+
+def backfill_players(store: Store, client: Client, player_ids: Iterable[int], *,
+                     max_players: int | None = None, max_stories: int | None = None) -> dict[str, int]:
+    """Poll ``tags.slug=playerid-N`` (the 25 latest stories) for each player and store new
+    candidate stories, with the same filter, idempotent upserts and run bookkeeping as
+    :func:`collect`. Items are marked seen with ``list_query`` ``playerid-N``.
+
+    The caller decides which players to (re-)poll: the store has no accessor that
+    says when a player list was last polled (``forge_seen`` keeps the first query a
+    slug was seen under, and a player with no stories leaves no row), so this does
+    not skip recently polled players by itself. Returns counters plus ``players``."""
+    ids = list(dict.fromkeys(int(p) for p in player_ids))
+    if max_players is not None:
+        ids = ids[:max_players]
+    out = _poll(store, client, "nhl_forge_players", (player_query(p) for p in ids), max_stories,
+                note=f"players={len(ids)}")
+    return {"requests": out["requests"], "new": out["new"], "listed": out["listed"], "players": len(ids)}

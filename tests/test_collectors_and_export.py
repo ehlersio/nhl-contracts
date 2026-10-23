@@ -77,11 +77,13 @@ def test_fetch_teams_filters_to_standings():
 def test_export_writes_all_files(tmp_path, espn_payload, teams):
     espn_rows = [{"key": str(i), "date": t["date"], "team_abbrev": t["team"]["abbreviation"],
                   "description": t["description"]} for i, t in enumerate(espn_payload["transactions"])]
-    claims, sources, merged = normalize_all(all_stories(), espn_rows, teams)
+    claims, sources, merged, _seasons = normalize_all(all_stories(), espn_rows, teams)
     stamp = export(merged, claims, sources, tmp_path / "dist")
     names = {p.name for p in (tmp_path / "dist").iterdir()}
-    assert names == {"contracts.parquet", "contracts.csv", "contracts.json", "claims.parquet", "claims.csv",
-                     "claims.json", "sources.csv", "timestamp.json"}
+    expected = {"sources.csv", "timestamp.json"}
+    for stem in ("contracts", "claims", "contract_seasons", "season_claims", "clauses", "clause_claims"):
+        expected |= {f"{stem}.parquet", f"{stem}.csv", f"{stem}.json"}
+    assert names == expected
     import pyarrow.parquet as pq
 
     table = pq.read_table(tmp_path / "dist" / "contracts.parquet")
