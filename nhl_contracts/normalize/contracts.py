@@ -42,7 +42,9 @@ EXCLUDE = re.compile(
     r"partnership|sponsor|affiliat\w*|naming rights|jersey patch|"
     r"emergency backup|EBUG|(?:AHL|American Hockey League(?: \(AHL\))?|ECHL)(?:\s+\w+)?\s+contracts?|"
     r"amateur tryout|ATO|development camp|equipment manager|athletic trainer|announcer|"
-    r"play-by-play|as (?:assistant |associate )?general manager|as president|to remain|to become|to continue as|"
+    r"play-by-play|as (?:assistant |associate )?general manager|as president|"
+    r"to (?:remain|become|continue)(?: as| the| its| their| [A-Z][a-z]+'s)? "
+    r"(?:president|general manager|GM|head coach)|"
     r"general manager (?:to|on) (?:a|an)|executive)\b",
     re.I,
 )
@@ -126,7 +128,8 @@ P_TERMS_ON = re.compile(
 # "Philip Broberg signed a six-year, $48 million contract with the St. Louis Blues"
 P_NAME_SIGNED = re.compile(
     r"(?:^|[.;:]\s+|\s)" + NAME + r"(?:,\s+who\s+[^,]+,|,\s*\d{2}(?:\s*\([^)]*\))?,)?\s+(?:has\s+|have\s+|had\s+)?"
-    r"(?:re-?signed|signed|inked|agreed\s+to)\s+(?:a|an|the|his)?\s*(?P<deal>.*?" + DEAL_WORD + r"\b[^;]*)",
+    r"(?:re-?signed|signed|re-?signs|signs|inked|inks|agreed\s+to)\s+(?:a|an|the|his)?\s*"
+    r"(?P<deal>.*?" + DEAL_WORD + r"\b[^;]*)",
 )
 # "Hischier ... agreed to terms on a five-year contract extension" (name before verb)
 P_NAME_TERMS = re.compile(
@@ -376,17 +379,21 @@ def _expand_name(name: str, texts: list[str], players: dict[str, int]) -> str:
     for full in players:
         if full.split()[-1] == name:
             return full
-    for text in texts:
-        m = re.search(r"((?:[A-Z\u00c0-\u017f][\w'.\-\u00c0-\u017f]+\s+){1,2})" + re.escape(name) + r"\b", text)
-        if m:
-            cand = _title_name(m.group(0))
-            if _valid_name(cand) and not any(t.lower() in NAME_STOP for t in cand.split()):
-                return cand
+    # one preceding capitalised token first ("Alex DeBrincat"), two only if that fails
+    # ("Jean-Gabriel Pageau" is one token; "As Alex DeBrincat" must not win)
+    for width in (1, 2):
+        for text in texts:
+            rx = r"((?:[A-Z\u00c0-\u017f][\w'.\-\u00c0-\u017f]+\s+){" + str(width) + "})" + re.escape(name) + r"\b"
+            for m in re.finditer(rx, text):
+                cand = _title_name(m.group(0))
+                if _valid_name(cand) and not any(t.lower() in NAME_STOP for t in cand.split()):
+                    return cand
     return name
 
 
 NAME_STOP = {"sign", "signs", "signed", "re-sign", "re-signs", "re-signed", "with", "to", "on",
-             "agree", "agrees", "agreed", "terms", "and", "the", "inks", "release", "today"}
+             "agree", "agrees", "agreed", "terms", "and", "the", "inks", "release", "today",
+             "as", "when", "after", "but", "while", "then", "because", "although", "if", "since"}
 
 
 # --- forge stories -----------------------------------------------------------

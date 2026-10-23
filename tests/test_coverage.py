@@ -13,7 +13,7 @@ NOT_PLAYER_CONTRACTS = (
     "senators-players-react", "release-blackhawks-and-wgn-radio", "tampa-bay-lightning-syracuse-crunch",
     "jets-sign-cole-kehler", "release-condors-sign-eemil-vinni", "dallas-stars-hope-to-begin",
     "philadelphia-flyers-and-nexgen",
-    "golden-knights-tahoe-knight-monsters", "debrincat-shows-faith", "debrincat-signs-seven-year-extension-feels",
+    "golden-knights-tahoe-knight-monsters", "debrincat-shows-faith",
     "multi-year-contract-extension-for-martin-st-louis",
     "vancouver-canucks-sign-goaltender-chris-driedger-to-a-pto-hire",
 )
