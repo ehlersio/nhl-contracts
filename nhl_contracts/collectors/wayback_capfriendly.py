@@ -40,6 +40,10 @@ from ..store import Store
 log = logging.getLogger(__name__)
 
 CDX = "https://web.archive.org/cdx/search/cdx"
+# Date windows for the bulk index: narrow enough for the CDX service to answer (a
+# whole-year wildcard query times out), together covering the last months of the site.
+BULK_WINDOWS = (("20240101", "20240331"), ("20240401", "20240531"), ("20240601", "20240619"),
+                ("20240620", "20240709"))
 SNAPSHOT = "https://web.archive.org/web/{ts}id_/{url}"
 MARKERS = {"team": "Years Remaining", "player": "Signing Date"}
 FINAL_WINDOW = ("20240625000000", "20240709235959")
@@ -158,16 +162,45 @@ class Wayback:
             log.warning("wayback CDX for %s returned non-JSON", url)
             return []
 
+    def bulk_captures(self, prefix: str = "capfriendly.com/players/*", windows: Iterable[tuple[str, str]] = BULK_WINDOWS
+                      ) -> dict[str, list[tuple[str, str, int | None]]]:
+        """One CDX query per date window for every page under ``prefix`` (collapsed to one
+        capture per page per window). Four queries replace about 1,600 per-page ones."""
+        index: dict[str, list[tuple[str, str, int | None]]] = {}
+        for start, end in windows:
+            params = {"url": prefix, "output": "json", "from": start, "to": end, "filter": "statuscode:200",
+                      "fl": "timestamp,original,length", "collapse": "urlkey"}
+            status, body, _final = self.get(CDX, params)
+            if status != 200 or not body.strip():
+                log.warning("wayback bulk CDX %s-%s returned HTTP %s", start, end, status)
+                continue
+            try:
+                rows = parse_cdx(json.loads(body))
+            except ValueError:
+                log.warning("wayback bulk CDX %s-%s returned non-JSON", start, end)
+                continue
+            for row in rows:
+                index.setdefault(_bare(row[1]), []).append(row)
+            log.info("wayback bulk CDX %s-%s: %d pages", start, end, len(rows))
+        return index
+
     def snapshot(self, ts: str, original: str) -> tuple[int, str, str]:
         """(status, html, timestamp actually served: Wayback may redirect to a neighbouring capture)."""
         status, body, final = self.get(SNAPSHOT.format(ts=ts, url=original))
         return status, body.decode("utf-8", "replace"), snapshot_ts_of(final) or ts
 
 
-def fetch_page(wb: Wayback, url: str, kind: str, *, max_attempts: int = 3) -> dict[str, Any]:
-    """Choose and fetch the best snapshot of one page. Returns the row to store."""
+def _bare(url: str) -> str:
+    return url.split("://", 1)[-1].removeprefix("www.").rstrip("/")
+
+
+def fetch_page(wb: Wayback, url: str, kind: str, *, max_attempts: int = 3,
+               index: dict[str, list[tuple[str, str, int | None]]] | None = None) -> dict[str, Any]:
+    """Choose and fetch the best snapshot of one page. Returns the row to store. With a bulk
+    ``index`` the per-page CDX query is skipped when the page is in it."""
     path = url.removeprefix(CF_BASE)
-    ranked = rank_snapshots(wb.captures(url))
+    rows = index.get(_bare(url)) if index is not None else None
+    ranked = rank_snapshots(rows if rows else wb.captures(url))
     if not ranked:
         return {"status": "missing", "snapshot_ts": "", "snapshot_url": "", "html": ""}
     fallback: dict[str, Any] | None = None
@@ -195,7 +228,7 @@ def player_urls_from_team_pages(store: Store) -> list[str]:
 def collect(store: Store, client: Client, *, kinds: Iterable[str] = ("team", "player"), max_pages: int | None = None,
             pause: float = 2.5, backoff: tuple[float, ...] = (10, 30, 90), teams: Iterable[str] | None = None,
             retry_statuses: Iterable[str] = ("error",), max_attempts: int = 3,
-            sleep: Callable[[float], None] = time.sleep) -> dict[str, Any]:
+            sleep: Callable[[float], None] = time.sleep, bulk_index: bool = True) -> dict[str, Any]:
     """Fetch team pages, then the player pages they link to. Pages already stored with a final
     status (ok, closing-page, missing) are skipped; ``retry_statuses`` are fetched again."""
     kinds = tuple(kinds)
@@ -220,12 +253,18 @@ def collect(store: Store, client: Client, *, kinds: Iterable[str] = ("team", "pl
         nonlocal processed, failures, note
         todo = pending(urls)
         log.info("wayback %s: %d of %d pages to fetch", kind, len(todo), len(urls))
+        index = None
+        if todo and kind == "player" and bulk_index:
+            try:
+                index = wb.bulk_captures()
+            except WaybackUnavailable as exc:
+                log.warning("wayback bulk index unavailable (%s); falling back to per-page CDX", exc)
         for u in todo:
             if max_pages is not None and processed >= max_pages:
                 note = f"stopped at max_pages={max_pages}"
                 return False
             try:
-                row = fetch_page(wb, u, kind, max_attempts=max_attempts)
+                row = fetch_page(wb, u, kind, max_attempts=max_attempts, index=index)
             except WaybackUnavailable as exc:
                 failures += 1
                 log.error("wayback %s: %s", u, exc)

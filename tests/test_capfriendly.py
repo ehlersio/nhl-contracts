@@ -412,3 +412,30 @@ def test_team_row_with_extension_is_split_by_cap_hit():
                {"season": "2026-27", "cap_hit": 7_250_000}, {"season": "2027-28", "cap_hit": 7_250_000}]
     segs = _split_by_cap_hit(seasons)
     assert [[x["season"] for x in seg] for seg in segs] == [["2024-25"], ["2025-26", "2026-27", "2027-28"]]
+
+
+def test_bulk_index_skips_per_page_cdx():
+    from nhl_contracts.collectors.wayback_capfriendly import Wayback, fetch_page
+
+    class C:
+        def __init__(self):
+            self.urls = []
+
+        def get_bytes(self, url, params=None, ok_statuses=(200,)):
+            self.urls.append((url, params))
+            if "cdx" in url:
+                assert params["url"].endswith("/*"), "per-page CDX must not be called when the index has the page"
+                rows = [["timestamp", "original", "length"],
+                        ["20240705184905", "https://www.capfriendly.com/players/connor-mcdavid", "20475"]]
+                return 200, json.dumps(rows).encode(), url
+            html = (FIXTURES / "wayback" / "players-connor-mcdavid-20240705184905.html").read_text()
+            final = "https://web.archive.org/web/20240705184905id_/https://www.capfriendly.com/players/connor-mcdavid"
+            return 200, html.encode(), final
+
+    c = C()
+    wb = Wayback(c, pause=0, backoff=(), sleep=lambda s: None)
+    index = wb.bulk_captures(windows=(("20240620", "20240709"),))
+    assert "capfriendly.com/players/connor-mcdavid" in index
+    row = fetch_page(wb, "https://www.capfriendly.com/players/connor-mcdavid", "player", index=index)
+    assert row["status"] == "ok" and row["snapshot_ts"] == "20240705184905"
+    assert sum(1 for u, _ in c.urls if "cdx" in u) == 1
