@@ -110,7 +110,7 @@ def test_jsonl_and_wayback_roundtrip(tmp_path, espn_payload):
     src.commit()
     counts = src.dump_jsonl(tmp_path / "raw")
     assert counts == {"forge_stories": 1, "espn_transactions": len(espn_payload["transactions"]), "bsky_posts": 1,
-                      "players": 1, "teams": 0}
+                      "players": 1, "teams": 0, "llm_cache": 0}
     first = (tmp_path / "raw" / "forge_stories.jsonl").read_text(encoding="utf-8")
     assert '"tags": [' in first  # JSON columns are expanded, not double-encoded
     assert src.dump_wayback(tmp_path / "wb.sqlite") == 1
