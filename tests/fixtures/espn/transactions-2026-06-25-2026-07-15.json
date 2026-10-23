@@ -1,0 +1,5213 @@
+{
+ "transactions": [
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Acquired F Luke Tuch from Montreal in exchange for F Hunter McKown.",
+   "team": {
+    "id": "29",
+    "location": "Columbus",
+    "name": "Blue Jackets",
+    "abbreviation": "CBJ",
+    "displayName": "Columbus Blue Jackets",
+    "color": "002d62",
+    "alternateColor": "e31937",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/cbj/columbus-blue-jackets",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=29",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Acquired F Garnet Hathaway and a 2026 sixth-round draft pick from Philadelphia in exchange for a 2026 fifth-round draft pick and a 2027 fourth-round draft pick.",
+   "team": {
+    "id": "26",
+    "location": "Florida",
+    "name": "Panthers",
+    "abbreviation": "FLA",
+    "displayName": "Florida Panthers",
+    "color": "e51937",
+    "alternateColor": "002d62",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/fla/florida-panthers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=26",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Acquired a 2027 third-round draft pick and a 2028 fifth-round draft pick from Pittsburgh Penguins for C Hendrix Lapierre.",
+   "team": {
+    "id": "23",
+    "location": "Washington",
+    "name": "Capitals",
+    "abbreviation": "WSH",
+    "displayName": "Washington Capitals",
+    "color": "d71830",
+    "alternateColor": "0b1f41",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/wsh/washington-capitals",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=23",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Signed F Ethan Cardwell to a one-year contract.",
+   "team": {
+    "id": "18",
+    "location": "San Jose",
+    "name": "Sharks",
+    "abbreviation": "SJ",
+    "displayName": "San Jose Sharks",
+    "color": "00788a",
+    "alternateColor": "070707",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/sj/san-jose-sharks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=18",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Acquired a 2026 second-round draft pick, a 2027 third-round draft pick and a 2028 fifth-round draft pick from Columbus in exchange for F Valeri Nichushkin.",
+   "team": {
+    "id": "17",
+    "location": "Colorado",
+    "name": "Avalanche",
+    "abbreviation": "COL",
+    "displayName": "Colorado Avalanche",
+    "color": "860038",
+    "alternateColor": "005ea3",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/col/colorado-avalanche",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=17",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Acquired C Hendrix Lapierre from Washington in exchange for a 2027 third-round draft pick and a 2028 fifth-round draft pick.",
+   "team": {
+    "id": "16",
+    "location": "Pittsburgh",
+    "name": "Penguins",
+    "abbreviation": "PIT",
+    "displayName": "Pittsburgh Penguins",
+    "color": "000000",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/pit/pittsburgh-penguins",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=16",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Acquired a 2026 fifth-round draft pick and a 2027 fourth-round draft pick from Florida Panthers for F Garnet Hathaway and a 2026 sixth-round draft pick.",
+   "team": {
+    "id": "15",
+    "location": "Philadelphia",
+    "name": "Flyers",
+    "abbreviation": "PHI",
+    "displayName": "Philadelphia Flyers",
+    "color": "fe5823",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/phi/philadelphia-flyers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=15",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Acquired F Amadeus Lombardi from Detroit in exchange for a 2026 fourth-round draft pick. Acquired D Declan Chisholm from Washington in exchange for a 2027 fourth-round pick.",
+   "team": {
+    "id": "11",
+    "location": "New Jersey",
+    "name": "Devils",
+    "abbreviation": "NJ",
+    "displayName": "New Jersey Devils",
+    "color": "e30b2b",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nj/new-jersey-devils",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=11",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Acquired F Hunter McKown from Columbus Blue Jackets for F Luke Tuch.",
+   "team": {
+    "id": "10",
+    "location": "Montreal",
+    "name": "Canadiens",
+    "abbreviation": "MTL",
+    "displayName": "Montreal Canadiens",
+    "color": "c41230",
+    "alternateColor": "013a81",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/mtl/montreal-canadiens",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=10",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Signed F Harrison Scott to a two-year, two-way contract. Signed Fs Matthew Seminoff and Harrison Scott to two-year contracts.",
+   "team": {
+    "id": "9",
+    "location": "Dallas",
+    "name": "Stars",
+    "abbreviation": "DAL",
+    "displayName": "Dallas Stars",
+    "color": "20864c",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/dal/dallas-stars",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=9",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Acquired a 2026 fourth-round draft pick from New Jersey Devils for F Amadeus Lombardi.",
+   "team": {
+    "id": "5",
+    "location": "Detroit",
+    "name": "Red Wings",
+    "abbreviation": "DET",
+    "displayName": "Detroit Red Wings",
+    "color": "e30526",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/det/detroit-red-wings",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=5",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-25T07:00Z",
+   "description": "Signed F Sam Morton to a one-year, two-way contract.",
+   "team": {
+    "id": "3",
+    "location": "Calgary",
+    "name": "Flames",
+    "abbreviation": "CGY",
+    "displayName": "Calgary Flames",
+    "color": "dd1a32",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/cgy/calgary-flames",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=3",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-26T07:00Z",
+   "description": "Acquired G Sebastian Cossa from Detroit in exchange for a 2026 first-round pick (No. 23).",
+   "team": {
+    "id": "129764",
+    "location": "Utah",
+    "name": "Mammoth",
+    "abbreviation": "UTA",
+    "displayName": "Utah Mammoth",
+    "color": "000000",
+    "alternateColor": "7ab2e1",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/utah/utah-mammoth",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=129764",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-26T07:00Z",
+   "description": "Acquired two 2026 first-round picks (No. 15 and 29) from St. Louis Blues for F Mason McTavish.",
+   "team": {
+    "id": "25",
+    "location": "Anaheim",
+    "name": "Ducks",
+    "abbreviation": "ANA",
+    "displayName": "Anaheim Ducks",
+    "color": "fc4c02",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/ana/anaheim-ducks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=25",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-26T07:00Z",
+   "description": "Acquired F Mason McTavish from Anaheim in exchange for two 2026 first-round picks (No. 15 and 29).",
+   "team": {
+    "id": "19",
+    "location": "St. Louis",
+    "name": "Blues",
+    "abbreviation": "STL",
+    "displayName": "St. Louis Blues",
+    "color": "0070b9",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/stl/st-louis-blues",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=19",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-26T07:00Z",
+   "description": "Signed D Brent Burns to a one-year contract extension.",
+   "team": {
+    "id": "17",
+    "location": "Colorado",
+    "name": "Avalanche",
+    "abbreviation": "COL",
+    "displayName": "Colorado Avalanche",
+    "color": "860038",
+    "alternateColor": "005ea3",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/col/colorado-avalanche",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=17",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-26T07:00Z",
+   "description": "Signed D Djibril Toure to a two-way contract. Signed Ds Djibril Toure and Samuel Bolduc to one-year contracts. Signed D Jordan Spence to a four-year contract. Acquired F Andre Burakovsky from Chicago in exchange for a 2027 sixth-round draft pick. Acquired G Samuel Ersson from Toronto in exchange for a 2027 fifth-round draft pick.",
+   "team": {
+    "id": "14",
+    "location": "Ottawa",
+    "name": "Senators",
+    "abbreviation": "OTT",
+    "displayName": "Ottawa Senators",
+    "color": "dd1a32",
+    "alternateColor": "b79257",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/ott/ottawa-senators",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=14",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-26T07:00Z",
+   "description": "Signed D Tony DeAngelo to a two-year contract. Acquired F Pavel Dorofeyev from Vegas in exchange for a 2026 first-round pick (No. 26), a 2026 third-round pick (No. 92) and a 2028 first-round pick.",
+   "team": {
+    "id": "13",
+    "location": "New York",
+    "name": "Rangers",
+    "abbreviation": "NYR",
+    "displayName": "New York Rangers",
+    "color": "0056ae",
+    "alternateColor": "e51937",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nyr/new-york-rangers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=13",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-26T07:00Z",
+   "description": "Acquired F Brett Berard from the N.Y. Rangers for D William Trudeau.",
+   "team": {
+    "id": "10",
+    "location": "Montreal",
+    "name": "Canadiens",
+    "abbreviation": "MTL",
+    "displayName": "Montreal Canadiens",
+    "color": "c41230",
+    "alternateColor": "013a81",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/mtl/montreal-canadiens",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=10",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-26T07:00Z",
+   "description": "Acquired a 2026 first-round pick (No. 23) from Utah Mammoth for G Sebastian Cossa.",
+   "team": {
+    "id": "5",
+    "location": "Detroit",
+    "name": "Red Wings",
+    "abbreviation": "DET",
+    "displayName": "Detroit Red Wings",
+    "color": "e30526",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/det/detroit-red-wings",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=5",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-26T07:00Z",
+   "description": "Acquired D Olen Zellweger from Anaheim for F Anton Wahlberg and a 2026 second-round draft pick. Signed D Brett Kulak to a five-year contract extension.",
+   "team": {
+    "id": "2",
+    "location": "Buffalo",
+    "name": "Sabres",
+    "abbreviation": "BUF",
+    "displayName": "Buffalo Sabres",
+    "color": "00468b",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/buf/buffalo-sabres",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=2",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-26T07:00Z",
+   "description": "Acquired F JJ Peterka from Utah in exchange for a 2026 first-round pick (No. 23) and a 2028 first-round pick.",
+   "team": {
+    "id": "1",
+    "location": "Boston",
+    "name": "Bruins",
+    "abbreviation": "BOS",
+    "displayName": "Boston Bruins",
+    "color": "231f20",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/bos/boston-bruins",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=1",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-27T07:00Z",
+   "description": "Acquired future considerations from New York Islanders for D Ryan Healey.",
+   "team": {
+    "id": "30",
+    "location": "Minnesota",
+    "name": "Wild",
+    "abbreviation": "MIN",
+    "displayName": "Minnesota Wild",
+    "color": "124734",
+    "alternateColor": "ae122a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/min/minnesota-wild",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=30",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-27T07:00Z",
+   "description": "Acquired F Adam Edstrom from the N.Y. Rangers in exchange for F Massimo Rizzo and a 2026 fifth-round pick (No. 148).",
+   "team": {
+    "id": "27",
+    "location": "Nashville",
+    "name": "Predators",
+    "abbreviation": "NSH",
+    "displayName": "Nashville Predators",
+    "color": "fdba31",
+    "alternateColor": "002d62",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nsh/nashville-predators",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=27",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-27T07:00Z",
+   "description": "Acquired D Kyle Masters and a 2026 sixth-round pick (No. 162) from Carolina Hurricanes for D John Carlson.",
+   "team": {
+    "id": "25",
+    "location": "Anaheim",
+    "name": "Ducks",
+    "abbreviation": "ANA",
+    "displayName": "Anaheim Ducks",
+    "color": "fc4c02",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/ana/anaheim-ducks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=25",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-27T07:00Z",
+   "description": "Acquired two 2026 third-round picks (No. 73 and 76) from St. Louis Blues for F Brandon Carlo.",
+   "team": {
+    "id": "21",
+    "location": "Toronto",
+    "name": "Maple Leafs",
+    "abbreviation": "TOR",
+    "displayName": "Toronto Maple Leafs",
+    "color": "003e7e",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/tor/toronto-maple-leafs",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=21",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-27T07:00Z",
+   "description": "Acquired F Brandon Carlo from Toronto in exchange for two 2026 third-round picks (No. 73 and 76).",
+   "team": {
+    "id": "19",
+    "location": "St. Louis",
+    "name": "Blues",
+    "abbreviation": "STL",
+    "displayName": "St. Louis Blues",
+    "color": "0070b9",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/stl/st-louis-blues",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=19",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-27T07:00Z",
+   "description": "Acquired F Fabian Lysell from Boston in exchange for F Ivan Ivan.",
+   "team": {
+    "id": "17",
+    "location": "Colorado",
+    "name": "Avalanche",
+    "abbreviation": "COL",
+    "displayName": "Colorado Avalanche",
+    "color": "860038",
+    "alternateColor": "005ea3",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/col/colorado-avalanche",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=17",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-27T07:00Z",
+   "description": "Acquired F Massimo Rizzo and a 2026 fifth-round pick (No. 148) from Nashville Predators for F Adam Edstrom.",
+   "team": {
+    "id": "13",
+    "location": "New York",
+    "name": "Rangers",
+    "abbreviation": "NYR",
+    "displayName": "New York Rangers",
+    "color": "0056ae",
+    "alternateColor": "e51937",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nyr/new-york-rangers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=13",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-27T07:00Z",
+   "description": "Acquired D Ryan Healey from Minnesota in exchange for future considerations.",
+   "team": {
+    "id": "12",
+    "location": "New York",
+    "name": "Islanders",
+    "abbreviation": "NYI",
+    "displayName": "New York Islanders",
+    "color": "00529b",
+    "alternateColor": "f47d31",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nyi/new-york-islanders",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=12",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-27T07:00Z",
+   "description": "Acquired D John Carlson from Anaheim in exchange for D Kyle Masters and a 2026 sixth-round pick (No. 162).",
+   "team": {
+    "id": "7",
+    "location": "Carolina",
+    "name": "Hurricanes",
+    "abbreviation": "CAR",
+    "displayName": "Carolina Hurricanes",
+    "color": "e30426",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/car/carolina-hurricanes",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=7",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-27T07:00Z",
+   "description": "Acquired F Ivan Ivan from Colorado Avalanche for F Fabian Lysell.",
+   "team": {
+    "id": "1",
+    "location": "Boston",
+    "name": "Bruins",
+    "abbreviation": "BOS",
+    "displayName": "Boston Bruins",
+    "color": "231f20",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/bos/boston-bruins",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=1",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-28T07:00Z",
+   "description": "Signed F Jack Drury to a five-year contract.",
+   "team": {
+    "id": "27",
+    "location": "Nashville",
+    "name": "Predators",
+    "abbreviation": "NSH",
+    "displayName": "Nashville Predators",
+    "color": "fdba31",
+    "alternateColor": "002d62",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nsh/nashville-predators",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=27",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-28T07:00Z",
+   "description": "Signed D Michael Kesselring to a three-year contract.",
+   "team": {
+    "id": "18",
+    "location": "San Jose",
+    "name": "Sharks",
+    "abbreviation": "SJ",
+    "displayName": "San Jose Sharks",
+    "color": "00788a",
+    "alternateColor": "070707",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/sj/san-jose-sharks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=18",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-29T07:00Z",
+   "description": "Acquired F Nils Höglander from Vancouver in exchange for a 2029 third-round draft pick.",
+   "team": {
+    "id": "27",
+    "location": "Nashville",
+    "name": "Predators",
+    "abbreviation": "NSH",
+    "displayName": "Nashville Predators",
+    "color": "fdba31",
+    "alternateColor": "002d62",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nsh/nashville-predators",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=27",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-29T07:00Z",
+   "description": "Acquired a 2029 third-round draft pick from Nashville Predators for F Nils Höglander.",
+   "team": {
+    "id": "22",
+    "location": "Vancouver",
+    "name": "Canucks",
+    "abbreviation": "VAN",
+    "displayName": "Vancouver Canucks",
+    "color": "003e7e",
+    "alternateColor": "008752",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/van/vancouver-canucks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=22",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-29T07:00Z",
+   "description": "Signed F Taylor Makar to a two-year contract.",
+   "team": {
+    "id": "17",
+    "location": "Colorado",
+    "name": "Avalanche",
+    "abbreviation": "COL",
+    "displayName": "Colorado Avalanche",
+    "color": "860038",
+    "alternateColor": "005ea3",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/col/colorado-avalanche",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=17",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-30T07:00Z",
+   "description": "Signed G Sebastian Cossa to a two-year contract.",
+   "team": {
+    "id": "129764",
+    "location": "Utah",
+    "name": "Mammoth",
+    "abbreviation": "UTA",
+    "displayName": "Utah Mammoth",
+    "color": "000000",
+    "alternateColor": "7ab2e1",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/utah/utah-mammoth",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=129764",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-30T07:00Z",
+   "description": "Acquired D Parker Wotherspoon from Pittsburgh Penguins for D Kaedan Korczak.",
+   "team": {
+    "id": "37",
+    "location": "Vegas",
+    "name": "Golden Knights",
+    "abbreviation": "VGK",
+    "displayName": "Vegas Golden Knights",
+    "color": "344043",
+    "alternateColor": "b4975a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/vgk/vegas-golden-knights",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=37",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-30T07:00Z",
+   "description": "Made qualifying offers to F Caeden Bankier and Ds Daemen Hunt, Carson Lambos, Roman Schmidt and David Spacek. Signed F Bobby Brink to a one-year contract.",
+   "team": {
+    "id": "30",
+    "location": "Minnesota",
+    "name": "Wild",
+    "abbreviation": "MIN",
+    "displayName": "Minnesota Wild",
+    "color": "124734",
+    "alternateColor": "ae122a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/min/minnesota-wild",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=30",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-30T07:00Z",
+   "description": "Acquired G Jacob Markstrom and F Angus Crookshank from New Jersey Devils for Fs Evan Rodrigues, Jesper Boqvist, and Ben Steeves.",
+   "team": {
+    "id": "26",
+    "location": "Florida",
+    "name": "Panthers",
+    "abbreviation": "FLA",
+    "displayName": "Florida Panthers",
+    "color": "e51937",
+    "alternateColor": "002d62",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/fla/florida-panthers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=26",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-30T07:00Z",
+   "description": "Signed LW A.J. Greer to a four-year contract. Acquired C Noah Philp from Carolina for D Kyle Masters.",
+   "team": {
+    "id": "25",
+    "location": "Anaheim",
+    "name": "Ducks",
+    "abbreviation": "ANA",
+    "displayName": "Anaheim Ducks",
+    "color": "fc4c02",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/ana/anaheim-ducks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=25",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-30T07:00Z",
+   "description": "Signed D Guillaume Brisebois to a one-year contract.",
+   "team": {
+    "id": "22",
+    "location": "Vancouver",
+    "name": "Canucks",
+    "abbreviation": "VAN",
+    "displayName": "Vancouver Canucks",
+    "color": "003e7e",
+    "alternateColor": "008752",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/van/vancouver-canucks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=22",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-30T07:00Z",
+   "description": "Signed F Jonatan Berggren to a one-year contract. Waived F Jonathan Drouin.",
+   "team": {
+    "id": "19",
+    "location": "St. Louis",
+    "name": "Blues",
+    "abbreviation": "STL",
+    "displayName": "St. Louis Blues",
+    "color": "0070b9",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/stl/st-louis-blues",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=19",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-30T07:00Z",
+   "description": "Acquired D Kaedan Korczak from Vegas in exchange for D Parker Wotherspoon.",
+   "team": {
+    "id": "16",
+    "location": "Pittsburgh",
+    "name": "Penguins",
+    "abbreviation": "PIT",
+    "displayName": "Pittsburgh Penguins",
+    "color": "000000",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/pit/pittsburgh-penguins",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=16",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-30T07:00Z",
+   "description": "Signed F Carl Grundstrom to a one-year contract.",
+   "team": {
+    "id": "15",
+    "location": "Philadelphia",
+    "name": "Flyers",
+    "abbreviation": "PHI",
+    "displayName": "Philadelphia Flyers",
+    "color": "fe5823",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/phi/philadelphia-flyers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=15",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-30T07:00Z",
+   "description": "Acquired Fs Evan Rodrigues, Jesper Boqvist, and Ben Steeves from Florida in exchange for G Jacob Markstrom and F Angus Crookshank. Re-signed F Arseny Gritsyuk to a three-year contract.",
+   "team": {
+    "id": "11",
+    "location": "New Jersey",
+    "name": "Devils",
+    "abbreviation": "NJ",
+    "displayName": "New Jersey Devils",
+    "color": "e30b2b",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nj/new-jersey-devils",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=11",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed F Marc Gatcomb to a two-year contract. Signed D Antti Tuomisto to a two-year contract.",
+   "team": {
+    "id": "37",
+    "location": "Vegas",
+    "name": "Golden Knights",
+    "abbreviation": "VGK",
+    "displayName": "Vegas Golden Knights",
+    "color": "344043",
+    "alternateColor": "b4975a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/vgk/vegas-golden-knights",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=37",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Acquired F Blake Coleman and D Olli Määttä from Calgary in exchange for D Jake Middleton, a 2027 third-round draft pick, a 2028 fourth-round draft pick and a 2029 second-round draft pick. Signed Fs Nick Foligno and Maxim Shabanov to one-year contracts.",
+   "team": {
+    "id": "30",
+    "location": "Minnesota",
+    "name": "Wild",
+    "abbreviation": "MIN",
+    "displayName": "Minnesota Wild",
+    "color": "124734",
+    "alternateColor": "ae122a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/min/minnesota-wild",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=30",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed D Erik Gudbranson to a one-year contract.",
+   "team": {
+    "id": "29",
+    "location": "Columbus",
+    "name": "Blue Jackets",
+    "abbreviation": "CBJ",
+    "displayName": "Columbus Blue Jackets",
+    "color": "002d62",
+    "alternateColor": "e31937",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/cbj/columbus-blue-jackets",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=29",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed F Alex Ovechkin to a one-year contract.",
+   "team": {
+    "id": "23",
+    "location": "Washington",
+    "name": "Capitals",
+    "abbreviation": "WSH",
+    "displayName": "Washington Capitals",
+    "color": "d71830",
+    "alternateColor": "0b1f41",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/wsh/washington-capitals",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=23",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed F Matthew Stienburg to a one-year contract. Signed F Matthew Stienburg to a one-year, two-way contract.",
+   "team": {
+    "id": "22",
+    "location": "Vancouver",
+    "name": "Canucks",
+    "abbreviation": "VAN",
+    "displayName": "Vancouver Canucks",
+    "color": "003e7e",
+    "alternateColor": "008752",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/van/vancouver-canucks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=22",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed D Cole McWard and Henrik Rybinski to two-year contracts.",
+   "team": {
+    "id": "21",
+    "location": "Toronto",
+    "name": "Maple Leafs",
+    "abbreviation": "TOR",
+    "displayName": "Toronto Maple Leafs",
+    "color": "003e7e",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/tor/toronto-maple-leafs",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=21",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed D John Carlson to a two-year contract.",
+   "team": {
+    "id": "20",
+    "location": "Tampa Bay",
+    "name": "Lightning",
+    "abbreviation": "TB",
+    "displayName": "Tampa Bay Lightning",
+    "color": "003e7e",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/tb/tampa-bay-lightning",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=20",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed F Brett Leason and G Kyle Keyser to one-year contracts.",
+   "team": {
+    "id": "18",
+    "location": "San Jose",
+    "name": "Sharks",
+    "abbreviation": "SJ",
+    "displayName": "San Jose Sharks",
+    "color": "00788a",
+    "alternateColor": "070707",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/sj/san-jose-sharks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=18",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed F Jaden Schwartz to a three-year contract.",
+   "team": {
+    "id": "17",
+    "location": "Colorado",
+    "name": "Avalanche",
+    "abbreviation": "COL",
+    "displayName": "Colorado Avalanche",
+    "color": "860038",
+    "alternateColor": "005ea3",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/col/colorado-avalanche",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=17",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed D Dennis Cholowski to a two-year contract.",
+   "team": {
+    "id": "13",
+    "location": "New York",
+    "name": "Rangers",
+    "abbreviation": "NYR",
+    "displayName": "New York Rangers",
+    "color": "0056ae",
+    "alternateColor": "e51937",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nyr/new-york-rangers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=13",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed G Jakub Dobes to a three-year contract.",
+   "team": {
+    "id": "10",
+    "location": "Montreal",
+    "name": "Canadiens",
+    "abbreviation": "MTL",
+    "displayName": "Montreal Canadiens",
+    "color": "c41230",
+    "alternateColor": "013a81",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/mtl/montreal-canadiens",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=10",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Acquired D Jake Middleton, a 2027 third-round draft pick, a 2028 fourth-round draft pick and a 2029 second-round draft pick from Minnesota Wild for F Blake Coleman and D Olli Määttä.",
+   "team": {
+    "id": "3",
+    "location": "Calgary",
+    "name": "Flames",
+    "abbreviation": "CGY",
+    "displayName": "Calgary Flames",
+    "color": "dd1a32",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/cgy/calgary-flames",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=3",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-02T07:00Z",
+   "description": "Signed F Aidan McDonough to a one-year contract.",
+   "team": {
+    "id": "2",
+    "location": "Buffalo",
+    "name": "Sabres",
+    "abbreviation": "BUF",
+    "displayName": "Buffalo Sabres",
+    "color": "00468b",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/buf/buffalo-sabres",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=2",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-03T07:00Z",
+   "description": "Signed D Andrew Peeke to a one-year contract.",
+   "team": {
+    "id": "129764",
+    "location": "Utah",
+    "name": "Mammoth",
+    "abbreviation": "UTA",
+    "displayName": "Utah Mammoth",
+    "color": "000000",
+    "alternateColor": "7ab2e1",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/utah/utah-mammoth",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=129764",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-03T07:00Z",
+   "description": "Signed F Raphael Lavoie to a one-year contract.",
+   "team": {
+    "id": "37",
+    "location": "Vegas",
+    "name": "Golden Knights",
+    "abbreviation": "VGK",
+    "displayName": "Vegas Golden Knights",
+    "color": "344043",
+    "alternateColor": "b4975a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/vgk/vegas-golden-knights",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=37",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-03T07:00Z",
+   "description": "Signed F Chase Bradley to a two-year, two-way contract.",
+   "team": {
+    "id": "27",
+    "location": "Nashville",
+    "name": "Predators",
+    "abbreviation": "NSH",
+    "displayName": "Nashville Predators",
+    "color": "fdba31",
+    "alternateColor": "002d62",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nsh/nashville-predators",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=27",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-03T07:00Z",
+   "description": "Signed F Vinni Lettieri and G Samuel Hlavaj to one-year contracts. Signed F Gavin McKenna to a three-year contract.",
+   "team": {
+    "id": "21",
+    "location": "Toronto",
+    "name": "Maple Leafs",
+    "abbreviation": "TOR",
+    "displayName": "Toronto Maple Leafs",
+    "color": "003e7e",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/tor/toronto-maple-leafs",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=21",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-03T07:00Z",
+   "description": "Signed D Tomas Kralovic to a three-year, entry-level contract. Signed F Jansen Harkins to a one-year, two-way contract. Re-signed F vinni Lettieri to a one-year contract.",
+   "team": {
+    "id": "20",
+    "location": "Tampa Bay",
+    "name": "Lightning",
+    "abbreviation": "TB",
+    "displayName": "Tampa Bay Lightning",
+    "color": "003e7e",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/tb/tampa-bay-lightning",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=20",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-03T07:00Z",
+   "description": "Signed F Hendrix Lapierre to a two-year contract.",
+   "team": {
+    "id": "16",
+    "location": "Pittsburgh",
+    "name": "Penguins",
+    "abbreviation": "PIT",
+    "displayName": "Pittsburgh Penguins",
+    "color": "000000",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/pit/pittsburgh-penguins",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=16",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-03T07:00Z",
+   "description": "Signed F Nolan Foote to a one-year contract.",
+   "team": {
+    "id": "15",
+    "location": "Philadelphia",
+    "name": "Flyers",
+    "abbreviation": "PHI",
+    "displayName": "Philadelphia Flyers",
+    "color": "fe5823",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/phi/philadelphia-flyers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=15",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-03T07:00Z",
+   "description": "Re-signed F Amadeus Lombardi to a two-year contract. Signed G David Rittich to a one-year, one-way contract.",
+   "team": {
+    "id": "11",
+    "location": "New Jersey",
+    "name": "Devils",
+    "abbreviation": "NJ",
+    "displayName": "New Jersey Devils",
+    "color": "e30b2b",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nj/new-jersey-devils",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=11",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-03T07:00Z",
+   "description": "Signed F Jamie Benn to a one-year contract.",
+   "team": {
+    "id": "9",
+    "location": "Dallas",
+    "name": "Stars",
+    "abbreviation": "DAL",
+    "displayName": "Dallas Stars",
+    "color": "20864c",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/dal/dallas-stars",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=9",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-04T07:00Z",
+   "description": "Signed Mavrik Bourque to a six-year contract.",
+   "team": {
+    "id": "27",
+    "location": "Nashville",
+    "name": "Predators",
+    "abbreviation": "NSH",
+    "displayName": "Nashville Predators",
+    "color": "fdba31",
+    "alternateColor": "002d62",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nsh/nashville-predators",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=27",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-04T07:00Z",
+   "description": "Signed D Emil Andrae to a two-year contract. Signed F Ryan Tverberg to a one-year, two-way contract.",
+   "team": {
+    "id": "21",
+    "location": "Toronto",
+    "name": "Maple Leafs",
+    "abbreviation": "TOR",
+    "displayName": "Toronto Maple Leafs",
+    "color": "003e7e",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/tor/toronto-maple-leafs",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=21",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-04T07:00Z",
+   "description": "Signed D Christian Wolanin to a one-year, two-way contract.",
+   "team": {
+    "id": "17",
+    "location": "Colorado",
+    "name": "Avalanche",
+    "abbreviation": "COL",
+    "displayName": "Colorado Avalanche",
+    "color": "860038",
+    "alternateColor": "005ea3",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/col/colorado-avalanche",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=17",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-04T07:00Z",
+   "description": "Signed D Shakir Mukhamadullin to a two-year contract.",
+   "team": {
+    "id": "6",
+    "location": "Edmonton",
+    "name": "Oilers",
+    "abbreviation": "EDM",
+    "displayName": "Edmonton Oilers",
+    "color": "00205b",
+    "alternateColor": "ff4c00",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/edm/edmonton-oilers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=6",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-04T07:00Z",
+   "description": "Signed F Chase Stillman to a one-year, two-way contract.",
+   "team": {
+    "id": "5",
+    "location": "Detroit",
+    "name": "Red Wings",
+    "abbreviation": "DET",
+    "displayName": "Detroit Red Wings",
+    "color": "e30526",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/det/detroit-red-wings",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=5",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-04T07:00Z",
+   "description": "Signed G Matt Villalta to a one-year, two-way contract.",
+   "team": {
+    "id": "2",
+    "location": "Buffalo",
+    "name": "Sabres",
+    "abbreviation": "BUF",
+    "displayName": "Buffalo Sabres",
+    "color": "00468b",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/buf/buffalo-sabres",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=2",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-05T07:00Z",
+   "description": "Signed D Daemon Hunt to a one-year contract.",
+   "team": {
+    "id": "30",
+    "location": "Minnesota",
+    "name": "Wild",
+    "abbreviation": "MIN",
+    "displayName": "Minnesota Wild",
+    "color": "124734",
+    "alternateColor": "ae122a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/min/minnesota-wild",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=30",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-05T07:00Z",
+   "description": "Signed D Pavel Mintyukov to a five-year contract.",
+   "team": {
+    "id": "25",
+    "location": "Anaheim",
+    "name": "Ducks",
+    "abbreviation": "ANA",
+    "displayName": "Anaheim Ducks",
+    "color": "fc4c02",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/ana/anaheim-ducks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=25",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-05T07:00Z",
+   "description": "Signed D Jacob MacDonald to a one-year contract.",
+   "team": {
+    "id": "23",
+    "location": "Washington",
+    "name": "Capitals",
+    "abbreviation": "WSH",
+    "displayName": "Washington Capitals",
+    "color": "d71830",
+    "alternateColor": "0b1f41",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/wsh/washington-capitals",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=23",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-05T07:00Z",
+   "description": "Signed D Christian Wolanin to a one-year contract.",
+   "team": {
+    "id": "17",
+    "location": "Colorado",
+    "name": "Avalanche",
+    "abbreviation": "COL",
+    "displayName": "Colorado Avalanche",
+    "color": "860038",
+    "alternateColor": "005ea3",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/col/colorado-avalanche",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=17",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-05T07:00Z",
+   "description": "Signed C David Gustafsson and G Arturs Silovs to one-year contracts. Signed G Joel Blosqvist to a two-year contract. signed F Egor Chinakhov to a three-year contract.",
+   "team": {
+    "id": "16",
+    "location": "Pittsburgh",
+    "name": "Penguins",
+    "abbreviation": "PIT",
+    "displayName": "Pittsburgh Penguins",
+    "color": "000000",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/pit/pittsburgh-penguins",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=16",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-05T07:00Z",
+   "description": "Signed D Spencer Stastney to a one-year contract.",
+   "team": {
+    "id": "6",
+    "location": "Edmonton",
+    "name": "Oilers",
+    "abbreviation": "EDM",
+    "displayName": "Edmonton Oilers",
+    "color": "00205b",
+    "alternateColor": "ff4c00",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/edm/edmonton-oilers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=6",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-06T07:00Z",
+   "description": "Signed D Lukas Cormier to a one-year contract.",
+   "team": {
+    "id": "37",
+    "location": "Vegas",
+    "name": "Golden Knights",
+    "abbreviation": "VGK",
+    "displayName": "Vegas Golden Knights",
+    "color": "344043",
+    "alternateColor": "b4975a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/vgk/vegas-golden-knights",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=37",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-06T07:00Z",
+   "description": "Signed D Colton White to a two-year contract.",
+   "team": {
+    "id": "29",
+    "location": "Columbus",
+    "name": "Blue Jackets",
+    "abbreviation": "CBJ",
+    "displayName": "Columbus Blue Jackets",
+    "color": "002d62",
+    "alternateColor": "e31937",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/cbj/columbus-blue-jackets",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=29",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-06T07:00Z",
+   "description": "Signed D Justin Barron to a one-year contract.",
+   "team": {
+    "id": "27",
+    "location": "Nashville",
+    "name": "Predators",
+    "abbreviation": "NSH",
+    "displayName": "Nashville Predators",
+    "color": "fdba31",
+    "alternateColor": "002d62",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nsh/nashville-predators",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=27",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-06T07:00Z",
+   "description": "Signed C Jacob Quillan to a one-year contract.",
+   "team": {
+    "id": "21",
+    "location": "Toronto",
+    "name": "Maple Leafs",
+    "abbreviation": "TOR",
+    "displayName": "Toronto Maple Leafs",
+    "color": "003e7e",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/tor/toronto-maple-leafs",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=21",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-06T07:00Z",
+   "description": "Signed D William Trudeau to a one-year contract.",
+   "team": {
+    "id": "13",
+    "location": "New York",
+    "name": "Rangers",
+    "abbreviation": "NYR",
+    "displayName": "New York Rangers",
+    "color": "0056ae",
+    "alternateColor": "e51937",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nyr/new-york-rangers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=13",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-06T07:00Z",
+   "description": "Re-signed F Ben Steeves to a one-year, two-way contract. Re-signed G Jakub Málek to a two-year contract.",
+   "team": {
+    "id": "11",
+    "location": "New Jersey",
+    "name": "Devils",
+    "abbreviation": "NJ",
+    "displayName": "New Jersey Devils",
+    "color": "e30b2b",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nj/new-jersey-devils",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=11",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-06T07:00Z",
+   "description": "Signed D Kyle Burroughs to a one-year contract.",
+   "team": {
+    "id": "9",
+    "location": "Dallas",
+    "name": "Stars",
+    "abbreviation": "DAL",
+    "displayName": "Dallas Stars",
+    "color": "20864c",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/dal/dallas-stars",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=9",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-06T07:00Z",
+   "description": "Signed F Owen Michaels to a two-year contract.",
+   "team": {
+    "id": "6",
+    "location": "Edmonton",
+    "name": "Oilers",
+    "abbreviation": "EDM",
+    "displayName": "Edmonton Oilers",
+    "color": "00205b",
+    "alternateColor": "ff4c00",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/edm/edmonton-oilers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=6",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-06T07:00Z",
+   "description": "Signed G Drew Commesso to a two-year contract.",
+   "team": {
+    "id": "4",
+    "location": "Chicago",
+    "name": "Blackhawks",
+    "abbreviation": "CHI",
+    "displayName": "Chicago Blackhawks",
+    "color": "e31937",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/chi/chicago-blackhawks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=4",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-06T07:00Z",
+   "description": "Signed D Simon Nemec to a five-year contract.",
+   "team": {
+    "id": "3",
+    "location": "Calgary",
+    "name": "Flames",
+    "abbreviation": "CGY",
+    "displayName": "Calgary Flames",
+    "color": "dd1a32",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/cgy/calgary-flames",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=3",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-07T07:00Z",
+   "description": "Signed D Roman Schmidt to a one-year contract.",
+   "team": {
+    "id": "30",
+    "location": "Minnesota",
+    "name": "Wild",
+    "abbreviation": "MIN",
+    "displayName": "Minnesota Wild",
+    "color": "124734",
+    "alternateColor": "ae122a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/min/minnesota-wild",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=30",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-07T07:00Z",
+   "description": "Signed D Tyson Hinds to a two-year contract.",
+   "team": {
+    "id": "25",
+    "location": "Anaheim",
+    "name": "Ducks",
+    "abbreviation": "ANA",
+    "displayName": "Anaheim Ducks",
+    "color": "fc4c02",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/ana/anaheim-ducks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=25",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-07T07:00Z",
+   "description": "Signed F Claude Giroux to a one-year contract.",
+   "team": {
+    "id": "14",
+    "location": "Ottawa",
+    "name": "Senators",
+    "abbreviation": "OTT",
+    "displayName": "Ottawa Senators",
+    "color": "dd1a32",
+    "alternateColor": "b79257",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/ott/ottawa-senators",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=14",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-08T07:00Z",
+   "description": "Signed F Barrett Hayton to a one-year contract.",
+   "team": {
+    "id": "129764",
+    "location": "Utah",
+    "name": "Mammoth",
+    "abbreviation": "UTA",
+    "displayName": "Utah Mammoth",
+    "color": "000000",
+    "alternateColor": "7ab2e1",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/utah/utah-mammoth",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=129764",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-08T07:00Z",
+   "description": "Signed D Roman Schmidt to a one-year, two-way contract.",
+   "team": {
+    "id": "30",
+    "location": "Minnesota",
+    "name": "Wild",
+    "abbreviation": "MIN",
+    "displayName": "Minnesota Wild",
+    "color": "124734",
+    "alternateColor": "ae122a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/min/minnesota-wild",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=30",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-08T07:00Z",
+   "description": "Signed D Libor Hajek to a one-year contract.",
+   "team": {
+    "id": "18",
+    "location": "San Jose",
+    "name": "Sharks",
+    "abbreviation": "SJ",
+    "displayName": "San Jose Sharks",
+    "color": "00788a",
+    "alternateColor": "070707",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/sj/san-jose-sharks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=18",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-08T07:00Z",
+   "description": "Signed D Reilly Walsh to a one-year contract.",
+   "team": {
+    "id": "10",
+    "location": "Montreal",
+    "name": "Canadiens",
+    "abbreviation": "MTL",
+    "displayName": "Montreal Canadiens",
+    "color": "c41230",
+    "alternateColor": "013a81",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/mtl/montreal-canadiens",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=10",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-09T07:00Z",
+   "description": "Signed D Tomas Galvas to a three-year, entry-level contract.",
+   "team": {
+    "id": "16",
+    "location": "Pittsburgh",
+    "name": "Penguins",
+    "abbreviation": "PIT",
+    "displayName": "Pittsburgh Penguins",
+    "color": "000000",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/pit/pittsburgh-penguins",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=16",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-09T07:00Z",
+   "description": "Signed F Xavier Bourgault to a one-year contract.",
+   "team": {
+    "id": "14",
+    "location": "Ottawa",
+    "name": "Senators",
+    "abbreviation": "OTT",
+    "displayName": "Ottawa Senators",
+    "color": "dd1a32",
+    "alternateColor": "b79257",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/ott/ottawa-senators",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=14",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-09T07:00Z",
+   "description": "Signed F Brett Berard to a one-year contract.",
+   "team": {
+    "id": "10",
+    "location": "Montreal",
+    "name": "Canadiens",
+    "abbreviation": "MTL",
+    "displayName": "Montreal Canadiens",
+    "color": "c41230",
+    "alternateColor": "013a81",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/mtl/montreal-canadiens",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=10",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-09T07:00Z",
+   "description": "Signed D Aleksi Heimosalmi to a one-year, two-way contract.",
+   "team": {
+    "id": "7",
+    "location": "Carolina",
+    "name": "Hurricanes",
+    "abbreviation": "CAR",
+    "displayName": "Carolina Hurricanes",
+    "color": "e30426",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/car/carolina-hurricanes",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=7",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-09T07:00Z",
+   "description": "Signed F Riley Duran to a one-year, two-way contract.",
+   "team": {
+    "id": "1",
+    "location": "Boston",
+    "name": "Bruins",
+    "abbreviation": "BOS",
+    "displayName": "Boston Bruins",
+    "color": "231f20",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/bos/boston-bruins",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=1",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-10T07:00Z",
+   "description": "Signed G Victor Ostman to a one-year contract.",
+   "team": {
+    "id": "124292",
+    "location": "Seattle",
+    "name": "Kraken",
+    "abbreviation": "SEA",
+    "displayName": "Seattle Kraken",
+    "color": "000d33",
+    "alternateColor": "a3dce4",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/sea/seattle-kraken",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=124292",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-10T07:00Z",
+   "description": "Signed F Caedan Bankier and Ds Carson Lambos and David Spacek to one-year, two-way contracts.",
+   "team": {
+    "id": "30",
+    "location": "Minnesota",
+    "name": "Wild",
+    "abbreviation": "MIN",
+    "displayName": "Minnesota Wild",
+    "color": "124734",
+    "alternateColor": "ae122a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/min/minnesota-wild",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=30",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-10T07:00Z",
+   "description": "Signed F Oskar Sundqvist to a one-year, two-way contract.",
+   "team": {
+    "id": "19",
+    "location": "St. Louis",
+    "name": "Blues",
+    "abbreviation": "STL",
+    "displayName": "St. Louis Blues",
+    "color": "0070b9",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/stl/st-louis-blues",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=19",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-10T07:00Z",
+   "description": "Signed F Tyler Boucher to a one-year, two-way contract.",
+   "team": {
+    "id": "14",
+    "location": "Ottawa",
+    "name": "Senators",
+    "abbreviation": "OTT",
+    "displayName": "Ottawa Senators",
+    "color": "dd1a32",
+    "alternateColor": "b79257",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/ott/ottawa-senators",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=14",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-10T07:00Z",
+   "description": "Signed D Bogdan Konyushkov to a two-year contract.",
+   "team": {
+    "id": "10",
+    "location": "Montreal",
+    "name": "Canadiens",
+    "abbreviation": "MTL",
+    "displayName": "Montreal Canadiens",
+    "color": "c41230",
+    "alternateColor": "013a81",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/mtl/montreal-canadiens",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=10",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-12T07:00Z",
+   "description": "Signed Colton Dach a two-year contract.",
+   "team": {
+    "id": "6",
+    "location": "Edmonton",
+    "name": "Oilers",
+    "abbreviation": "EDM",
+    "displayName": "Edmonton Oilers",
+    "color": "00205b",
+    "alternateColor": "ff4c00",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/edm/edmonton-oilers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=6",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-13T07:00Z",
+   "description": "Signed D Filip Ruzicka to a three-year contract.",
+   "team": {
+    "id": "30",
+    "location": "Minnesota",
+    "name": "Wild",
+    "abbreviation": "MIN",
+    "displayName": "Minnesota Wild",
+    "color": "124734",
+    "alternateColor": "ae122a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/min/minnesota-wild",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=30",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-13T07:00Z",
+   "description": "Signed F Viggo Björck to a three-year contract.",
+   "team": {
+    "id": "28",
+    "location": "Winnipeg",
+    "name": "Jets",
+    "abbreviation": "WPG",
+    "displayName": "Winnipeg Jets",
+    "color": "002d62",
+    "alternateColor": "c41230",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/wpg/winnipeg-jets",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=28",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-13T07:00Z",
+   "description": "Signed D Braden Schneider to a one-year contract.",
+   "team": {
+    "id": "13",
+    "location": "New York",
+    "name": "Rangers",
+    "abbreviation": "NYR",
+    "displayName": "New York Rangers",
+    "color": "0056ae",
+    "alternateColor": "e51937",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nyr/new-york-rangers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=13",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-13T07:00Z",
+   "description": "Signed D Ronald Attard to a one-year contract.",
+   "team": {
+    "id": "5",
+    "location": "Detroit",
+    "name": "Red Wings",
+    "abbreviation": "DET",
+    "displayName": "Detroit Red Wings",
+    "color": "e30526",
+    "alternateColor": "ffffff",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/det/detroit-red-wings",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=5",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-13T07:00Z",
+   "description": "Signed F Peyton Krebs to a four-year contract .Acquired F Zac Funk Washington for F Tyler Kopff.",
+   "team": {
+    "id": "2",
+    "location": "Buffalo",
+    "name": "Sabres",
+    "abbreviation": "BUF",
+    "displayName": "Buffalo Sabres",
+    "color": "00468b",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/buf/buffalo-sabres",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=2",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-14T07:00Z",
+   "description": "Signed G Filip Ruzicka to a three-year, entry-level contract.",
+   "team": {
+    "id": "30",
+    "location": "Minnesota",
+    "name": "Wild",
+    "abbreviation": "MIN",
+    "displayName": "Minnesota Wild",
+    "color": "124734",
+    "alternateColor": "ae122a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/min/minnesota-wild",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=30",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-14T07:00Z",
+   "description": "Signed F Oliver Suvanto to a three-year contract.",
+   "team": {
+    "id": "23",
+    "location": "Washington",
+    "name": "Capitals",
+    "abbreviation": "WSH",
+    "displayName": "Washington Capitals",
+    "color": "d71830",
+    "alternateColor": "0b1f41",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/wsh/washington-capitals",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=23",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-14T07:00Z",
+   "description": "Signed F Nicholas Robertson to a two-year contract.",
+   "team": {
+    "id": "16",
+    "location": "Pittsburgh",
+    "name": "Penguins",
+    "abbreviation": "PIT",
+    "displayName": "Pittsburgh Penguins",
+    "color": "000000",
+    "alternateColor": "fdb71a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/pit/pittsburgh-penguins",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=16",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-14T07:00Z",
+   "description": "Signed D Malte Gustafsson to a three-year contract.",
+   "team": {
+    "id": "12",
+    "location": "New York",
+    "name": "Islanders",
+    "abbreviation": "NYI",
+    "displayName": "New York Islanders",
+    "color": "00529b",
+    "alternateColor": "f47d31",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nyi/new-york-islanders",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=12",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-15T07:00Z",
+   "description": "Signed D Juho Piiparinen to a three-year, entry-level contract.",
+   "team": {
+    "id": "37",
+    "location": "Vegas",
+    "name": "Golden Knights",
+    "abbreviation": "VGK",
+    "displayName": "Vegas Golden Knights",
+    "color": "344043",
+    "alternateColor": "b4975a",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/vgk/vegas-golden-knights",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=37",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-15T07:00Z",
+   "description": "Signed F Luke Tuch to a two-year contract.",
+   "team": {
+    "id": "29",
+    "location": "Columbus",
+    "name": "Blue Jackets",
+    "abbreviation": "CBJ",
+    "displayName": "Columbus Blue Jackets",
+    "color": "002d62",
+    "alternateColor": "e31937",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/cbj/columbus-blue-jackets",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=29",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-15T07:00Z",
+   "description": "Signed F Cole Perfetti to a five-year contract.",
+   "team": {
+    "id": "28",
+    "location": "Winnipeg",
+    "name": "Jets",
+    "abbreviation": "WPG",
+    "displayName": "Winnipeg Jets",
+    "color": "002d62",
+    "alternateColor": "c41230",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/wpg/winnipeg-jets",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=28",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-15T07:00Z",
+   "description": "Signed F Marcus Nordmark to a three-year contract.",
+   "team": {
+    "id": "25",
+    "location": "Anaheim",
+    "name": "Ducks",
+    "abbreviation": "ANA",
+    "displayName": "Anaheim Ducks",
+    "color": "fc4c02",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/ana/anaheim-ducks",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=25",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-15T07:00Z",
+   "description": "Signed C Trevor Zegras to a four-year contract.",
+   "team": {
+    "id": "15",
+    "location": "Philadelphia",
+    "name": "Flyers",
+    "abbreviation": "PHI",
+    "displayName": "Philadelphia Flyers",
+    "color": "fe5823",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/phi/philadelphia-flyers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=15",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-15T07:00Z",
+   "description": "Signed D Aberts Smits to a three-year contract.",
+   "team": {
+    "id": "13",
+    "location": "New York",
+    "name": "Rangers",
+    "abbreviation": "NYR",
+    "displayName": "New York Rangers",
+    "color": "0056ae",
+    "alternateColor": "e51937",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nyr/new-york-rangers",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=13",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-15T07:00Z",
+   "description": "Signed F Anthony Mantha to a two-year contract.",
+   "team": {
+    "id": "11",
+    "location": "New Jersey",
+    "name": "Devils",
+    "abbreviation": "NJ",
+    "displayName": "New Jersey Devils",
+    "color": "e30b2b",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/nj/new-jersey-devils",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=11",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-15T07:00Z",
+   "description": "Signed F Elton Hermansson to a three-year, entry-level contract.",
+   "team": {
+    "id": "8",
+    "location": "Los Angeles",
+    "name": "Kings",
+    "abbreviation": "LA",
+    "displayName": "Los Angeles Kings",
+    "color": "121212",
+    "alternateColor": "a2aaad",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/la/los-angeles-kings",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=8",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-15T07:00Z",
+   "description": "Signed D William Håkansson to a three-year contract.",
+   "team": {
+    "id": "7",
+    "location": "Carolina",
+    "name": "Hurricanes",
+    "abbreviation": "CAR",
+    "displayName": "Carolina Hurricanes",
+    "color": "e30426",
+    "alternateColor": "000000",
+    "links": [
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "desktop",
+       "team"
+      ],
+      "href": "https://www.espn.com/nhl/team/_/name/car/carolina-hurricanes",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     },
+     {
+      "language": "en-US",
+      "rel": [
+       "clubhouse",
+       "mobile",
+       "team"
+      ],
+      "href": "https://m.espn.com/nhl/clubhouse?teamId=7",
+      "text": "Clubhouse",
+      "shortText": "Clubhouse",
+      "isExternal": false,
+      "isPremium": false
+     }
+    ]
+   }
+  }
+ ],
+ "count": 127,
+ "pageCount": 1
+}

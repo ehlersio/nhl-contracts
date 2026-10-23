@@ -1,0 +1,23 @@
+{
+ "slug": "anaheim-ducks-sign-ryan-poehling-to-four-year-contract",
+ "url": "https://www.nhl.com/news/anaheim-ducks-sign-ryan-poehling-to-four-year-contract",
+ "content_date": "2026-03-06T00:53:21.813Z",
+ "headline": "Poehling signs 4-year contract with Ducks",
+ "title": "Anaheim Ducks sign Ryan Poehling to four year contract",
+ "summary": "Ryan Poehling signed a four-year contract with the Anaheim Ducks on Thursday. Financial terms were not disclosed.\nThe 27-year-old center is in the final season of a two-year, $3.8 million contract ($1.9 million average annual value) he signed with the Philadelphia Flyers on Jan. 27, 2024. He could have become",
+ "tags": [
+  "nhl",
+  "nhl-created",
+  "2025-26",
+  "news",
+  "transactions",
+  "playerid-8480068",
+  "teamid-24"
+ ],
+ "body": "<forge-entity title=\"Ryan Poehling\" slug=\"ryan-poehling-8480068\" code=\"player\">Ryan Poehling</forge-entity> signed a four-year contract with the Anaheim Ducks on Thursday. Financial terms were not disclosed.\n\nThe 27-year-old center is in the final season of a two-year, $3.8 million contract ($1.9 million average annual value) he signed with the Philadelphia Flyers on Jan. 27, 2024. He could have become an unrestricted free agent after the season.\n\nPoehling was traded to Anaheim as part of the deal for <forge-entity title=\"Trevor Zegras\" slug=\"trevor-zegras-8481533\" code=\"player\">Trevor Zegras</forge-entity> on June 23, 2025.\n\nPoehling has 24 points (seven goals, 17 assists) in 54 games this season. He also leads Ducks forwards in blocks (62) and short-handed ice time per game (2:23).\n\nSelected by the Montreal Canadiens in the first round (No. 25) of the 2017 NHL Draft, Poehling has 119 points (50 goals, 69 assists) in 337 regular-season games for the Canadiens, Pittsburgh Penguins, Flyers and Ducks.",
+ "author_tag": "nhl-created",
+ "created_by": "Dave Miniaci",
+ "entity_id": "6ca4f81a-1f46-4d3a-9952-37d0c7cc7d7a",
+ "last_updated": "2026-03-06T00:53:21.813Z",
+ "fetched_at": "2026-10-23T00:00:00+00:00"
+}

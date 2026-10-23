@@ -1,0 +1,69 @@
+# Hourly collector + publisher, modelled on nflverse-data.
+#
+# NOT ACTIVATED: the schedule below is commented out. To switch it on, uncomment
+# the `schedule` block (and prefer an external dispatcher such as a Cloudflare
+# Worker calling `workflow_dispatch`, since GitHub cron can run hours late).
+#
+# What a run does:
+#   1. restores the raw SQLite store from the `contracts` release (so the 25-item
+#      Forge lists accumulate across runs),
+#   2. polls NHL.com Forge + ESPN, normalizes, writes dist/,
+#   3. uploads dist/* and the raw store back to the `contracts` release tag,
+#      overwriting the previous assets (nflverse style: one moving tag).
+name: update-contracts
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "7 * * * *"   # hourly; July 1-15 a 15-minute cadence is worth it
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-contracts
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_TAG: contracts
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: pip install -e .
+
+      - name: Restore raw store from the release
+        run: |
+          mkdir -p data
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release download "$RELEASE_TAG" --pattern raw.sqlite --dir data || true
+          fi
+
+      - name: Collect, normalize, export
+        run: python -m nhl_contracts.run all --espn-days 45
+
+      - name: Ensure the release exists
+        run: |
+          gh release view "$RELEASE_TAG" >/dev/null 2>&1 || \
+            gh release create "$RELEASE_TAG" --title "contracts (rolling)" \
+              --notes "Rolling dataset release. Files are replaced on every run; see timestamp.json." --latest=false
+
+      - name: Upload dataset
+        run: |
+          gh release upload "$RELEASE_TAG" dist/* data/raw.sqlite --clobber
+
+      - name: Summary
+        run: |
+          echo '### nhl-contracts' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat dist/timestamp.json >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
