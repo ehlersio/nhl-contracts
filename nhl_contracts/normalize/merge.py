@@ -65,14 +65,20 @@ def _same_contract(c: Claim, g0: Claim) -> bool:
     if pto and c.contract_type != g0.contract_type:
         return False
     days = abs((date.fromisoformat(c.signed_at) - date.fromisoformat(g0.signed_at)).days)
+    # An archived row whose signing date is unknown (dated by its snapshot) never joins
+    # by date; it joins a contract that covers the same seasons at the same cap hit.
+    undated = "signing_date_unknown" in c.flags or "signing_date_unknown" in g0.flags
+    if undated:
+        if not _seasons_overlap(c, g0):
+            return False
+        remaining = "term_is_remaining_seasons" in c.flags or "term_is_remaining_seasons" in g0.flags
+        term_ok = remaining or c.term_years is None or g0.term_years is None or c.term_years == g0.term_years
+        money_c = c.cap_hit_usd or c.aav_usd
+        money_g = g0.cap_hit_usd or g0.aav_usd
+        money_ok = money_c is None or money_g is None or money_c == money_g
+        return term_ok and money_ok
     if days <= WINDOW_DAYS:
         return True
-    # An archived row whose signing date is unknown (dated by its snapshot) joins a
-    # contract that covers the same seasons.
-    undated = "signing_date_unknown" in c.flags or "signing_date_unknown" in g0.flags
-    if undated and _seasons_overlap(c, g0):
-        term_ok = c.term_years is None or g0.term_years is None or c.term_years == g0.term_years
-        return term_ok
     # A stated signing date (archive) versus a publication date (story) for the same deal
     stated = c.signing_date_stated != g0.signing_date_stated
     if stated and _seasons_overlap(c, g0) and c.start_season == g0.start_season:

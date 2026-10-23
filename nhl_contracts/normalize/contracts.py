@@ -306,6 +306,8 @@ def seasons_from(text: str, published: date, term: int | None, is_extension: boo
                  ) -> tuple[str | None, str | None, list[str]]:
     flags: list[str] = []
     start = end = None
+    # cut a trailing clause about someone else's deal: ", two days after Dahlin signed ..."
+    text = re.split(r",\s+(?:\w+\s+)?(?:days?|hours?|weeks?|months?)\s+after\b|,\s+after\b|,\s+while\b", text)[0]
     m = re.search(r"through (?:the )?(?:end of the )?(20\d\d-\d\d)", text)
     if m:
         end = m.group(1)
@@ -470,7 +472,13 @@ def _valid_name(name: str) -> bool:
         return False
     if any(p.lower() in TEAM_NICKNAMES_LOWER for p in parts):
         return False
+    # a role that slipped in front of the name ("general manager Jim Rutherford")
+    if any(p[:1].islower() and p.lower() not in NAME_PARTICLES for p in parts):
+        return False
     return True
+
+
+NAME_PARTICLES = {"de", "van", "der", "von", "da", "di", "du", "la", "le", "st."}
 
 
 TEAM_NICKNAMES_LOWER = {n.lower() for n in TEAM_NICKNAMES.values()} | {"hockey", "club", "nhl"}
