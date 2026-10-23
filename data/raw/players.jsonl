@@ -124,6 +124,7 @@
 {"full_name": "Rickard Rakell", "player_id": 8476483, "team": "PIT", "updated_at": "2026-10-23"}
 {"full_name": "Jonathan Marchessault", "player_id": 8476539, "team": "NSH", "updated_at": "2026-10-23"}
 {"full_name": "Barclay Goodrow", "player_id": 8476624, "team": "SJS", "updated_at": "2026-10-23"}
+{"full_name": "Luke Glendening", "player_id": 8476822, "team": "NYR", "updated_at": "2026-10-23"}
 {"full_name": "Yanni Gourde", "player_id": 8476826, "team": "TBL", "updated_at": "2026-10-23"}
 {"full_name": "Morgan Rielly", "player_id": 8476853, "team": "TOR", "updated_at": "2026-10-23"}
 {"full_name": "Hampus Lindholm", "player_id": 8476854, "team": "BOS", "updated_at": "2026-10-23"}
@@ -601,7 +602,7 @@
 {"full_name": "Jack Ahcan", "player_id": 8482072, "team": "NSH", "updated_at": "2026-10-23"}
 {"full_name": "Braden Schneider", "player_id": 8482073, "team": "NYR", "updated_at": "2026-10-23"}
 {"full_name": "Connor Zary", "player_id": 8482074, "team": "CGY", "updated_at": "2026-10-23"}
-{"full_name": "Nico Daws", "player_id": 8482076, "team": "NJD", "updated_at": "2026-10-23"}
+{"full_name": "Nico Daws", "player_id": 8482076, "team": "WPG", "updated_at": "2026-10-23"}
 {"full_name": "Dylan Holloway", "player_id": 8482077, "team": "STL", "updated_at": "2026-10-23"}
 {"full_name": "Lucas Raymond", "player_id": 8482078, "team": "DET", "updated_at": "2026-10-23"}
 {"full_name": "Marco Rossi", "player_id": 8482079, "team": "VAN", "updated_at": "2026-10-23"}
@@ -617,7 +618,7 @@
 {"full_name": "Jack Quinn", "player_id": 8482097, "team": "BUF", "updated_at": "2026-10-23"}
 {"full_name": "Jake Sanderson", "player_id": 8482105, "team": "OTT", "updated_at": "2026-10-23"}
 {"full_name": "Alexis Lafrenière", "player_id": 8482109, "team": "NYR", "updated_at": "2026-10-23"}
-{"full_name": "Dawson Mercer", "player_id": 8482110, "team": "NJD", "updated_at": "2026-10-23"}
+{"full_name": "Dawson Mercer", "player_id": 8482110, "team": "WPG", "updated_at": "2026-10-23"}
 {"full_name": "Justin Barron", "player_id": 8482111, "team": "STL", "updated_at": "2026-10-23"}
 {"full_name": "Anton Lundell", "player_id": 8482113, "team": "FLA", "updated_at": "2026-10-23"}
 {"full_name": "Tim Stützle", "player_id": 8482116, "team": "OTT", "updated_at": "2026-10-23"}
