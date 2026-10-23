@@ -321,7 +321,7 @@ input tokens). The model is only allowed to read: every amount, term and season
 it returns is checked against the story text and dropped if the text does not
 state it, so a computed AAV or a guessed season never enters the dataset. Rows
 it touched carry `extracted_by` = `llm` or `regex+llm` and the flag
-`llm:<model>`. About 230 stories in the current store are eligible, roughly 40 a
+`llm:<model>`. About 277 stories in the current store are eligible, roughly 40 a
 season going forward. `--no-llm` disables it for a run.
 
 ### Publishing
