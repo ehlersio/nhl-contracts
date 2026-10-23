@@ -48,6 +48,25 @@ CREATE TABLE IF NOT EXISTS teams (
     full_name TEXT,
     updated_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS bsky_posts (
+    uri TEXT PRIMARY KEY,        -- at://did/app.bsky.feed.post/rkey
+    cid TEXT,
+    author TEXT NOT NULL,        -- handle, e.g. puckpedia.com
+    created_at TEXT NOT NULL,
+    text TEXT NOT NULL,
+    links TEXT,                  -- JSON list of URLs found in facets/embeds
+    raw TEXT NOT NULL,           -- original record JSON
+    fetched_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS wayback_pages (
+    url TEXT PRIMARY KEY,        -- original URL, e.g. https://www.capfriendly.com/players/connor-mcdavid
+    kind TEXT NOT NULL,          -- team | player | browse
+    snapshot_ts TEXT NOT NULL,   -- Wayback timestamp YYYYMMDDhhmmss
+    snapshot_url TEXT NOT NULL,
+    html BLOB NOT NULL,          -- gzip-compressed page
+    status TEXT NOT NULL,        -- ok | closing-page | missing | error
+    fetched_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS runs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     started_at TEXT NOT NULL,
@@ -163,6 +182,56 @@ class Store:
         for r in self.conn.execute("SELECT * FROM espn_transactions ORDER BY date"):
             yield dict(r)
 
+    # -- bluesky -----------------------------------------------------------
+    def upsert_bsky_posts(self, rows: Iterable[dict[str, Any]], fetched_at: str) -> int:
+        """rows: dicts with uri, cid, author, created_at, text, links (list), raw (dict)."""
+        new = 0
+        for r in rows:
+            cur = self.conn.execute(
+                """INSERT OR IGNORE INTO bsky_posts (uri, cid, author, created_at, text, links, raw, fetched_at)
+                   VALUES (?,?,?,?,?,?,?,?)""",
+                (r["uri"], r.get("cid"), r["author"], r["created_at"], r["text"],
+                 json.dumps(r.get("links") or []), json.dumps(r.get("raw") or {}, ensure_ascii=False), fetched_at),
+            )
+            new += cur.rowcount
+        return new
+
+    def bsky_posts(self, author: str | None = None) -> Iterator[dict[str, Any]]:
+        q = "SELECT * FROM bsky_posts" + (" WHERE author=?" if author else "") + " ORDER BY created_at"
+        for r in self.conn.execute(q, (author,) if author else ()):
+            d = dict(r)
+            d["links"] = json.loads(d["links"] or "[]")
+            yield d
+
+    def oldest_bsky_post(self, author: str) -> str | None:
+        row = self.conn.execute("SELECT MIN(created_at) FROM bsky_posts WHERE author=?", (author,)).fetchone()
+        return row[0] if row else None
+
+    # -- wayback -----------------------------------------------------------
+    def upsert_wayback_page(self, url: str, kind: str, snapshot_ts: str, snapshot_url: str,
+                            html_gz: bytes, status: str, fetched_at: str) -> None:
+        self.conn.execute(
+            """INSERT INTO wayback_pages (url, kind, snapshot_ts, snapshot_url, html, status, fetched_at)
+               VALUES (?,?,?,?,?,?,?)
+               ON CONFLICT(url) DO UPDATE SET kind=excluded.kind, snapshot_ts=excluded.snapshot_ts,
+                   snapshot_url=excluded.snapshot_url, html=excluded.html, status=excluded.status,
+                   fetched_at=excluded.fetched_at""",
+            (url, kind, snapshot_ts, snapshot_url, html_gz, status, fetched_at),
+        )
+
+    def wayback_page_status(self, url: str) -> str | None:
+        row = self.conn.execute("SELECT status FROM wayback_pages WHERE url=?", (url,)).fetchone()
+        return row["status"] if row else None
+
+    def wayback_pages(self, kind: str | None = None, status: str = "ok") -> Iterator[dict[str, Any]]:
+        q = "SELECT url, kind, snapshot_ts, snapshot_url, html, status, fetched_at FROM wayback_pages WHERE status=?"
+        args: tuple[Any, ...] = (status,)
+        if kind:
+            q += " AND kind=?"
+            args += (kind,)
+        for r in self.conn.execute(q + " ORDER BY url", args):
+            yield dict(r)
+
     # -- teams / runs ------------------------------------------------------
     def set_teams(self, teams: dict[int, tuple[str, str]], updated_at: str) -> None:
         self.conn.executemany(
@@ -190,7 +259,7 @@ class Store:
 
     def counts(self) -> dict[str, int]:
         out = {}
-        for t in ("forge_stories", "forge_seen", "espn_transactions", "teams"):
+        for t in ("forge_stories", "forge_seen", "espn_transactions", "bsky_posts", "wayback_pages", "teams"):
             out[t] = self.conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
         return out
 

@@ -8,15 +8,15 @@ the same ``contract_key``. Conflicts are kept, never resolved here.
 
 from __future__ import annotations
 
-import hashlib
 import re
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict
 from datetime import date
 from typing import Any
 
 from ..config import STATIC_TEAMS
 from ..store import Story
 from . import llm_fallback
+from .model import Claim, Source, claim_id, make_key
 from .text import (
     MONEY,
     clean,
@@ -155,53 +155,7 @@ TEAM_ALIASES: dict[str, str] = {"Canes": "CAR", "Utah": "UTA", "Utah Hockey Club
 ESPN_ABBREV = {"NJ": "NJD", "LA": "LAK", "SJ": "SJS", "TB": "TBL", "WSH": "WSH", "MTL": "MTL"}
 
 
-# --- model -------------------------------------------------------------------
-
-@dataclass
-class Claim:
-    claim_id: str
-    contract_key: str
-    player_name: str
-    player_id: int | None
-    team: str | None
-    signed_at: str              # YYYY-MM-DD, the source's publication date
-    contract_type: str          # ELC | standard | extension | PTO
-    term_years: int | None
-    aav_usd: int | None
-    cap_hit_usd: int | None
-    total_usd: int | None
-    nhl_salary_usd: int | None
-    minors_salary_usd: int | None
-    one_way: bool | None
-    start_season: str | None
-    end_season: str | None
-    re_signed: bool
-    source_id: str
-    source_url: str
-    publisher: str
-    published_at: str
-    confidence_tier: str        # A club release | B NHL.com staff | C other
-    extracted_by: str           # regex | llm
-    flags: list[str] = field(default_factory=list)
-    evidence: str = ""          # the sentence(s) the numbers came from
-
-    def to_dict(self) -> dict[str, Any]:
-        d = asdict(self)
-        d["flags"] = ";".join(self.flags)
-        return d
-
-
-@dataclass
-class Source:
-    source_id: str
-    url: str
-    publisher: str
-    author: str | None
-    published_at: str
-    confidence_tier: str
-    headline: str
-    kind: str                   # nhl_forge | espn_transactions
-
+# --- model: see model.py ---
 
 # --- helpers -----------------------------------------------------------------
 
@@ -345,15 +299,6 @@ def minimum_flags(signed_at: str, *amounts: int | None) -> list[str]:
         if a is not None and a < floor:
             return ["below_league_minimum"]
     return []
-
-
-def make_key(player_id: int | None, name: str, team: str | None, signed_at: str) -> str:
-    who = str(player_id) if player_id else name_key(name)
-    return f"{who}|{team or '?'}|{signed_at[:7]}"
-
-
-def claim_id(source_id: str, name: str, player_id: int | None) -> str:
-    return hashlib.sha1(f"{source_id}|{player_id or name_key(name)}".encode()).hexdigest()[:16]
 
 
 def _title_name(name: str) -> str:
