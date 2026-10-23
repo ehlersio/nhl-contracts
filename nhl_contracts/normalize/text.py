@@ -102,3 +102,33 @@ def split_sentences(text: str) -> list[str]:
     text = re.sub(r"\b([A-Z])\.(?=\s[A-Z][a-z])", r"\1<DOT>", text)  # J.R. Avon
     parts = re.split(r"(?<=[.!?])\s+(?=[A-Z\"'(])|\n+", text)
     return [p.replace("<DOT>", ".").strip() for p in parts if p.strip()]
+
+
+# Short forms and transliterations that rosters, club releases and databases use
+# for the same player ("Zach"/"Zachary Werenski", "Evgeni"/"Evgeny"). Keys and
+# values are lower-case first names; both sides fold to the value.
+FIRST_NAME_ALIASES = {
+    "zach": "zachary", "zack": "zachary", "josh": "joshua", "alex": "alexander", "sasha": "alexander",
+    "mike": "michael", "mikey": "michael", "matt": "matthew", "matty": "matthew", "nick": "nicholas",
+    "will": "william", "bill": "william", "jake": "jacob", "tom": "thomas", "tommy": "thomas",
+    "ben": "benjamin", "benny": "benjamin", "sam": "samuel", "sammy": "samuel", "nate": "nathan",
+    "jon": "jonathan", "dan": "daniel", "danny": "daniel", "chris": "christopher", "kris": "kristopher",
+    "andy": "andrew", "drew": "andrew", "pat": "patrick", "cam": "cameron", "jim": "james", "jimmy": "james",
+    "mitch": "mitchell", "tony": "anthony", "rob": "robert", "bob": "robert", "bobby": "robert",
+    "joe": "joseph", "joey": "joseph", "ed": "edward", "eddie": "edward", "max": "maxim", "maxime": "maxim",
+    "evgeni": "evgeny", "evgenii": "evgeny", "yevgeni": "evgeny", "nikolaj": "nikolai", "nikolay": "nikolai",
+    "dmitri": "dmitry", "dmitrij": "dmitry", "yegor": "egor", "danil": "daniil", "ilya": "ilia",
+    "artyom": "artem", "vasili": "vasily", "vasiliy": "vasily", "matvei": "matvey", "andrei": "andrey",
+    "sergei": "sergey", "alexei": "alexey", "aleksei": "alexey", "pavol": "pavel", "jesse": "jesse",
+}
+
+
+def alias_key(name: str) -> str:
+    """Looser than name_key: first and last token only, first name folded through
+    FIRST_NAME_ALIASES, initials squashed ("A.J. Greer" -> "aj greer")."""
+    s = strip_accents(name).lower().replace(".", "")
+    parts = re.sub(r"[^a-z ]", "", s).split()
+    if not parts:
+        return ""
+    first = FIRST_NAME_ALIASES.get(parts[0], parts[0])
+    return f"{first} {parts[-1]}" if len(parts) > 1 else first

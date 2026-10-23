@@ -12,7 +12,7 @@ from datetime import date
 from typing import Any
 
 from .model import TIER_ORDER, Claim, ClauseClaim, SeasonClaim
-from .text import name_key
+from .text import alias_key, name_key, season_from_date, shift_season
 
 MERGE_FIELDS = ("contract_type", "term_years", "aav_usd", "cap_hit_usd", "total_usd",
                 "nhl_salary_usd", "minors_salary_usd", "one_way", "start_season", "end_season",
@@ -89,23 +89,44 @@ def _same_contract(c: Claim, g0: Claim) -> bool:
 
 def assign_player_ids(claims: list[Claim], players: dict[int, tuple[str, str | None]]) -> int:
     """Fill ``player_id`` on claims that lack one when exactly one known player has the
-    same normalized name (accents folded). Returns the number of claims filled. A
-    name shared by two players is left alone unless the team disambiguates it."""
+    same name: first by the exact normalized name, then by the alias key (first name
+    folded through FIRST_NAME_ALIASES, middle names dropped, so "Zach Werenski" meets
+    "Zachary Werenski"). Returns the number of claims filled. A name shared by two
+    players is left alone unless the team disambiguates it."""
     by_name: dict[str, list[tuple[int, str | None]]] = {}
+    by_alias: dict[str, list[tuple[int, str | None]]] = {}
     for pid, (name, team) in players.items():
         by_name.setdefault(name_key(name), []).append((pid, team))
+        by_alias.setdefault(alias_key(name), []).append((pid, team))
     filled = 0
     for c in claims:
         if c.player_id:
             continue
-        cands = by_name.get(name_key(c.player_name), [])
-        if len(cands) > 1 and c.team:
-            cands = [x for x in cands if x[1] == c.team] or cands
-        if len(cands) == 1:
-            c.player_id = cands[0][0]
-            c.flags.append("player_id_from_roster")
-            filled += 1
+        for index, key, flag in ((by_name, name_key(c.player_name), "player_id_from_roster"),
+                                 (by_alias, alias_key(c.player_name), "player_id_by_alias")):
+            cands = index.get(key, [])
+            if len(cands) > 1 and c.team:
+                cands = [x for x in cands if x[1] == c.team] or cands
+            if len(cands) == 1:
+                c.player_id = cands[0][0]
+                c.flags.append(flag)
+                filled += 1
+                break
     return filled
+
+
+def infer_span(row: dict[str, Any]) -> None:
+    """Fill start/end season on a merged row from its signing date and term when no
+    source stated them: a deal signed July-June belongs to the season starting that
+    July; an extension starts the season after. Flagged, so consumers can drop it."""
+    if row["start_season"] or row["end_season"] or not row["term_years"] or not row["signed_at"]:
+        return
+    start = season_from_date(date.fromisoformat(row["signed_at"]))
+    if row["contract_type"] == "extension":
+        start = shift_season(start, 1)
+    row["start_season"] = start
+    row["end_season"] = shift_season(start, row["term_years"] - 1)
+    row["flags"] = ";".join(sorted(set(filter(None, row["flags"].split(";"))) | {"derived:span_from_signing_date"}))
 
 
 def _surname_key_lookup(who: str, c: Claim, by_player: dict[str, list[Claim]]) -> str:
@@ -132,12 +153,12 @@ def group_claims(claims: list[Claim]) -> list[list[Claim]]:
     id_to_name: dict[int, str] = {}
     for c in claims:
         if c.player_id:
-            id_to_name.setdefault(c.player_id, name_key(c.player_name))
+            id_to_name.setdefault(c.player_id, alias_key(c.player_name))
     name_to_id: dict[str, int] = {v: k for k, v in id_to_name.items()}
     by_player: dict[str, list[Claim]] = {}
     deferred: list[Claim] = []
     for c in claims:
-        who = name_key(c.player_name)
+        who = alias_key(c.player_name)
         if c.player_id:
             who = id_to_name[c.player_id]
         elif who in name_to_id:
@@ -147,7 +168,7 @@ def group_claims(claims: list[Claim]) -> list[list[Claim]]:
             continue
         by_player.setdefault(who, []).append(c)
     for c in deferred:
-        who = _surname_key_lookup(name_key(c.player_name), c, by_player)
+        who = _surname_key_lookup(alias_key(c.player_name), c, by_player)
         by_player.setdefault(who, []).append(c)
     groups: list[list[Claim]] = []
     for cs in by_player.values():
@@ -205,6 +226,7 @@ def merge_contracts(claims: list[Claim]) -> tuple[list[dict[str, Any]], dict[str
         row["source_ids"] = ";".join(sorted({c.source_id for c in g}))
         row["claim_ids"] = ";".join(c.claim_id for c in g)
         row["flags"] = ";".join(sorted({f for c in g for f in c.flags if not f.startswith("ref:")}))
+        infer_span(row)
         for c in g:
             c.contract_key = row["contract_key"]
             key_map[c.claim_id] = row["contract_key"]

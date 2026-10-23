@@ -104,3 +104,30 @@ def test_assumed_start_season_yields_to_stated_one():
     assert (rows[0]["start_season"], rows[0]["end_season"]) == ("2026-27", "2027-28")
     only_post, _ = merge_contracts([post])
     assert only_post[0]["start_season"] == "2025-26"
+
+
+def test_alias_matching_and_grouping():
+    from nhl_contracts.normalize.merge import assign_player_ids
+    from nhl_contracts.normalize.text import alias_key
+
+    assert alias_key("Zachary Werenski") == alias_key("Zach Werenski") == "zachary werenski"
+    assert alias_key("A.J. Greer") == "aj greer" and alias_key("Jean-Gabriel Pageau") == "jeangabriel pageau"
+    a = claim("Zachary Werenski", "CBJ", "2024-07-05", "E", "wayback:w", term=6, cap=9_583_333,
+              start="2022-23", end="2027-28", flags=["signing_date_unknown"])
+    b = claim("Zach Werenski", "CBJ", "2022-07-01", "C", "espn:w", term=6, start="2022-23", end="2027-28")
+    assert assign_player_ids([a, b], {8478460: ("Zach Werenski", "CBJ")}) == 2
+    assert a.player_id == 8478460 and "player_id_by_alias" in a.flags and "player_id_from_roster" in b.flags
+    rows, _ = merge_contracts([a, b])
+    assert len(rows) == 1 and rows[0]["tiers"] == "CE"
+
+
+def test_span_inferred_from_signing_date_is_flagged():
+    espn = claim("Sidney Crosby", "PIT", "2024-09-16", "C", "espn:c", pid=8471675, term=2, ctype="extension")
+    rows, _ = merge_contracts([espn])
+    r = rows[0]
+    assert (r["start_season"], r["end_season"]) == ("2025-26", "2026-27")
+    assert "derived:span_from_signing_date" in r["flags"]
+    july = claim("Kevin Stenlund", "UTA", "2026-07-01", "A", "forge:s", term=1)
+    assert merge_contracts([july])[0][0]["start_season"] == "2026-27"
+    stated = claim("Marat Khusnutdinov", "BOS", "2026-10-21", "A", "forge:k", term=3, start="2027-28", end="2029-30")
+    assert "derived:span_from_signing_date" not in merge_contracts([stated])[0][0]["flags"]
