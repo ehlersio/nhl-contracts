@@ -174,14 +174,16 @@ Flags are `;`-separated on claims and unioned on merged rows. The important ones
 | `retained_salary_adjusted` | tier E: the cap hit shown is after retention in a trade |
 | `unconfirmed` | tier E: the page said the contract details were not yet confirmed |
 | `35_plus`, `franchise_relocated`, `varying_cap_hit`, `two_way_minors_salary_shown` | tier E oddities kept as written |
-| `player_id_from_roster` | the NHL id was attached by name (and team) from the current roster and prospect lists, not stated by the source |
+| `player_id_from_roster`, `player_id_by_alias` | the NHL id was attached by name (and team) from the current roster and prospect lists, not stated by the source; `by_alias` means the first name was folded ("Zach" for "Zachary") or a middle name dropped |
+| `derived:span_from_signing_date` | no source stated the seasons; `start_season`/`end_season` were placed from the signing date and term (a deal signed July–June belongs to the season starting that July; an extension to the season after) |
 | `ref:<url>` | tier D: the puckpedia.com link in the post (dropped from merged rows) |
 
 ### How rows are merged
 
 Claims are the same contract when they name the same player (NHL id when both
-have one, else the accent-folded name; a surname-only post joins a same-team
-claim within 45 days) on the same team and were published within 45 days of each
+have one, else the accent-folded first and last name with common short forms
+folded, so "Zach Werenski" meets "Zachary Werenski"; a surname-only post joins
+a same-team claim within 45 days) on the same team and were published within 45 days of each
 other, or cover the same seasons when one of them is an archived row with no
 signing date. Values are taken from every tier; a disagreement between any two
 sources is reported in `conflicts`, not resolved. `best_tier` is the best tier
