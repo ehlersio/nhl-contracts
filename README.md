@@ -324,12 +324,30 @@ it touched carry `extracted_by` = `llm` or `regex+llm` and the flag
 `llm:<model>`. About 277 stories in the current store are eligible, roughly 40 a
 season going forward. `--no-llm` disables it for a run.
 
+### Where the raw data lives
+
+`data/raw.sqlite` is a working cache. Its portable copies are:
+
+- `data/raw/*.jsonl`, committed to this repository: every NHL.com story, ESPN
+  row, Bluesky post, player and team ever collected, one sorted file per table
+  so each run is a readable diff. These are the only copies of stories that have
+  aged out of Forge's 25-item lists. About 30 MB today, growing roughly 1 MB a
+  month.
+- `data/wayback_pages.sqlite` (25 MB), the one-off CapFriendly archive crawl,
+  kept as an asset on the `contracts` release rather than in git.
+
+`run load` rebuilds the cache from both; `collect`, `backfill` and `all` load
+an empty cache automatically and refresh the JSONL afterwards (`--no-dump` to
+skip). `run dump --sources wayback` also rewrites the archive file after a new
+crawl.
+
 ### Publishing
 
-`.github/workflows/update-contracts.yml` mirrors nflverse-data: restore the raw
-store from the `contracts` release, run the collector, upload `dist/*` and the
-store back to the same tag with `--clobber`, so clients always download the
-latest files from one fixed URL. The real schedule is `workflow_dispatch`
+`.github/workflows/update-contracts.yml` mirrors nflverse-data: rebuild the
+cache from the committed JSONL plus the archive file on the `contracts`
+release, run the collector, commit the refreshed JSONL back to the repository,
+and upload `dist/*` to the same tag with `--clobber`, so clients always
+download the latest files from one fixed URL. The real schedule is `workflow_dispatch`
 called by the EyeWall Cloudflare Worker (hourly in season, every 15 minutes
 from July 1 to 15, since GitHub cron runs hours late); a daily GitHub cron is
 the safety net. The workflow passes `OPENROUTER_API_KEY` from the repository

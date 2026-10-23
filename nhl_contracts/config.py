@@ -25,7 +25,9 @@ USER_AGENT = (
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = Path(os.environ.get("NHL_CONTRACTS_DATA", ROOT / "data"))
 DIST_DIR = Path(os.environ.get("NHL_CONTRACTS_DIST", ROOT / "dist"))
-STORE_PATH = DATA_DIR / "raw.sqlite"
+STORE_PATH = DATA_DIR / "raw.sqlite"          # working store, rebuilt from the two copies below
+RAW_JSONL_DIR = DATA_DIR / "raw"               # committed to the repository
+WAYBACK_STORE = DATA_DIR / "wayback_pages.sqlite"  # release asset, one-off archive crawl
 
 # Static fallback for offline use and tests; the live map is fetched and cached
 # by ``nhl_contracts.teams``. NHL team ids are stable.

@@ -5,8 +5,13 @@
     python -m nhl_contracts.run backfill       # one-off history: per-player NHL.com lists, ESPN since
                                                # 2016, the whole Bluesky feed, CapFriendly snapshots
     python -m nhl_contracts.run normalize      # rebuild dist/ from the raw store (offline)
+    python -m nhl_contracts.run load           # rebuild data/raw.sqlite from data/raw/*.jsonl + wayback_pages.sqlite
+    python -m nhl_contracts.run dump           # write data/raw/*.jsonl (and the wayback file with --sources wayback)
 
-Every step is idempotent; re-runs only add what is new.
+The working store (data/raw.sqlite) is a cache. Its portable copies are the JSONL
+files under data/raw/ (committed) and data/wayback_pages.sqlite (a release
+asset). ``collect``, ``backfill`` and ``all`` load the copies into an empty store
+first and dump the JSONL afterwards. Every step is idempotent.
 """
 
 from __future__ import annotations
@@ -19,7 +24,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from .collectors import espn_transactions, nhl_forge
-from .config import DIST_DIR, STORE_PATH
+from .config import DIST_DIR, RAW_JSONL_DIR, STORE_PATH, WAYBACK_STORE
 from .http import Client
 from .normalize import llm_fallback
 from .normalize.contracts import normalize_all
@@ -38,9 +43,12 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="nhl-contracts", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("step", nargs="?", default="all",
-                   choices=["collect", "backfill", "normalize", "export", "all"])
+                   choices=["collect", "backfill", "normalize", "export", "all", "load", "dump"])
     p.add_argument("--store", default=str(STORE_PATH), help="SQLite raw store path")
     p.add_argument("--dist", default=str(DIST_DIR), help="output directory")
+    p.add_argument("--raw-dir", default=str(RAW_JSONL_DIR), help="JSONL copies of the live-source tables")
+    p.add_argument("--wayback-store", default=str(WAYBACK_STORE), help="SQLite file holding the archived pages")
+    p.add_argument("--no-dump", action="store_true", help="do not refresh the JSONL copies after collecting")
     p.add_argument("--sources", default="forge,espn,bluesky",
                    help=f"comma list of sources to collect/backfill; any of {','.join(SOURCES)}")
     p.add_argument("--espn-days", type=int, default=45, help="days back to (re)fetch ESPN transactions")
@@ -65,6 +73,26 @@ def _sources(args: argparse.Namespace) -> set[str]:
     if unknown:
         raise SystemExit(f"unknown sources: {sorted(unknown)}")
     return chosen
+
+
+def do_load(store: Store, args: argparse.Namespace, *, only_if_empty: bool = False) -> None:
+    counts = store.counts()
+    if not only_if_empty or counts["forge_stories"] == 0:
+        loaded = store.load_jsonl(args.raw_dir)
+        if loaded:
+            log.info("load: %s from %s", loaded, args.raw_dir)
+    if not only_if_empty or counts["wayback_pages"] == 0:
+        n = store.load_wayback(args.wayback_store)
+        if n:
+            log.info("load: %d archived pages from %s", n, args.wayback_store)
+
+
+def do_dump(store: Store, args: argparse.Namespace, *, wayback: bool = False) -> None:
+    counts = store.dump_jsonl(args.raw_dir)
+    log.info("dump: %s -> %s", counts, args.raw_dir)
+    if wayback:
+        n = store.dump_wayback(args.wayback_store)
+        log.info("dump: %d archived pages -> %s", n, args.wayback_store)
 
 
 def do_collect(store: Store, args: argparse.Namespace) -> None:
@@ -192,10 +220,18 @@ def main(argv: list[str] | None = None) -> int:
     store = Store(args.store)
     extractor = None if args.no_llm else llm_fallback.configure_from_env()
     try:
+        if args.step == "load":
+            do_load(store, args)
+        if args.step == "dump":
+            do_dump(store, args, wayback="wayback" in _sources(args))
+        if args.step in ("collect", "backfill", "all"):
+            do_load(store, args, only_if_empty=True)
         if args.step == "collect" or args.step == "all":
             do_collect(store, args)
         if args.step == "backfill":
             do_backfill(store, args)
+        if args.step in ("collect", "backfill", "all") and not args.no_dump:
+            do_dump(store, args, wayback=(args.step == "backfill" and "wayback" in _sources(args)))
         if args.step in ("normalize", "export", "all", "backfill"):
             do_export(store, args)
     finally:

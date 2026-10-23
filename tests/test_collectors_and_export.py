@@ -91,3 +91,37 @@ def test_export_writes_all_files(tmp_path, espn_payload, teams):
     assert table.schema.field("aav_usd").type == "int64"
     ts = json.loads((tmp_path / "dist" / "timestamp.json").read_text())
     assert ts["license"] == {"data": "CC0-1.0", "code": "MIT"} and ts["n_claims"] == len(claims)
+
+
+def test_jsonl_and_wayback_roundtrip(tmp_path, espn_payload):
+    import gzip
+
+    src = Store(tmp_path / "a.sqlite")
+    story = json.loads((FIXTURES / "forge_story_marat-khusnutdinov.json").read_text())
+    src.upsert_story(nhl_forge.story_from_payload(story, "2026-10-23T00:00:00+00:00"))
+    src.upsert_espn(espn_transactions.normalize_rows(espn_payload), "2026-10-23T00:00:00+00:00")
+    src.upsert_bsky_posts([{"uri": "at://did/app.bsky.feed.post/abc", "cid": "c", "author": "puckpedia.com",
+                            "created_at": "2026-10-22T01:00:00Z", "text": "The #NHLBruins signed …",
+                            "links": ["https://puckpedia.com/signing/10842"], "raw": {"text": "x"}}],
+                         "2026-10-23T00:00:00+00:00")
+    src.set_players({8482177: ("Marat Khusnutdinov", "BOS")}, "2026-10-23")
+    src.upsert_wayback_page("https://www.capfriendly.com/teams/oilers", "team", "20240704221225", "u",
+                            gzip.compress(b"<html>Years Remaining</html>"), "ok", "2026-10-23T00:00:00+00:00")
+    src.commit()
+    counts = src.dump_jsonl(tmp_path / "raw")
+    assert counts == {"forge_stories": 1, "espn_transactions": len(espn_payload["transactions"]), "bsky_posts": 1,
+                      "players": 1, "teams": 0}
+    first = (tmp_path / "raw" / "forge_stories.jsonl").read_text(encoding="utf-8")
+    assert '"tags": [' in first  # JSON columns are expanded, not double-encoded
+    assert src.dump_wayback(tmp_path / "wb.sqlite") == 1
+
+    dst = Store(tmp_path / "b.sqlite")
+    assert dst.load_jsonl(tmp_path / "raw")["forge_stories"] == 1
+    assert dst.load_wayback(tmp_path / "wb.sqlite") == 1
+    assert dst.counts() == src.counts()
+    s = next(dst.stories())
+    assert s.tags == nhl_forge.tag_slugs(story) and "$11.85 million" in s.body
+    assert next(dst.bsky_posts("puckpedia.com"))["links"] == ["https://puckpedia.com/signing/10842"]
+    assert dst.load_jsonl(tmp_path / "raw")["forge_stories"] == 1 and dst.counts()["forge_stories"] == 1
+    assert src.dump_jsonl(tmp_path / "raw") == counts  # a second dump is byte-identical
+    assert (tmp_path / "raw" / "forge_stories.jsonl").read_text(encoding="utf-8") == first

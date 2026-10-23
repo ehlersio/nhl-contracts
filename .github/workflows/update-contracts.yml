@@ -5,11 +5,14 @@
 # (GitHub's own cron runs hours late). The daily cron below is only a safety net.
 #
 # What a run does:
-#   1. restores the raw SQLite store from the `contracts` release (so the 25-item
-#      Forge lists accumulate across runs),
-#   2. polls NHL.com Forge + ESPN, normalizes, writes dist/,
-#   3. uploads dist/* and the raw store back to the `contracts` release tag,
-#      overwriting the previous assets (nflverse style: one moving tag).
+#   1. rebuilds the working store from data/raw/*.jsonl (committed: every story,
+#      ESPN row and Bluesky post ever collected, since Forge's 25-item lists
+#      cannot be re-read) and from wayback_pages.sqlite on the `contracts`
+#      release (the one-off CapFriendly archive crawl),
+#   2. polls NHL.com Forge, ESPN and Bluesky, normalizes, writes dist/,
+#   3. commits the refreshed JSONL back to the repository,
+#   4. uploads dist/* to the `contracts` release tag, overwriting the previous
+#      assets (nflverse style: one moving tag).
 name: update-contracts
 
 on:
@@ -42,15 +45,25 @@ jobs:
       - name: Install
         run: pip install -e .
 
-      - name: Restore raw store from the release
+      - name: Fetch the archived CapFriendly pages from the release
         run: |
           mkdir -p data
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
-            gh release download "$RELEASE_TAG" --pattern raw.sqlite --dir data || true
+            gh release download "$RELEASE_TAG" --pattern wayback_pages.sqlite --dir data || true
           fi
 
-      - name: Collect, normalize, export
+      - name: Collect, normalize, export (loads data/raw/*.jsonl first, dumps it after)
         run: python -m nhl_contracts.run all --espn-days 45 --refresh-players
+
+      - name: Commit the refreshed raw JSONL
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/raw
+          if ! git diff --cached --quiet; then
+            git commit -m "data: raw rows $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
 
       - name: Ensure the release exists
         run: |
@@ -60,7 +73,9 @@ jobs:
 
       - name: Upload dataset
         run: |
-          gh release upload "$RELEASE_TAG" dist/* data/raw.sqlite --clobber
+          gh release upload "$RELEASE_TAG" dist/* --clobber
+          # The archive file is uploaded once by hand (or after a wayback backfill):
+          #   gh release upload contracts data/wayback_pages.sqlite --clobber
 
       - name: Summary
         run: |

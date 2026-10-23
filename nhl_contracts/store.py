@@ -281,6 +281,100 @@ class Store:
             out[t] = self.conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
         return out
 
+    # -- portable copies ----------------------------------------------------
+    # The live-source tables are committed to the repository as JSONL (text, small,
+    # diffable, and the only copy of stories that have aged out of Forge's 25-item
+    # lists). The archived CapFriendly pages are a one-off 50 MB blob kept as a
+    # release asset in their own SQLite file. The working store is rebuilt from both.
+    JSONL_TABLES = ("forge_stories", "espn_transactions", "bsky_posts", "players", "teams")
+
+    def dump_jsonl(self, directory: Path | str) -> dict[str, int]:
+        """Write one sorted JSONL file per live-source table. Returns row counts."""
+        directory = Path(directory)
+        directory.mkdir(parents=True, exist_ok=True)
+        counts = {}
+        for table in self.JSONL_TABLES:
+            key = {"forge_stories": "slug", "espn_transactions": "key", "bsky_posts": "uri",
+                   "players": "player_id", "teams": "team_id"}[table]
+            rows = self.conn.execute(f"SELECT * FROM {table} ORDER BY {key}").fetchall()
+            with (directory / f"{table}.jsonl").open("w", encoding="utf-8") as f:
+                for r in rows:
+                    d = dict(r)
+                    for col in ("tags", "raw", "links"):
+                        if col in d and isinstance(d[col], str):
+                            d[col] = json.loads(d[col])
+                    f.write(json.dumps(d, ensure_ascii=False, sort_keys=True) + "\n")
+            counts[table] = len(rows)
+        return counts
+
+    def load_jsonl(self, directory: Path | str) -> dict[str, int]:
+        """Upsert every JSONL file written by dump_jsonl. Idempotent."""
+        directory = Path(directory)
+        counts = {}
+        for table in self.JSONL_TABLES:
+            path = directory / f"{table}.jsonl"
+            if not path.exists():
+                continue
+            n = 0
+            with path.open(encoding="utf-8") as f:
+                for line in f:
+                    if not line.strip():
+                        continue
+                    d = json.loads(line)
+                    for col in ("tags", "raw", "links"):
+                        if col in d and not isinstance(d[col], str):
+                            d[col] = json.dumps(d[col], ensure_ascii=False)
+                    cols = ", ".join(d.keys())
+                    marks = ", ".join("?" for _ in d)
+                    updates = ", ".join(f"{c}=excluded.{c}" for c in d)
+                    pk = {"forge_stories": "slug", "espn_transactions": "key", "bsky_posts": "uri",
+                          "players": "player_id", "teams": "team_id"}[table]
+                    self.conn.execute(
+                        f"INSERT INTO {table} ({cols}) VALUES ({marks}) ON CONFLICT({pk}) DO UPDATE SET {updates}",
+                        tuple(d.values()),
+                    )
+                    n += 1
+            counts[table] = n
+        self.conn.commit()
+        return counts
+
+    def dump_wayback(self, path: Path | str) -> int:
+        """Copy the wayback_pages table into its own SQLite file (a release asset)."""
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if path.exists():
+            path.unlink()
+        self.conn.execute("ATTACH DATABASE ? AS wb", (str(path),))
+        try:
+            self.conn.execute("CREATE TABLE wb.wayback_pages AS SELECT * FROM main.wayback_pages")
+            self.conn.commit()
+            n = self.conn.execute("SELECT COUNT(*) FROM wb.wayback_pages").fetchone()[0]
+        finally:
+            self.conn.execute("DETACH DATABASE wb")
+        return int(n)
+
+    def load_wayback(self, path: Path | str) -> int:
+        """Import pages from a wayback_pages.sqlite written by dump_wayback (newer wins)."""
+        path = Path(path)
+        if not path.exists():
+            return 0
+        self.conn.execute("ATTACH DATABASE ? AS wb", (str(path),))
+        try:
+            cur = self.conn.execute(
+                """INSERT INTO main.wayback_pages (url, kind, snapshot_ts, snapshot_url, html, status, fetched_at)
+                   SELECT url, kind, snapshot_ts, snapshot_url, html, status, fetched_at FROM wb.wayback_pages
+                   WHERE true
+                   ON CONFLICT(url) DO UPDATE SET kind=excluded.kind, snapshot_ts=excluded.snapshot_ts,
+                       snapshot_url=excluded.snapshot_url, html=excluded.html, status=excluded.status,
+                       fetched_at=excluded.fetched_at
+                   WHERE excluded.fetched_at >= main.wayback_pages.fetched_at"""
+            )
+            self.conn.commit()
+            n = cur.rowcount
+        finally:
+            self.conn.execute("DETACH DATABASE wb")
+        return int(n)
+
     def commit(self) -> None:
         self.conn.commit()
 
