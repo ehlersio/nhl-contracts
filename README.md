@@ -1,5 +1,13 @@
 # nhl-contracts
 
+[![PyPI](https://img.shields.io/pypi/v/nhl-contracts?label=PyPI)](https://pypi.org/project/nhl-contracts/)
+[![npm](https://img.shields.io/npm/v/nhl-contracts?label=npm)](https://www.npmjs.com/package/nhl-contracts)
+[![dataset](https://img.shields.io/github/v/release/ehlersio/nhl-contracts?filter=contracts&label=dataset&display_name=tag)](https://github.com/ehlersio/nhl-contracts/releases/tag/contracts)
+[![update-contracts](https://github.com/ehlersio/nhl-contracts/actions/workflows/update-contracts.yml/badge.svg)](https://github.com/ehlersio/nhl-contracts/actions/workflows/update-contracts.yml)
+[![ci](https://github.com/ehlersio/nhl-contracts/actions/workflows/ci.yml/badge.svg)](https://github.com/ehlersio/nhl-contracts/actions/workflows/ci.yml)
+[![data: CC0](https://img.shields.io/badge/data-CC0_1.0-lightgrey)](LICENSE-DATA)
+[![code: MIT](https://img.shields.io/badge/code-MIT-blue)](LICENSE)
+
 An open, provenance-first dataset of NHL player contracts: term, cap hit, total
 value, year-by-year salary and signing-bonus structure, and trade clauses, with
 every number tied to the public document it came from and a confidence tier that
