@@ -23,7 +23,8 @@ WINDOW_DAYS = 45
 # A value carried with one of these flags is a guess by the parser, not a statement by
 # the source: it yields to any stated value instead of conflicting with it.
 ASSUMED = {
-    "start_season": ("start_season_assumed", "derived:season_from_signing_date", "derived:start_next_season"),
+    "start_season": ("start_season_assumed", "derived:season_from_signing_date", "derived:start_next_season",
+                     "term_is_remaining_seasons"),
     "end_season": ("start_season_assumed", "derived:season_from_signing_date", "derived:start_next_season",
                    "term_is_remaining_seasons"),
     "term_years": ("term_is_remaining_seasons", "derived:term_from_seasons"),
@@ -45,8 +46,14 @@ def _tier_rank(t: str) -> int:
 
 
 def _seasons_overlap(a: Claim, b: Claim) -> bool:
+    """True when both claims cover a common season. An archived row (dated by its
+    snapshot) may use its visible seasons; any other claim must state its seasons,
+    since an assumed start would join the wrong contract."""
     if not (a.start_season and a.end_season and b.start_season and b.end_season):
         return False
+    for c in (a, b):
+        if "signing_date_unknown" not in c.flags and any(f in c.flags for f in ASSUMED["start_season"]):
+            return False
     return a.start_season <= b.end_season and b.start_season <= a.end_season
 
 

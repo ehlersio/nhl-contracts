@@ -823,12 +823,28 @@ def to_rows(team_rows: list[dict[str, Any]], player_pages: list[dict[str, Any]],
                         source_id=sid, confidence_tier=TIER, evidence=_season_text(s), **v))
             if covered:
                 clauses_out.extend(_team_clause_enrichment(r, covered, sid))
-            if uncovered:
-                tc, ts_rows, tcl = _team_only_rows(r, uncovered, sid, partial=bool(covered))
+            segments = _split_by_cap_hit(uncovered)
+            for seg in segments:
+                tc, ts_rows, tcl = _team_only_rows(r, seg, sid, partial=bool(covered))
+                if len(segments) > 1:
+                    tc.flags.append("split_by_cap_hit")
                 claims.append(tc)
                 seasons_out.extend(ts_rows)
                 clauses_out.extend(tcl)
     return claims, seasons_out, clauses_out, list(sources.values())
+
+
+def _split_by_cap_hit(seasons: list[dict[str, Any]]) -> list[list[dict[str, Any]]]:
+    """A team page lists a player's current deal and a signed extension in one row.
+    A cap hit is constant within one contract, so a change in cap hit between
+    consecutive seasons starts a new contract segment."""
+    segments: list[list[dict[str, Any]]] = []
+    for s in seasons:
+        if segments and segments[-1][-1]["cap_hit"] == s["cap_hit"]:
+            segments[-1].append(s)
+        else:
+            segments.append([s])
+    return segments
 
 
 def _player_contract_rows(page: dict[str, Any], c: dict[str, Any], i: int, sid: str
@@ -980,6 +996,8 @@ def rows_from_store(store: Any) -> tuple[list[Claim], list[SeasonClaim], list[Cl
     team_rows: list[dict[str, Any]] = []
     pages: list[dict[str, Any]] = []
     for p in store.wayback_pages(kind="team"):
+        if "/teams/coyotes" in p["url"]:
+            continue  # the Arizona page froze at 2023-24; the utah page carries the franchise
         team_rows.extend(parse_team_page(gzip.decompress(p["html"]).decode("utf-8", "replace"),
                                          p["snapshot_url"], p["snapshot_ts"]))
     for p in store.wayback_pages(kind="player"):

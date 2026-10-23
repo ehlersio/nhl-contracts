@@ -403,3 +403,12 @@ def test_live_wayback_smoke():
     assert row["status"] == "ok" and "20240625" <= row["snapshot_ts"][:8] <= "20240709"
     rows = cf.parse_team_page(row["html"], row["snapshot_url"], row["snapshot_ts"])
     assert any(r["name"] == "Connor McDavid" for r in rows)
+
+
+def test_team_row_with_extension_is_split_by_cap_hit():
+    from nhl_contracts.normalize.capfriendly import _split_by_cap_hit
+
+    seasons = [{"season": "2024-25", "cap_hit": 5_250_000}, {"season": "2025-26", "cap_hit": 7_250_000},
+               {"season": "2026-27", "cap_hit": 7_250_000}, {"season": "2027-28", "cap_hit": 7_250_000}]
+    segs = _split_by_cap_hit(seasons)
+    assert [[x["season"] for x in seg] for seg in segs] == [["2024-25"], ["2025-26", "2026-27", "2027-28"]]

@@ -43,7 +43,7 @@ EXCLUDE = re.compile(
     r"partnership|sponsor|affiliat\w*|naming rights|jersey patch|"
     r"emergency backup|EBUG|(?:AHL|American Hockey League(?: \(AHL\))?|ECHL)(?:\s+\w+)?\s+contracts?|"
     r"amateur tryout|ATO|development camp|equipment manager|athletic trainer|announcer|"
-    r"play-by-play|as (?:assistant |associate )?general manager|as president|"
+    r"play-by-play|as (?:assistant |associate )?general manager|as president|to remain|to become|to continue as|"
     r"general manager (?:to|on) (?:a|an)|executive)\b",
     re.I,
 )
@@ -619,7 +619,10 @@ def extract_story(story: Story, teams: dict[int, str]) -> tuple[list[Claim], Sou
                 else:
                     _merge_into(prev, claim)
     out = list(claims.values())
-    if len(out) == 1 and len(tag_ids) == 1 and out[0].player_id is None:
+    tagged_names = {pid: n for n, pid in players.items()}
+    if (len(out) == 1 and len(tag_ids) == 1 and out[0].player_id is None
+            and name_key(tagged_names.get(tag_ids[0], out[0].player_name)).split()[-1]
+            == name_key(out[0].player_name).split()[-1]):
         out[0].player_id = tag_ids[0]
         out[0].contract_key = make_key(tag_ids[0], out[0].player_name, out[0].team, published)
         out[0].claim_id = claim_id(source.source_id, out[0].player_name, tag_ids[0])
