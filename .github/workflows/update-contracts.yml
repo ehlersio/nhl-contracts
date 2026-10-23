@@ -43,7 +43,7 @@ jobs:
           cache: pip
 
       - name: Install
-        run: pip install -e .
+        run: pip install -e ".[collect]"
 
       - name: Fetch the archived CapFriendly pages from the release
         run: |
