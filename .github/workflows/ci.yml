@@ -15,3 +15,8 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: ruff check .
       - run: pytest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node --test
+        working-directory: js

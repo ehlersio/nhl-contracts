@@ -1,0 +1,48 @@
+# Publishes the loaders when a version tag (v0.1.0) is pushed. No registry tokens
+# are stored anywhere: both registries use OpenID Connect "trusted publishing",
+# which has to be enabled once on each site:
+#   PyPI: https://pypi.org/manage/account/publishing/  -> add pending publisher
+#         project "nhl-contracts", owner "ehlersio", repo "nhl-contracts",
+#         workflow "publish.yml", environment "pypi".
+#   npm:  https://www.npmjs.com/package/nhl-contracts/access (after the first
+#         manual publish) or the "Trusted publisher" section when creating the
+#         package -> GitHub Actions, repo ehlersio/nhl-contracts, workflow publish.yml.
+name: publish
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  pypi:
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build && python -m build
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  npm:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    defaults:
+      run:
+        working-directory: js
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm@latest
+      - run: npm test
+      - run: npm publish --provenance --access public

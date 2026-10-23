@@ -1,0 +1,16 @@
+{
+  "name": "nhl-contracts",
+  "version": "0.1.0",
+  "description": "Thin loader for the open NHL player-contracts dataset (CC0 data): term, cap hit, salary structure, clauses, with per-row provenance.",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": { ".": { "types": "./index.d.ts", "import": "./index.js" } },
+  "files": ["index.js", "index.d.ts", "README.md"],
+  "engines": { "node": ">=18" },
+  "repository": { "type": "git", "url": "git+https://github.com/ehlersio/nhl-contracts.git", "directory": "js" },
+  "homepage": "https://github.com/ehlersio/nhl-contracts#readme",
+  "license": "MIT",
+  "keywords": ["nhl", "hockey", "contracts", "salary-cap", "open-data"],
+  "scripts": { "test": "node --test" }
+}

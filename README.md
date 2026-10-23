@@ -8,8 +8,33 @@ never silently resolved.
 
 **Data: CC0 1.0** (`LICENSE-DATA`). **Code: MIT** (`LICENSE`).
 
-Status: pre-release. Nothing is published yet; the GitHub Actions workflow
-that would publish to a Releases tag is checked in but not scheduled.
+Status: first release 2026-10-23. The dataset is on the rolling
+[`contracts` release](https://github.com/ehlersio/nhl-contracts/releases/tag/contracts);
+the loaders below fetch it.
+
+## Using the data
+
+Python (`pip install nhl-contracts`; add `[parquet]` for pyarrow):
+
+```python
+import nhl_contracts
+
+meta = nhl_contracts.timestamp()                  # updated_at, row counts, tiers
+contracts = nhl_contracts.load("contracts")       # list of dicts
+seasons = nhl_contracts.load("contract_seasons", fmt="parquet")   # pyarrow.Table
+```
+
+JavaScript (`npm install nhl-contracts`, Node 18+):
+
+```js
+import { load, timestamp } from "nhl-contracts";
+const contracts = await load("contracts");
+const clauses = await load("clauses");
+```
+
+Or download the files directly from the release; every table comes as
+parquet, CSV and JSON. Neither package ships data, so they rarely need a
+version bump; `timestamp.json` tells you how fresh the files are.
 
 ## Sources and tiers
 
@@ -353,11 +378,12 @@ from July 1 to 15, since GitHub cron runs hours late); a daily GitHub cron is
 the safety net. The workflow passes `OPENROUTER_API_KEY` from the repository
 secrets when it exists.
 
-Names: the repository is planned as `ehlersio/nhl-contracts`, with
-`nhl-contracts` on PyPI and npm (all three free as of 2026-10-23).
+Repository: `ehlersio/nhl-contracts`; packages: `nhl-contracts` on PyPI and npm.
 
-Thin npm and PyPI loaders that download the release files are planned but not
-written; neither package exists yet.
+The loaders live in `nhl_contracts/load.py` and `js/`. `.github/workflows/publish.yml`
+publishes both when a `v*` tag is pushed, through each registry's trusted
+publishing (OpenID Connect, no stored tokens), which has to be enabled once on
+pypi.org and npmjs.com as the workflow's comments describe.
 
 ## Caveats
 
