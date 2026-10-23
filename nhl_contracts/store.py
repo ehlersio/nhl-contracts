@@ -42,6 +42,12 @@ CREATE TABLE IF NOT EXISTS espn_transactions (
     raw TEXT NOT NULL,           -- original JSON row (logos stripped)
     fetched_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS players (
+    player_id INTEGER PRIMARY KEY,
+    full_name TEXT NOT NULL,
+    team TEXT,
+    updated_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS teams (
     team_id INTEGER PRIMARY KEY,
     abbrev TEXT NOT NULL,
@@ -241,6 +247,17 @@ class Store:
             [(tid, ab, name, updated_at) for tid, (ab, name) in teams.items()],
         )
 
+    def set_players(self, players: dict[int, tuple[str, str]], updated_at: str) -> None:
+        self.conn.executemany(
+            """INSERT INTO players (player_id, full_name, team, updated_at) VALUES (?,?,?,?)
+               ON CONFLICT(player_id) DO UPDATE SET full_name=excluded.full_name, team=excluded.team,
+               updated_at=excluded.updated_at""",
+            [(pid, name, team, updated_at) for pid, (name, team) in players.items()],
+        )
+
+    def players(self) -> dict[int, tuple[str, str | None]]:
+        return {r["player_id"]: (r["full_name"], r["team"]) for r in self.conn.execute("SELECT * FROM players")}
+
     def teams(self) -> dict[int, str]:
         return {r["team_id"]: r["abbrev"] for r in self.conn.execute("SELECT * FROM teams")}
 
@@ -259,7 +276,8 @@ class Store:
 
     def counts(self) -> dict[str, int]:
         out = {}
-        for t in ("forge_stories", "forge_seen", "espn_transactions", "bsky_posts", "wayback_pages", "teams"):
+        for t in ("forge_stories", "forge_seen", "espn_transactions", "bsky_posts", "wayback_pages", "players",
+                  "teams"):
             out[t] = self.conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
         return out
 

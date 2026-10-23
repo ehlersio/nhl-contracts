@@ -20,6 +20,24 @@ MERGE_FIELDS = ("contract_type", "term_years", "aav_usd", "cap_hit_usd", "total_
 SEASON_FIELDS = ("cap_hit_usd", "aav_usd", "base_salary_usd", "signing_bonus_usd",
                  "performance_bonus_usd", "total_salary_usd", "minors_salary_usd", "one_way", "clause")
 WINDOW_DAYS = 45
+# A value carried with one of these flags is a guess by the parser, not a statement by
+# the source: it yields to any stated value instead of conflicting with it.
+ASSUMED = {
+    "start_season": ("start_season_assumed", "derived:season_from_signing_date", "derived:start_next_season"),
+    "end_season": ("start_season_assumed", "derived:season_from_signing_date", "derived:start_next_season",
+                   "term_is_remaining_seasons"),
+    "term_years": ("term_is_remaining_seasons", "derived:term_from_seasons"),
+    "total_usd": ("total_includes_performance_bonuses", "derived:total_from_seasons", "derived:total_one_year"),
+    "aav_usd": ("derived:aav_one_year", "derived:aav_from_nhl_salary", "derived:all_salary_from_cap_hit"),
+}
+
+
+def _stated(claims: list[Claim], field_name: str) -> list[Claim]:
+    """Claims whose value for ``field_name`` is stated rather than assumed, when any are."""
+    flags = ASSUMED.get(field_name, ())
+    stated = [c for c in claims if getattr(c, field_name) is not None
+              and not any(f in c.flags for f in flags)]
+    return stated or [c for c in claims if getattr(c, field_name) is not None]
 
 
 def _tier_rank(t: str) -> int:
@@ -56,6 +74,44 @@ def _same_contract(c: Claim, g0: Claim) -> bool:
     return False
 
 
+def assign_player_ids(claims: list[Claim], players: dict[int, tuple[str, str | None]]) -> int:
+    """Fill ``player_id`` on claims that lack one when exactly one known player has the
+    same normalized name (accents folded). Returns the number of claims filled. A
+    name shared by two players is left alone unless the team disambiguates it."""
+    by_name: dict[str, list[tuple[int, str | None]]] = {}
+    for pid, (name, team) in players.items():
+        by_name.setdefault(name_key(name), []).append((pid, team))
+    filled = 0
+    for c in claims:
+        if c.player_id:
+            continue
+        cands = by_name.get(name_key(c.player_name), [])
+        if len(cands) > 1 and c.team:
+            cands = [x for x in cands if x[1] == c.team] or cands
+        if len(cands) == 1:
+            c.player_id = cands[0][0]
+            c.flags.append("player_id_from_roster")
+            filled += 1
+    return filled
+
+
+def _surname_key_lookup(who: str, c: Claim, by_player: dict[str, list[Claim]]) -> str:
+    """A surname-only claim ("Lowry", flag surname_only) joins the player whose key ends
+    with that surname and who has a claim on the same team within the signing window."""
+    surname = who.split()[-1]
+    hits = []
+    for key, cs in by_player.items():
+        if key.split()[-1] != surname or key == who:
+            continue
+        for other in cs:
+            if other.team == c.team and abs(
+                (date.fromisoformat(other.signed_at) - date.fromisoformat(c.signed_at)).days
+            ) <= WINDOW_DAYS:
+                hits.append(key)
+                break
+    return hits[0] if len(hits) == 1 else who
+
+
 def group_claims(claims: list[Claim]) -> list[list[Claim]]:
     """Group claims that describe the same contract: same player (NHL id when both
     have one, else normalized name), same team, and the same signing window or the
@@ -66,12 +122,19 @@ def group_claims(claims: list[Claim]) -> list[list[Claim]]:
             id_to_name.setdefault(c.player_id, name_key(c.player_name))
     name_to_id: dict[str, int] = {v: k for k, v in id_to_name.items()}
     by_player: dict[str, list[Claim]] = {}
+    deferred: list[Claim] = []
     for c in claims:
         who = name_key(c.player_name)
         if c.player_id:
             who = id_to_name[c.player_id]
         elif who in name_to_id:
             who = id_to_name[name_to_id[who]]
+        elif "surname_only" in c.flags:
+            deferred.append(c)
+            continue
+        by_player.setdefault(who, []).append(c)
+    for c in deferred:
+        who = _surname_key_lookup(name_key(c.player_name), c, by_player)
         by_player.setdefault(who, []).append(c)
     groups: list[list[Claim]] = []
     for cs in by_player.values():
@@ -114,7 +177,7 @@ def merge_contracts(claims: list[Claim]) -> tuple[list[dict[str, Any]], dict[str
         }
         conflicts = []
         for f in MERGE_FIELDS:
-            vals = {getattr(c, f) for c in g if getattr(c, f) is not None}
+            vals = {getattr(c, f) for c in _stated(g, f)}
             if f == "contract_type":
                 vals = {v for v in vals if v != "standard"} or vals
             value, conflict = _consensus(vals)

@@ -70,3 +70,37 @@ def test_season_and_clause_merge_report_conflicts():
     assert cz == [{"contract_key": key, "kind": "M-NTC", "season_from": "2030-31", "season_to": "2031-32",
                    "list_size": 15, "list_type": None, "conflicts": "", "n_sources": 1, "best_tier": "D",
                    "source_ids": "bsky:f"}]
+
+
+def test_surname_only_post_joins_player_on_same_team_and_window():
+    release = claim("Adam Lowry", "WPG", "2026-07-01", "A", "forge:l", pid=8476392, term=5, aav=5_000_000)
+    post = claim("Lowry", "WPG", "2026-07-02", "D", "bsky:l", term=5, cap=5_000_000, flags=["surname_only"])
+    other = claim("Lowry", "WPG", "2026-10-02", "D", "bsky:l2", term=1, cap=850_000, flags=["surname_only"])
+    rows, _ = merge_contracts([release, post, other])
+    assert len(rows) == 2
+    merged = next(r for r in rows if r["n_sources"] == 2)
+    assert merged["player_id"] == 8476392 and merged["tiers"] == "AD"
+
+
+def test_assign_player_ids_from_roster():
+    from nhl_contracts.normalize.merge import assign_player_ids
+
+    a = claim("Juuso Valimaki", "CAR", "2026-06-24", "E", "wayback:v")
+    b = claim("Sebastian Aho", "CAR", "2026-06-24", "E", "wayback:a")
+    c = claim("Sebastian Aho", "NYI", "2026-06-24", "E", "wayback:a2")
+    players = {1: ("Juuso Välimäki", "CAR"), 2: ("Sebastian Aho", "CAR"), 3: ("Sebastian Aho", "NYI")}
+    assert assign_player_ids([a, b, c], players) == 3
+    assert (a.player_id, b.player_id, c.player_id) == (1, 2, 3)
+    assert "player_id_from_roster" in a.flags
+
+
+def test_assumed_start_season_yields_to_stated_one():
+    club = claim("Jack Anderson", "DAL", "2026-03-18", "A", "forge:j", term=2, start="2026-27", end="2027-28",
+                 ctype="ELC")
+    post = claim("Jack Anderson", "DAL", "2026-03-18", "D", "bsky:j", term=2, cap=925_000, start="2025-26",
+                 end="2026-27", ctype="ELC", flags=["start_season_assumed"])
+    rows, _ = merge_contracts([club, post])
+    assert len(rows) == 1 and rows[0]["conflicts"] == ""
+    assert (rows[0]["start_season"], rows[0]["end_season"]) == ("2026-27", "2027-28")
+    only_post, _ = merge_contracts([post])
+    assert only_post[0]["start_season"] == "2025-26"

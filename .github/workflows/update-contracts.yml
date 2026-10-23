@@ -49,7 +49,7 @@ jobs:
           fi
 
       - name: Collect, normalize, export
-        run: python -m nhl_contracts.run all --espn-days 45
+        run: python -m nhl_contracts.run all --espn-days 45 --refresh-players
 
       - name: Ensure the release exists
         run: |

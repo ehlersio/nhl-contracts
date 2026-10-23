@@ -23,7 +23,7 @@ from .config import DIST_DIR, STORE_PATH
 from .http import Client
 from .normalize import llm_fallback
 from .normalize.contracts import normalize_all
-from .normalize.merge import merge_clauses, merge_contracts, merge_seasons
+from .normalize.merge import assign_player_ids, merge_clauses, merge_contracts, merge_seasons
 from .normalize.model import Claim, ClauseClaim, SeasonClaim, Source
 from .publish.export import export
 from .store import Store
@@ -52,6 +52,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--max-players", type=int, default=None, help="cap players polled by backfill")
     p.add_argument("--max-pages", type=int, default=None, help="cap Wayback/Bluesky pages per run")
     p.add_argument("--wayback-pause", type=float, default=2.5, help="seconds between Wayback requests")
+    p.add_argument("--refresh-players", action="store_true",
+                   help="also refresh the roster/prospect player-id list during collect")
     p.add_argument("-v", "--verbose", action="store_true")
     return p
 
@@ -70,6 +72,11 @@ def do_collect(store: Store, args: argparse.Namespace) -> None:
         teams = load_teams(store, client)
         if "forge" in chosen:
             nhl_forge.collect(store, client, sorted(teams), max_stories=args.max_stories)
+            if args.refresh_players:
+                from .teams import fetch_player_ids
+
+                store.set_players(fetch_player_ids(client, teams), date.today().isoformat())
+                store.commit()
         if "espn" in chosen:
             start = args.espn_from or (date.today() - timedelta(days=args.espn_days))
             espn_transactions.collect(store, client, start, date.today())
@@ -97,6 +104,8 @@ def do_backfill(store: Store, args: argparse.Namespace) -> None:
             from .teams import fetch_player_ids
 
             players = fetch_player_ids(client, teams)
+            store.set_players(players, date.today().isoformat())
+            store.commit()
             log.info("backfill: %d players on rosters and prospect lists", len(players))
             nhl_forge.backfill_players(store, client, sorted(players), max_players=args.max_players)
         if "espn" in chosen:
@@ -151,6 +160,9 @@ def normalize_store(store: Store) -> dict[str, object]:
         log.info("normalize: %d archived CapFriendly pages -> %d claims, %d season rows, %d clauses",
                  n_pages, len(w_claims), len(w_seasons), len(w_clauses))
 
+    filled = assign_player_ids(claims, store.players())
+    if filled:
+        log.info("normalize: %d claims given an NHL player id from the roster lists", filled)
     contracts, key_map = merge_contracts(claims)
     seasons = merge_seasons(season_claims, key_map)
     clauses = merge_clauses(clause_claims, key_map)
