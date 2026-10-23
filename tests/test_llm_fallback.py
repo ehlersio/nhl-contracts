@@ -73,3 +73,29 @@ def test_openrouter_extractor_fills_regex_gaps(teams):
 
 def test_configure_from_env_is_a_no_op_without_key():
     assert llm_fallback.configure_from_env({}) is None and not llm_fallback.is_enabled()
+
+
+def test_answers_are_cached_in_the_store(tmp_path, teams):
+    from nhl_contracts.store import Store
+
+    story = load_story("canes-sign-kochetkov")
+    answer = [{"player_name": "Pyotr Kochetkov", "team_abbrev": "CAR", "contract_type": "extension", "term_years": 2}]
+    store = Store(tmp_path / "s.sqlite")
+    extractor = OpenRouterExtractor("test-key", transport=_fake_openrouter(answer), store=store)
+    llm_fallback.register(extractor)
+    try:
+        extract_story(story, teams)
+        extract_story(story, teams)
+        assert extractor.calls == 1 and extractor.cache_hits == 1
+        assert store.counts()["llm_cache"] == 1
+        # the cache travels with the JSONL copies, so CI does not pay twice
+        store.dump_jsonl(tmp_path / "raw")
+        other = Store(tmp_path / "t.sqlite")
+        other.load_jsonl(tmp_path / "raw")
+        again = OpenRouterExtractor("test-key", transport=_fake_openrouter(answer), store=other)
+        llm_fallback.register(again)
+        extract_story(story, teams)
+        assert again.calls == 0 and again.cache_hits == 1
+    finally:
+        llm_fallback.register(None)
+        llm_fallback.season_rows.clear()

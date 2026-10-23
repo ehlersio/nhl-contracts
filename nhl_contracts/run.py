@@ -218,7 +218,7 @@ def main(argv: list[str] | None = None) -> int:
                         format="%(levelname)s %(name)s: %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)
     store = Store(args.store)
-    extractor = None if args.no_llm else llm_fallback.configure_from_env()
+    extractor = None if args.no_llm else llm_fallback.configure_from_env(store=store)
     try:
         if args.step == "load":
             do_load(store, args)
@@ -236,9 +236,9 @@ def main(argv: list[str] | None = None) -> int:
             do_export(store, args)
     finally:
         store.close()
-        if extractor is not None and extractor.calls:
-            log.info("llm fallback: %d calls, %d tokens in, %d out (%s)", extractor.calls, extractor.tokens_in,
-                     extractor.tokens_out, extractor.model)
+        if extractor is not None and (extractor.calls or extractor.cache_hits):
+            log.info("llm fallback: %d calls, %d cache hits, %d tokens in, %d out (%s)", extractor.calls,
+                     extractor.cache_hits, extractor.tokens_in, extractor.tokens_out, extractor.model)
     return 0
 
 

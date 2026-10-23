@@ -42,6 +42,15 @@ CREATE TABLE IF NOT EXISTS espn_transactions (
     raw TEXT NOT NULL,           -- original JSON row (logos stripped)
     fetched_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS llm_cache (
+    key TEXT PRIMARY KEY,        -- sha1(model | slug | body)
+    slug TEXT NOT NULL,
+    model TEXT NOT NULL,
+    rows TEXT NOT NULL,          -- JSON list of verified rows ([] when the model found nothing usable)
+    tokens_in INTEGER,
+    tokens_out INTEGER,
+    fetched_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS players (
     player_id INTEGER PRIMARY KEY,
     full_name TEXT NOT NULL,
@@ -238,6 +247,20 @@ class Store:
         for r in self.conn.execute(q + " ORDER BY url", args):
             yield dict(r)
 
+    # -- llm cache ---------------------------------------------------------
+    def llm_cache_get(self, key: str) -> list[dict[str, Any]] | None:
+        row = self.conn.execute("SELECT rows FROM llm_cache WHERE key=?", (key,)).fetchone()
+        return json.loads(row["rows"]) if row else None
+
+    def llm_cache_put(self, key: str, slug: str, model: str, rows: list[dict[str, Any]],
+                      tokens_in: int, tokens_out: int, fetched_at: str) -> None:
+        self.conn.execute(
+            """INSERT INTO llm_cache (key, slug, model, rows, tokens_in, tokens_out, fetched_at)
+               VALUES (?,?,?,?,?,?,?) ON CONFLICT(key) DO UPDATE SET rows=excluded.rows,
+               tokens_in=excluded.tokens_in, tokens_out=excluded.tokens_out, fetched_at=excluded.fetched_at""",
+            (key, slug, model, json.dumps(rows, ensure_ascii=False), tokens_in, tokens_out, fetched_at),
+        )
+
     # -- teams / runs ------------------------------------------------------
     def set_teams(self, teams: dict[int, tuple[str, str]], updated_at: str) -> None:
         self.conn.executemany(
@@ -277,7 +300,7 @@ class Store:
     def counts(self) -> dict[str, int]:
         out = {}
         for t in ("forge_stories", "forge_seen", "espn_transactions", "bsky_posts", "wayback_pages", "players",
-                  "teams"):
+                  "teams", "llm_cache"):
             out[t] = self.conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
         return out
 
@@ -286,7 +309,7 @@ class Store:
     # diffable, and the only copy of stories that have aged out of Forge's 25-item
     # lists). The archived CapFriendly pages are a one-off 50 MB blob kept as a
     # release asset in their own SQLite file. The working store is rebuilt from both.
-    JSONL_TABLES = ("forge_stories", "espn_transactions", "bsky_posts", "players", "teams")
+    JSONL_TABLES = ("forge_stories", "espn_transactions", "bsky_posts", "players", "teams", "llm_cache")
 
     def dump_jsonl(self, directory: Path | str) -> dict[str, int]:
         """Write one sorted JSONL file per live-source table. Returns row counts."""
@@ -295,12 +318,12 @@ class Store:
         counts = {}
         for table in self.JSONL_TABLES:
             key = {"forge_stories": "slug", "espn_transactions": "key", "bsky_posts": "uri",
-                   "players": "player_id", "teams": "team_id"}[table]
+                   "players": "player_id", "teams": "team_id", "llm_cache": "key"}[table]
             rows = self.conn.execute(f"SELECT * FROM {table} ORDER BY {key}").fetchall()
             with (directory / f"{table}.jsonl").open("w", encoding="utf-8") as f:
                 for r in rows:
                     d = dict(r)
-                    for col in ("tags", "raw", "links"):
+                    for col in ("tags", "raw", "links", "rows"):
                         if col in d and isinstance(d[col], str):
                             d[col] = json.loads(d[col])
                     f.write(json.dumps(d, ensure_ascii=False, sort_keys=True) + "\n")
@@ -321,14 +344,14 @@ class Store:
                     if not line.strip():
                         continue
                     d = json.loads(line)
-                    for col in ("tags", "raw", "links"):
+                    for col in ("tags", "raw", "links", "rows"):
                         if col in d and not isinstance(d[col], str):
                             d[col] = json.dumps(d[col], ensure_ascii=False)
                     cols = ", ".join(d.keys())
                     marks = ", ".join("?" for _ in d)
                     updates = ", ".join(f"{c}=excluded.{c}" for c in d)
                     pk = {"forge_stories": "slug", "espn_transactions": "key", "bsky_posts": "uri",
-                          "players": "player_id", "teams": "team_id"}[table]
+                          "players": "player_id", "teams": "team_id", "llm_cache": "key"}[table]
                     self.conn.execute(
                         f"INSERT INTO {table} ({cols}) VALUES ({marks}) ON CONFLICT({pk}) DO UPDATE SET {updates}",
                         tuple(d.values()),

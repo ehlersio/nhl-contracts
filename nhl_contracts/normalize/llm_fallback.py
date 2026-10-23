@@ -12,11 +12,13 @@ row is dropped. Rows that pass carry ``extracted_by="llm"`` and the flag
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import os
 import re
 from collections.abc import Callable
+from datetime import UTC, datetime
 from typing import Any
 
 import httpx
@@ -152,11 +154,16 @@ def parse_response(content: str) -> list[dict[str, Any]]:
 # --- OpenRouter ---------------------------------------------------------------------
 
 class OpenRouterExtractor:
-    """Calls OpenRouter's chat completions endpoint and verifies every number."""
+    """Calls OpenRouter's chat completions endpoint and verifies every number.
+
+    With a ``store`` every answer is cached by (model, slug, body) in ``llm_cache``,
+    so a story is sent once, not on every hourly run."""
 
     def __init__(self, api_key: str, model: str = DEFAULT_MODEL, *, timeout: float = 60.0,
-                 transport: httpx.BaseTransport | None = None) -> None:
+                 transport: httpx.BaseTransport | None = None, store: Any = None) -> None:
         self.model = model
+        self.store = store
+        self.cache_hits = 0
         self._client = httpx.Client(
             headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json",
                      "HTTP-Referer": "https://github.com/ehlersio/nhl-contracts", "X-Title": "nhl-contracts"},
@@ -166,8 +173,17 @@ class OpenRouterExtractor:
         self.tokens_in = 0
         self.tokens_out = 0
 
+    def cache_key(self, story: Story, text: str) -> str:
+        return hashlib.sha1(f"{self.model}|{story.slug}|{text}".encode()).hexdigest()
+
     def __call__(self, story: Story) -> list[dict[str, Any]] | None:
         text = clean(story.body)[:12000]
+        key = self.cache_key(story, text)
+        if self.store is not None:
+            cached = self.store.llm_cache_get(key)
+            if cached is not None:
+                self.cache_hits += 1
+                return cached or None
         prompt = PROMPT_TEMPLATE.format(headline=clean(story.headline), published=story.content_date[:10],
                                         body=text)
         resp = self._client.post(OPENROUTER_URL, json={
@@ -188,16 +204,20 @@ class OpenRouterExtractor:
             if row is not None:
                 row["flags"] = [f"llm:{self.model}"]
                 rows.append(row)
+        if self.store is not None:
+            self.store.llm_cache_put(key, story.slug, self.model, rows, int(usage.get("prompt_tokens") or 0),
+                                     int(usage.get("completion_tokens") or 0), datetime.now(UTC).isoformat())
+            self.store.commit()
         return rows or None
 
 
-def configure_from_env(env: dict[str, str] | None = None) -> OpenRouterExtractor | None:
+def configure_from_env(env: dict[str, str] | None = None, store: Any = None) -> OpenRouterExtractor | None:
     """Register an OpenRouter extractor when OPENROUTER_API_KEY is set; otherwise do nothing."""
     env = os.environ if env is None else env
     key = env.get(ENV_KEY)
     if not key:
         return None
-    extractor = OpenRouterExtractor(key, env.get(ENV_MODEL, DEFAULT_MODEL))
+    extractor = OpenRouterExtractor(key, env.get(ENV_MODEL, DEFAULT_MODEL), store=store)
     register(extractor)
     log.info("llm fallback enabled: OpenRouter %s", extractor.model)
     return extractor
