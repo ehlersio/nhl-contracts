@@ -202,25 +202,31 @@ rows), almost all New Jersey, Carolina and two-way one-year deals.
 Measured on the live store after the crawl; see `timestamp.json` and the
 section "Live store" below.
 
-### Live store (2026-10-23, after the first backfill; CapFriendly player-page crawl still in progress)
+### Live store (2026-10-23, after the full backfill)
 
 | measure | result |
 |---|---|
-| merged contracts | 5,604 (claims 7,022 from 4,917 source documents) |
-| … with an NHL player id | 2,824 (ids come from current rosters and prospect lists, so older contracts lack them) |
-| … with a cap hit or AAV | 2,645 |
-| … with per-season rows | 2,218 (4,796 season rows) |
-| … with clauses | 410 (593 clause rows) |
-| contracts covering 2026-27 or later | 1,152; 1,002 with money, 944 with season rows |
+| merged contracts | 6,961 (claims 9,679 from 6,331 source documents) |
+| … with a stated signing date | 3,855 (tier E player pages) |
+| … with an NHL player id | 3,474 (ids come from current rosters and prospect lists, so retired players lack them) |
+| … with a cap hit or AAV | 5,096 |
+| … with per-season rows | 4,876 (12,925 season rows) |
+| … with clauses | 594 (941 clause rows) |
+| contracts covering 2026-27 or later | 1,165; 1,015 with money, 962 with season rows, 876 with a player id |
 | signings since June 2026 | 485; 316 with money, 322 with season rows, 44 with clauses |
-| fields where two sources disagree | 30 contracts |
-| claims by tier | A 544 · B 578 · C 3,615 · D 840 · E 1,464 |
+| contracts where two sources disagree on a field | 60 |
+| claims by tier | A 542 · B 556 · C 3,583 · D 840 · E 4,158 |
+| CapFriendly pages read | 33 team pages, 1,494 player pages (2 missing, 5 unreadable) |
 
-Tier C (ESPN) dominates the count because its wire goes back to 2016 and
-covers every depth signing; most of those rows carry no money and no player id.
-Tier E rows at this point come from the 32 team pages plus the first hundred
-player pages; the per-player crawl adds signing dates and contract history as
-it progresses.
+Tier E carries the contract history back to the early 2000s for every player
+who was on a roster, prospect list or buyout table in July 2024. Tier C (ESPN)
+covers every depth signing since 2016 but mostly without money. Tier D fills
+money and structure for recent signings that clubs did not disclose.
+
+Common tier E flags: `total_includes_performance_bonuses` (CapFriendly's
+value column adds maximum bonuses on entry-level deals, 578 rows),
+`total_vs_seasons_mismatch` (the same effect, 764 rows), `varying_aav`
+(two-way or bonus-laden deals, 521 rows).
 
 ## How it works
 
