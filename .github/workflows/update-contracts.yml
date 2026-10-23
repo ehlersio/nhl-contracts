@@ -1,8 +1,8 @@
-# Hourly collector + publisher, modelled on nflverse-data.
+# Collector + publisher, modelled on nflverse-data.
 #
-# NOT ACTIVATED: the schedule below is commented out. To switch it on, uncomment
-# the `schedule` block (and prefer an external dispatcher such as a Cloudflare
-# Worker calling `workflow_dispatch`, since GitHub cron can run hours late).
+# Scheduling: the primary trigger is `workflow_dispatch`, called by the EyeWall
+# Cloudflare Worker hourly in season and every 15 minutes from July 1 to 15
+# (GitHub's own cron runs hours late). The daily cron below is only a safety net.
 #
 # What a run does:
 #   1. restores the raw SQLite store from the `contracts` release (so the 25-item
@@ -14,8 +14,8 @@ name: update-contracts
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: "7 * * * *"   # hourly; July 1-15 a 15-minute cadence is worth it
+  schedule:
+    - cron: "17 9 * * *"   # daily safety net (UTC); the Worker dispatch is the real schedule
 
 permissions:
   contents: write
@@ -30,6 +30,7 @@ jobs:
     env:
       RELEASE_TAG: contracts
       GH_TOKEN: ${{ github.token }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}   # enables the LLM fallback when set
     steps:
       - uses: actions/checkout@v4
 

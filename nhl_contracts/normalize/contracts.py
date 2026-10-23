@@ -9,7 +9,6 @@ the same ``contract_key``. Conflicts are kept, never resolved here.
 from __future__ import annotations
 
 import re
-from dataclasses import asdict
 from datetime import date
 from typing import Any
 
@@ -634,16 +633,66 @@ def extract_story(story: Story, teams: dict[int, str]) -> tuple[list[Claim], Sou
         out[0].player_id = tag_ids[0]
         out[0].contract_key = make_key(tag_ids[0], out[0].player_name, out[0].team, published)
         out[0].claim_id = claim_id(source.source_id, out[0].player_name, tag_ids[0])
-    needs_llm = not out or all(c.term_years is None and c.aav_usd is None and c.total_usd is None for c in out) or any(
-        "per_season_breakdown" in c.flags and c.aav_usd is None and c.cap_hit_usd is None for c in out)
+    def _no_money(c: Claim) -> bool:
+        return all(v is None for v in (c.aav_usd, c.cap_hit_usd, c.total_usd, c.nhl_salary_usd))
+
+    # Eligible for the LLM fallback: nothing read at all, or a dollar figure in the text
+    # that the regex could not attach (bonus schedules, mixed one-way years, prose).
+    needs_llm = (not out or all(c.term_years is None and _no_money(c) for c in out)
+                 or ("$" in body_clean and any(_no_money(c) for c in out)))
     if needs_llm:
         llm = llm_fallback.extract(story)
         if llm:
-            out = [Claim(**{**asdict(c), **{k: v for k, v in d.items() if k in Claim.__dataclass_fields__},
-                           "extracted_by": "llm"}) for c, d in zip(out or [out[0]] if out else [], llm, strict=False)]
+            out = _apply_llm_rows(out, llm, story, source, team, players, published)
         elif not out:
             return [], source
     return out, source
+
+
+def _apply_llm_rows(claims: list[Claim], rows: list[dict[str, Any]], story: Story, source: Source,
+                    team: str | None, players: dict[str, int], published: str) -> list[Claim]:
+    """Fill gaps in the regex claims from verified LLM rows (never overwrite a stated
+    value) and create claims for players the regex missed. Season rows go to
+    ``llm_fallback.season_rows`` keyed by claim_id for normalize_all to pick up."""
+    out = list(claims)
+    by_surname = {name_key(c.player_name).split()[-1]: c for c in out}
+    for row in rows:
+        name = row["player_name"]
+        surname = name_key(name).split()[-1]
+        target = by_surname.get(surname)
+        fields = {k: row.get(k) for k in ("term_years", "aav_usd", "cap_hit_usd", "total_usd", "nhl_salary_usd",
+                                           "minors_salary_usd", "one_way", "start_season", "end_season")}
+        if target is None:
+            pid = players.get(name)
+            target = Claim(
+                claim_id=claim_id(source.source_id, name, pid),
+                contract_key=make_key(pid, name, row.get("team_abbrev") or team, published),
+                player_name=name, player_id=pid, team=row.get("team_abbrev") or team, signed_at=published,
+                contract_type=row.get("contract_type") or "standard", term_years=None, aav_usd=None,
+                cap_hit_usd=None, total_usd=None, nhl_salary_usd=None, minors_salary_usd=None, one_way=None,
+                start_season=None, end_season=None, re_signed=False, source_id=source.source_id,
+                source_url=source.url, publisher=source.publisher, published_at=story.content_date,
+                confidence_tier=source.confidence_tier, extracted_by="llm", flags=[], evidence="",
+            )
+            out.append(target)
+            by_surname[surname] = target
+        else:
+            target.extracted_by = "regex+llm"
+        filled = False
+        for k, v in fields.items():
+            if v is not None and getattr(target, k) is None:
+                setattr(target, k, v)
+                filled = True
+        if row.get("contract_type") and target.contract_type == "standard" and row["contract_type"] != "standard":
+            target.contract_type = row["contract_type"]
+        for fl in row.get("flags", []):
+            if fl not in target.flags:
+                target.flags.append(fl)
+        if filled and "llm_filled" not in target.flags:
+            target.flags.append("llm_filled")
+        if row.get("seasons"):
+            llm_fallback.season_rows[target.claim_id] = (target, row["seasons"])
+    return out
 
 
 def _merge_into(base: Claim, new: Claim) -> None:
@@ -1142,6 +1191,27 @@ def merge(claims: list[Claim]) -> list[dict[str, Any]]:
     return rows
 
 
+def _llm_season_claims(claims: list[Claim]) -> list[SeasonClaim]:
+    """Season rows the LLM fallback read for these claims (numbers already verified)."""
+    out: list[SeasonClaim] = []
+    for c in claims:
+        hit = llm_fallback.season_rows.pop(c.claim_id, None)
+        if not hit:
+            continue
+        _claim, rows = hit
+        for r in rows:
+            base, sb = r.get("base_salary_usd"), r.get("signing_bonus_usd")
+            out.append(SeasonClaim(
+                claim_id=c.claim_id, contract_key=c.contract_key, season=r["season"],
+                cap_hit_usd=c.cap_hit_usd or c.aav_usd, aav_usd=c.aav_usd, base_salary_usd=base,
+                signing_bonus_usd=sb, performance_bonus_usd=r.get("performance_bonus_usd"),
+                total_salary_usd=(base + sb) if base is not None and sb is not None else None,
+                minors_salary_usd=r.get("minors_salary_usd"), one_way=None, clause=None,
+                source_id=c.source_id, confidence_tier=c.confidence_tier, evidence="llm fallback",
+            ))
+    return out
+
+
 def normalize_all(stories: list[Story], espn_rows: list[dict[str, Any]], teams: dict[int, str] | None = None
                   ) -> tuple[list[Claim], list[Source], list[dict[str, Any]], list[SeasonClaim]]:
     """Claims, sources, merged contracts and per-season rows (NHL.com stories only)."""
@@ -1155,6 +1225,7 @@ def normalize_all(stories: list[Story], espn_rows: list[dict[str, Any]], teams: 
             claims.extend(cs)
             sources.append(src)
             seasons.extend(extract_story_seasons(s, cs, teams))
+            seasons.extend(_llm_season_claims(cs))
     for r in espn_rows:
         cs, src = extract_espn(r)
         if src and cs:

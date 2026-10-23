@@ -241,7 +241,7 @@ nhl_contracts/
   normalize/puckpedia.py            post text -> claims, seasons, clauses
   normalize/capfriendly.py          archived HTML -> contract history, seasons, clauses
   normalize/merge.py                cross-source merge; conflicts named, never resolved
-  normalize/llm_fallback.py         hook for an LLM extractor (nothing registered, no key)
+  normalize/llm_fallback.py         OpenRouter extractor for stories the regex cannot read (off without a key)
   publish/export.py                 parquet / csv / json / timestamp.json
   store.py                          SQLite raw store (idempotent upserts)
   teams.py                          team ids, roster and prospect player ids
@@ -311,14 +311,32 @@ One-off history (resumable; the Wayback crawl is slow by design):
 .venv/bin/pytest
 ```
 
-### Publishing (not activated)
+### LLM fallback
+
+Stories where the regex finds a signing but cannot attach a stated dollar
+figure (bonus schedules, mixed one-way/two-way years, prose) are sent to a model
+through OpenRouter when `OPENROUTER_API_KEY` is set; `NHL_CONTRACTS_LLM_MODEL`
+picks the model (default `anthropic/claude-haiku-5.5`, about $0.10 per million
+input tokens). The model is only allowed to read: every amount, term and season
+it returns is checked against the story text and dropped if the text does not
+state it, so a computed AAV or a guessed season never enters the dataset. Rows
+it touched carry `extracted_by` = `llm` or `regex+llm` and the flag
+`llm:<model>`. About 230 stories in the current store are eligible, roughly 40 a
+season going forward. `--no-llm` disables it for a run.
+
+### Publishing
 
 `.github/workflows/update-contracts.yml` mirrors nflverse-data: restore the raw
 store from the `contracts` release, run the collector, upload `dist/*` and the
 store back to the same tag with `--clobber`, so clients always download the
-latest files from one fixed URL. The `schedule` block is commented out. When it
-is switched on, prefer an external dispatcher calling `workflow_dispatch`
-(GitHub cron can run hours late, and a July 1 hour can exceed a 25-item list).
+latest files from one fixed URL. The real schedule is `workflow_dispatch`
+called by the EyeWall Cloudflare Worker (hourly in season, every 15 minutes
+from July 1 to 15, since GitHub cron runs hours late); a daily GitHub cron is
+the safety net. The workflow passes `OPENROUTER_API_KEY` from the repository
+secrets when it exists.
+
+Names: the repository is planned as `ehlersio/nhl-contracts`, with
+`nhl-contracts` on PyPI and npm (all three free as of 2026-10-23).
 
 Thin npm and PyPI loaders that download the release files are planned but not
 written; neither package exists yet.

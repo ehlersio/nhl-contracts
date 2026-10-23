@@ -54,6 +54,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--wayback-pause", type=float, default=2.5, help="seconds between Wayback requests")
     p.add_argument("--refresh-players", action="store_true",
                    help="also refresh the roster/prospect player-id list during collect")
+    p.add_argument("--no-llm", action="store_true", help="ignore OPENROUTER_API_KEY; regex only")
     p.add_argument("-v", "--verbose", action="store_true")
     return p
 
@@ -167,7 +168,8 @@ def normalize_store(store: Store) -> dict[str, object]:
     seasons = merge_seasons(season_claims, key_map)
     clauses = merge_clauses(clause_claims, key_map)
     if llm_fallback.wanted:
-        log.info("llm fallback wanted for %d stories (no extractor registered)", len(llm_fallback.wanted))
+        log.info("llm fallback: %d stories eligible, %d answered%s", len(llm_fallback.wanted),
+                 len(llm_fallback.used), "" if llm_fallback.is_enabled() else " (no extractor registered)")
     return {"claims": claims, "sources": sources, "contracts": contracts, "seasons": seasons,
             "season_claims": season_claims, "clauses": clauses, "clause_claims": clause_claims}
 
@@ -188,6 +190,7 @@ def main(argv: list[str] | None = None) -> int:
                         format="%(levelname)s %(name)s: %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)
     store = Store(args.store)
+    extractor = None if args.no_llm else llm_fallback.configure_from_env()
     try:
         if args.step == "collect" or args.step == "all":
             do_collect(store, args)
@@ -197,6 +200,9 @@ def main(argv: list[str] | None = None) -> int:
             do_export(store, args)
     finally:
         store.close()
+        if extractor is not None and extractor.calls:
+            log.info("llm fallback: %d calls, %d tokens in, %d out (%s)", extractor.calls, extractor.tokens_in,
+                     extractor.tokens_out, extractor.model)
     return 0
 
 
