@@ -61,24 +61,24 @@ def _people(payload: dict) -> list[tuple[int, str]]:
     return out
 
 
-def fetch_player_ids(client: Client, teams: dict[int, str]) -> dict[int, tuple[str, str]]:
-    """Return {player_id: (full name, team abbrev)} from every club's current roster and
-    prospect list. Each abbrev is fetched once (Utah has two team ids). A player on one
-    club's roster and another's prospect list keeps the roster club. A failed request is
-    logged and skipped, so the result can be partial."""
-    out: dict[int, tuple[str, str]] = {}
+def fetch_player_ids(client: Client, teams: dict[int, str]) -> dict[int, tuple[str, str, str]]:
+    """Return {player_id: (full name, team abbrev, kind)} from every club's current roster
+    ("roster") and prospect list ("prospect"). Each abbrev is fetched once (Utah has two
+    team ids). A player on one club's roster and another's prospect list keeps the roster
+    club. A failed request is logged and skipped, so the result can be partial."""
+    out: dict[int, tuple[str, str, str]] = {}
     done: set[str] = set()
     for tid in sorted(teams):
         abbr = teams[tid]
         if not abbr or abbr in done:
             continue
         done.add(abbr)
-        for url in (NHL_ROSTER.format(abbr=abbr), NHL_PROSPECTS.format(abbr=abbr)):
+        for kind, url in (("roster", NHL_ROSTER.format(abbr=abbr)), ("prospect", NHL_PROSPECTS.format(abbr=abbr))):
             try:
                 payload = client.get_json(url)
             except RuntimeError as exc:
                 log.warning("player list %s failed: %s", url, exc)
                 continue
             for pid, name in _people(payload or {}):
-                out.setdefault(pid, (name, abbr))
+                out.setdefault(pid, (name, abbr, kind))
     return out

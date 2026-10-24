@@ -143,7 +143,7 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
         "earliest_signed_at": min((r["signed_at"] for r in c_rows), default=None),
         "latest_signed_at": max((r["signed_at"] for r in c_rows), default=None),
         "raw_store": store_counts or {},
-        "files": files,
+        "files": files + ["gaps.csv", "gaps.json"],
         "license": {"data": "CC0-1.0", "code": "MIT"},
     }
     (dist / "timestamp.json").write_text(json.dumps(stamp, indent=2), encoding="utf-8")

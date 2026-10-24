@@ -88,6 +88,7 @@ thestanleycap.com, and nothing from a paid API.
 | `clauses.*` | one row per (contract, clause kind, season range) | NMC / NTC / M-NTC with list size and list type when stated |
 | `clause_claims.*` | one row per (source, contract, clause) | the per-source clause rows |
 | `sources.csv` | one row per source document | URL, publisher, author, published time, tier |
+| `gaps.csv` / `.json` | one row per current NHL roster player the dataset does not fully cover | `gap` = `no_contract` / `no_money` / `no_structure`; `status` says whether the player has older rows, is mentioned in the raw store (a parsing or matching gap) or is absent from every source; hints quote the latest ESPN row, NHL.com headline and Bluesky post that name them |
 | `timestamp.json` | run metadata | `updated_at`, counts per table and tier, file list, licence |
 
 ## Data dictionary
@@ -358,6 +359,24 @@ state it, so a computed AAV or a guessed season never enters the dataset. Rows
 it touched carry `extracted_by` = `llm` or `regex+llm` and the flag
 `llm:<model>`. About 277 stories in the current store are eligible, roughly 40 a
 season going forward. `--no-llm` disables it for a run.
+
+### Gaps report
+
+Coverage is measured against the 800 players on current NHL rosters (the
+roster and prospect lists from the NHL API are stored with the players).
+`gaps.csv` on every release lists the roster players whose current contract
+is missing, has no money, or has no per-season rows, with what the raw store
+knows about each, so the remaining work is a list rather than a percentage.
+`timestamp.json` carries the counts (`n_gaps_*`).
+
+### Repository hygiene
+
+Dependabot (pip, npm in `js/`, GitHub Actions, weekly, grouped), CodeQL default
+setup (Python, JavaScript, Actions), secret scanning with push protection,
+Dependabot security updates, workflow actions pinned to commit SHAs, `pip-audit`
+and `npm audit` in CI, dependency review on pull requests, and a ruleset that
+blocks deleting or force-pushing `main`. Direct pushes to `main` are allowed
+because the hourly workflow commits the refreshed raw rows.
 
 ### Where the raw data lives
 

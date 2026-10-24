@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS players (
     player_id INTEGER PRIMARY KEY,
     full_name TEXT NOT NULL,
     team TEXT,
+    kind TEXT,                   -- roster | prospect
     updated_at TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS teams (
@@ -132,6 +133,13 @@ class Store:
         self.conn = sqlite3.connect(self.path, timeout=120)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(SCHEMA)
+        self._migrate()
+
+    def _migrate(self) -> None:
+        cols = {r["name"] for r in self.conn.execute("PRAGMA table_info(players)")}
+        if "kind" not in cols:
+            self.conn.execute("ALTER TABLE players ADD COLUMN kind TEXT")
+            self.conn.commit()
 
     # -- forge -------------------------------------------------------------
     def has_story(self, slug: str) -> bool:
@@ -270,16 +278,21 @@ class Store:
             [(tid, ab, name, updated_at) for tid, (ab, name) in teams.items()],
         )
 
-    def set_players(self, players: dict[int, tuple[str, str]], updated_at: str) -> None:
+    def set_players(self, players: dict[int, tuple], updated_at: str) -> None:
+        """players: {id: (name, team)} or {id: (name, team, kind)} with kind roster | prospect."""
         self.conn.executemany(
-            """INSERT INTO players (player_id, full_name, team, updated_at) VALUES (?,?,?,?)
+            """INSERT INTO players (player_id, full_name, team, kind, updated_at) VALUES (?,?,?,?,?)
                ON CONFLICT(player_id) DO UPDATE SET full_name=excluded.full_name, team=excluded.team,
-               updated_at=excluded.updated_at""",
-            [(pid, name, team, updated_at) for pid, (name, team) in players.items()],
+               kind=COALESCE(excluded.kind, players.kind), updated_at=excluded.updated_at""",
+            [(pid, v[0], v[1], v[2] if len(v) > 2 else None, updated_at) for pid, v in players.items()],
         )
 
     def players(self) -> dict[int, tuple[str, str | None]]:
         return {r["player_id"]: (r["full_name"], r["team"]) for r in self.conn.execute("SELECT * FROM players")}
+
+    def players_with_kind(self) -> dict[int, tuple[str, str | None, str | None]]:
+        return {r["player_id"]: (r["full_name"], r["team"], r["kind"])
+                for r in self.conn.execute("SELECT * FROM players")}
 
     def teams(self) -> dict[int, str]:
         return {r["team_id"]: r["abbrev"] for r in self.conn.execute("SELECT * FROM teams")}

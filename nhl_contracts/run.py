@@ -31,6 +31,7 @@ from .normalize.contracts import normalize_all
 from .normalize.merge import assign_player_ids, merge_clauses, merge_contracts, merge_seasons
 from .normalize.model import Claim, ClauseClaim, SeasonClaim, Source
 from .publish.export import export
+from .publish.gaps import find_gaps, write_gaps
 from .store import Store
 from .teams import load_teams
 
@@ -210,6 +211,11 @@ def do_export(store: Store, args: argparse.Namespace) -> None:
                    store_counts=store.counts())
     keys = ("n_contracts", "n_claims", "n_sources", "n_conflicts", "n_contract_seasons", "n_clauses")
     log.info("export: %s", json.dumps({k: stamp[k] for k in keys}))
+    gaps = find_gaps(store, n["contracts"], n["seasons"])  # type: ignore[arg-type]
+    counts = write_gaps(gaps, Path(args.dist))
+    stamp.update(counts)
+    (Path(args.dist) / "timestamp.json").write_text(json.dumps(stamp, indent=2), encoding="utf-8")
+    log.info("gaps: %s", json.dumps(counts))
 
 
 def main(argv: list[str] | None = None) -> int:
