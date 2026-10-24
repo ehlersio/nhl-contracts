@@ -313,12 +313,13 @@ nhl_contracts/
   in Yr 5 & 6 / Rep'd by …"). Reposts and other authors are skipped. Team
   hashtags are mapped to tri-codes (typos included); an unknown tag leaves
   `team` null with `team_unmapped`.
-- **r/hockey on Reddit** `https://www.reddit.com/r/hockey/new.rss?limit=100` and a
-  signings search feed. Post titles quote insider posts from X verbatim, which is
-  the only free, terms-compliant way to read them; the Reddit permalink is the
-  cited source and the bracket tag the author. Rumours ("closing in on",
-  "expected to"), other leagues, coaches and executives yield nothing. Reddit
-  rate-limits anonymous readers, so a 429 is skipped until the next run.
+- **r/hockey on Reddit** `https://www.reddit.com/r/hockey/new.rss?limit=100`, read
+  hourly (that covers the subreddit's volume). Post titles quote insider posts
+  from X verbatim, which is the only free, terms-compliant way to read them; the
+  Reddit permalink is the cited source and the bracket tag the author. Rumours
+  ("closing in on", "expected to"), other leagues, coaches and executives yield
+  nothing. Reddit answers its search feed with 429 from cloud runners, so the
+  signings search is only used for a backfill from a home connection.
 - **CapFriendly via the Wayback Machine**. One CDX query per page finds the
   2024 captures; the latest valid one before the July 2024 shutdown is fetched
   with the `id_` flag (original bytes). Team pages give every player's

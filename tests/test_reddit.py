@@ -87,7 +87,8 @@ def test_contract_title_filter():
 def test_collect_stores_contract_posts_idempotently(tmp_path):
     store = Store(tmp_path / "raw.sqlite")
     client = FakeClient({"new.rss": (200, NEW.read_bytes()), "search.rss": (200, SEARCH.read_bytes())})
-    first = reddit_hockey.collect(store, client, pause=0)
+    both = (reddit_hockey.NEW_FEED, reddit_hockey.SEARCH_FEED)  # the search feed is opt-in (429 from cloud runners)
+    first = reddit_hockey.collect(store, client, feeds=both, pause=0)
     assert len(client.calls) == 2
     assert first["requests"] == 2 and first["entries"] == 200
     stored = reddit_hockey.posts(store)
@@ -95,7 +96,7 @@ def test_collect_stores_contract_posts_idempotently(tmp_path):
     assert all(reddit_hockey.is_contract_title(p["title"]) for p in stored)
     assert len({p["id"] for p in stored}) == len(stored)
     assert isinstance(stored[0]["raw"], dict)
-    again = reddit_hockey.collect(store, client, pause=0)
+    again = reddit_hockey.collect(store, client, feeds=both, pause=0)
     assert again["new"] == 0
     assert len(reddit_hockey.posts(store)) == len(stored)
     runs = store.conn.execute("SELECT collector, requests, new_rows FROM runs").fetchall()
@@ -105,7 +106,7 @@ def test_collect_stores_contract_posts_idempotently(tmp_path):
 def test_collect_survives_bad_feeds(tmp_path):
     store = Store(tmp_path / "raw.sqlite")
     client = FakeClient({"new.rss": (429, b""), "search.rss": (200, b"<html>not atom")})
-    out = reddit_hockey.collect(store, client, pause=0)
+    out = reddit_hockey.collect(store, client, feeds=(reddit_hockey.NEW_FEED, reddit_hockey.SEARCH_FEED), pause=0)
     assert out["new"] == 0 and out["errors"] == 2
     assert reddit_hockey.posts(store) == []
 

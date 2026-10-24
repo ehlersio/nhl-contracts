@@ -37,7 +37,11 @@ log = logging.getLogger(__name__)
 NEW_FEED = "https://www.reddit.com/r/hockey/new.rss?limit=100"
 SEARCH_FEED = ("https://www.reddit.com/r/hockey/search.rss?q=signed+OR+extension+OR+%22agreed+to+terms%22"
                "&restrict_sr=on&sort=new&t=week&limit=100")
-DEFAULT_FEEDS = (NEW_FEED, SEARCH_FEED)
+# Only the new-posts feed by default: Reddit answers the search feed with 429 from
+# cloud runners (every hourly run on GitHub Actions saw it), and 100 new posts an
+# hour comfortably covers r/hockey's volume. SEARCH_FEED stays for a backfill from
+# a residential connection: collect(..., feeds=(NEW_FEED, SEARCH_FEED)).
+DEFAULT_FEEDS = (NEW_FEED,)
 
 ATOM = "{http://www.w3.org/2005/Atom}"
 ANCHOR = re.compile(r"<a\s+href=\"(?P<href>[^\"]+)\"\s*>\s*(?P<text>[^<]*?)\s*</a>", re.I)
