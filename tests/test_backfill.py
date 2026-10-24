@@ -62,8 +62,8 @@ def test_fetch_player_ids_rosters_and_prospects():
     urls[PROSPECTS.format("BOS")] = RuntimeError("503")  # a failed list is skipped
     client = FakeClient(urls=urls)
     ids = fetch_player_ids(client, teams)
-    assert ids == {8478427: ("Sebastian Aho", "CAR"), 8481611: ("Pyotr Kochetkov", "CAR"),
-                   8485000: ("William Håkansson", "CAR"), 8483000: ("Joshua Roy", "UTA")}
+    assert ids == {8478427: ("Sebastian Aho", "CAR", "roster"), 8481611: ("Pyotr Kochetkov", "CAR", "roster"),
+                   8485000: ("William Håkansson", "CAR", "prospect"), 8483000: ("Joshua Roy", "UTA", "roster")}
     fetched = [url for url, _ in client.calls]
     assert len(fetched) == 64 and len(set(fetched)) == 64  # 32 clubs x 2 lists; Utah's second id skipped
 
