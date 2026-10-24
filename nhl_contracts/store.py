@@ -42,6 +42,16 @@ CREATE TABLE IF NOT EXISTS espn_transactions (
     raw TEXT NOT NULL,           -- original JSON row (logos stripped)
     fetched_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS reddit_posts (
+    id TEXT PRIMARY KEY,         -- t3_...
+    created_at TEXT NOT NULL,
+    title TEXT NOT NULL,
+    author TEXT,                 -- the Reddit submitter
+    permalink TEXT NOT NULL,
+    source_url TEXT,             -- the outbound link (usually the quoted X post)
+    raw TEXT NOT NULL,
+    fetched_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS llm_cache (
     key TEXT PRIMARY KEY,        -- sha1(model | slug | body)
     slug TEXT NOT NULL,
@@ -313,7 +323,7 @@ class Store:
     def counts(self) -> dict[str, int]:
         out = {}
         for t in ("forge_stories", "forge_seen", "espn_transactions", "bsky_posts", "wayback_pages", "players",
-                  "teams", "llm_cache"):
+                  "teams", "llm_cache", "reddit_posts"):
             out[t] = self.conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
         return out
 
@@ -322,7 +332,7 @@ class Store:
     # diffable, and the only copy of stories that have aged out of Forge's 25-item
     # lists). The archived CapFriendly pages are a one-off 50 MB blob kept as a
     # release asset in their own SQLite file. The working store is rebuilt from both.
-    JSONL_TABLES = ("forge_stories", "espn_transactions", "bsky_posts", "players", "teams", "llm_cache")
+    JSONL_TABLES = ("forge_stories", "espn_transactions", "bsky_posts", "players", "teams", "llm_cache", "reddit_posts")
 
     def dump_jsonl(self, directory: Path | str) -> dict[str, int]:
         """Write one sorted JSONL file per live-source table. Returns row counts."""
@@ -331,7 +341,7 @@ class Store:
         counts = {}
         for table in self.JSONL_TABLES:
             key = {"forge_stories": "slug", "espn_transactions": "key", "bsky_posts": "uri",
-                   "players": "player_id", "teams": "team_id", "llm_cache": "key"}[table]
+                   "players": "player_id", "teams": "team_id", "llm_cache": "key", "reddit_posts": "id"}[table]
             rows = self.conn.execute(f"SELECT * FROM {table} ORDER BY {key}").fetchall()
             with (directory / f"{table}.jsonl").open("w", encoding="utf-8") as f:
                 for r in rows:
@@ -364,7 +374,7 @@ class Store:
                     marks = ", ".join("?" for _ in d)
                     updates = ", ".join(f"{c}=excluded.{c}" for c in d)
                     pk = {"forge_stories": "slug", "espn_transactions": "key", "bsky_posts": "uri",
-                          "players": "player_id", "teams": "team_id", "llm_cache": "key"}[table]
+                          "players": "player_id", "teams": "team_id", "llm_cache": "key", "reddit_posts": "id"}[table]
                     self.conn.execute(
                         f"INSERT INTO {table} ({cols}) VALUES ({marks}) ON CONFLICT({pk}) DO UPDATE SET {updates}",
                         tuple(d.values()),
