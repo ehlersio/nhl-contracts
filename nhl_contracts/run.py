@@ -37,7 +37,7 @@ from .teams import load_teams
 
 log = logging.getLogger("nhl_contracts")
 
-SOURCES = ("forge", "espn", "bluesky", "wayback")
+SOURCES = ("forge", "espn", "bluesky", "reddit", "wayback")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -50,7 +50,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--raw-dir", default=str(RAW_JSONL_DIR), help="JSONL copies of the live-source tables")
     p.add_argument("--wayback-store", default=str(WAYBACK_STORE), help="SQLite file holding the archived pages")
     p.add_argument("--no-dump", action="store_true", help="do not refresh the JSONL copies after collecting")
-    p.add_argument("--sources", default="forge,espn,bluesky",
+    p.add_argument("--sources", default="forge,espn,bluesky,reddit",
                    help=f"comma list of sources to collect/backfill; any of {','.join(SOURCES)}")
     p.add_argument("--espn-days", type=int, default=45, help="days back to (re)fetch ESPN transactions")
     p.add_argument("--espn-from", type=date.fromisoformat, default=None,
@@ -114,8 +114,19 @@ def do_collect(store: Store, args: argparse.Namespace) -> None:
             from .collectors import bluesky_puckpedia
 
             bluesky_puckpedia.collect(store, client, since=args.bluesky_since, max_pages=args.max_pages)
+        if "reddit" in chosen:
+            _collect_reddit(store)
         if "wayback" in chosen:
             _collect_wayback(store, args)
+
+
+def _collect_reddit(store: Store) -> None:
+    """Reddit rate-limits unauthenticated readers hard; a 429 is skipped (the next hourly
+    run reads the same feeds) instead of retried within seconds."""
+    from .collectors import reddit_hockey
+
+    with Client(retries=1, pause=2.0) as r_client:
+        reddit_hockey.collect(store, r_client)
 
 
 def _collect_wayback(store: Store, args: argparse.Namespace) -> None:
@@ -146,6 +157,8 @@ def do_backfill(store: Store, args: argparse.Namespace) -> None:
 
             since = args.bluesky_since or date(2023, 7, 1)
             bluesky_puckpedia.collect(store, client, since=since, max_pages=args.max_pages)
+        if "reddit" in chosen:
+            _collect_reddit(store)  # the feeds have no paging: this only reaches the last week
         if "wayback" in chosen:
             _collect_wayback(store, args)
 
@@ -177,6 +190,19 @@ def normalize_store(store: Store) -> dict[str, object]:
         sources += b_sources
         log.info("normalize: %d bluesky posts -> %d claims, %d season rows, %d clauses",
                  len(posts), len(b_claims), len(b_seasons), len(b_clauses))
+
+    if store.counts().get("reddit_posts", 0):
+        from .collectors import reddit_hockey
+        from .normalize import reddit
+
+        r_posts = reddit_hockey.posts(store)
+        r_claims, r_seasons, r_clauses, r_sources = reddit.normalize_posts(r_posts)
+        claims += r_claims
+        season_claims += r_seasons
+        clause_claims += r_clauses
+        sources += r_sources
+        log.info("normalize: %d r/hockey posts -> %d claims, %d season rows, %d clauses",
+                 len(r_posts), len(r_claims), len(r_seasons), len(r_clauses))
 
     n_pages = store.counts().get("wayback_pages", 0)
     if n_pages:

@@ -52,6 +52,7 @@ version bump; `timestamp.json` tells you how fresh the files are.
 | B | NHL.com staff stories | term, total value, AAV, NHL player id | Forge content API |
 | C | ESPN transaction wire | term, type, two-way, PTO; almost never money | ESPN site API |
 | D | PuckPedia's public Bluesky posts | cap hit, year-by-year salary and signing bonus, clauses with list sizes, agent, expiry status | Bluesky public API (no account) |
+| D | r/hockey post titles quoting insiders and club accounts | term, AAV, cap hit or total as quoted, type, one/two-way; the bracket tag (`[Friedman]`, `[NY Rangers PR]`) is the author | Reddit's public Atom feeds (new posts and a signings search), no account; titles quoting PuckPedia, CapWages or Spotrac are skipped |
 | E | CapFriendly pages as preserved by the Internet Archive (site closed July 2024) | full contract history to July 2024: per-season cap hit, base salary, signing and performance bonuses, minors salary, clauses | Wayback Machine, one paced request at a time |
 
 Tiers A–C are official or first-hand publications. D and E are agent-fed
@@ -177,7 +178,9 @@ Flags are `;`-separated on claims and unioned on merged rows. The important ones
 | `35_plus`, `franchise_relocated`, `varying_cap_hit`, `two_way_minors_salary_shown` | tier E oddities kept as written |
 | `player_id_from_roster`, `player_id_by_alias` | the NHL id was attached by name (and team) from the current roster and prospect lists, not stated by the source; `by_alias` means the first name was folded ("Zach" for "Zachary") or a middle name dropped |
 | `derived:span_from_signing_date` | no source stated the seasons; `start_season`/`end_season` were placed from the signing date and term (a deal signed July–June belongs to the season starting that July; an extension to the season after) |
-| `ref:<url>` | tier D: the puckpedia.com link in the post (dropped from merged rows) |
+| `ref:<url>` | tier D: the puckpedia.com link in a PuckPedia post, or the outbound link (usually the quoted X post) of an r/hockey post; dropped from merged rows |
+| `insider:<tag>`, `report` | tier D (r/hockey): the quoted account, and a title phrased as a report ("Report:", a reporter's "agreed"/"signing") rather than an announcement |
+| `money_unlabeled`, `multiple_amounts`, `term_mismatch` | tier D (r/hockey): amounts the title does not tie to a role, several amounts, or a term stated twice differently |
 
 ### How rows are merged
 
@@ -271,10 +274,12 @@ nhl_contracts/
   collectors/nhl_forge.py           poll Forge lists per team (and per player for backfill), store raw stories
   collectors/espn_transactions.py   ESPN transactions by date range
   collectors/bluesky_puckpedia.py   PuckPedia's public Bluesky feed (incremental or back to 2023-07)
+  collectors/reddit_hockey.py       r/hockey Atom feeds: post titles quoting insiders (last week only)
   collectors/wayback_capfriendly.py Internet Archive snapshots of CapFriendly team and player pages
   normalize/model.py                Claim, SeasonClaim, ClauseClaim, Source, tiers
   normalize/contracts.py            NHL.com + ESPN regex extraction, incl. per-season breakdowns
   normalize/puckpedia.py            post text -> claims, seasons, clauses
+  normalize/reddit.py               r/hockey titles -> claims (rumours and non-NHL leagues rejected)
   normalize/capfriendly.py          archived HTML -> contract history, seasons, clauses
   normalize/merge.py                cross-source merge; conflicts named, never resolved
   normalize/llm_fallback.py         OpenRouter extractor for stories the regex cannot read (off without a key)
@@ -308,6 +313,12 @@ nhl_contracts/
   in Yr 5 & 6 / Rep'd by …"). Reposts and other authors are skipped. Team
   hashtags are mapped to tri-codes (typos included); an unknown tag leaves
   `team` null with `team_unmapped`.
+- **r/hockey on Reddit** `https://www.reddit.com/r/hockey/new.rss?limit=100` and a
+  signings search feed. Post titles quote insider posts from X verbatim, which is
+  the only free, terms-compliant way to read them; the Reddit permalink is the
+  cited source and the bracket tag the author. Rumours ("closing in on",
+  "expected to"), other leagues, coaches and executives yield nothing. Reddit
+  rate-limits anonymous readers, so a 429 is skipped until the next run.
 - **CapFriendly via the Wayback Machine**. One CDX query per page finds the
   2024 captures; the latest valid one before the July 2024 shutdown is fetched
   with the `id_` flag (original bytes). Team pages give every player's
