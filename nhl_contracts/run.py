@@ -230,10 +230,11 @@ def main(argv: list[str] | None = None) -> int:
             do_collect(store, args)
         if args.step == "backfill":
             do_backfill(store, args)
-        if args.step in ("collect", "backfill", "all") and not args.no_dump:
-            do_dump(store, args, wayback=(args.step == "backfill" and "wayback" in _sources(args)))
         if args.step in ("normalize", "export", "all", "backfill"):
             do_export(store, args)
+        # after the export: normalizing fills the LLM cache, which must reach the JSONL copies
+        if args.step in ("collect", "backfill", "all") and not args.no_dump:
+            do_dump(store, args, wayback=(args.step == "backfill" and "wayback" in _sources(args)))
     finally:
         store.close()
         if extractor is not None and (extractor.calls or extractor.cache_hits):
