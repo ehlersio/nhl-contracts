@@ -517,7 +517,7 @@
 {"full_name": "Cole Koepke", "kind": "roster", "player_id": 8481043, "team": "WPG", "updated_at": "2026-10-24"}
 {"full_name": "Semyon Kizimov", "kind": "prospect", "player_id": 8481054, "team": "TOR", "updated_at": "2026-10-24"}
 {"full_name": "Spencer Stastney", "kind": "roster", "player_id": 8481056, "team": "PIT", "updated_at": "2026-10-24"}
-{"full_name": "Mitchell Gibson", "kind": "prospect", "player_id": 8481064, "team": "WSH", "updated_at": "2026-10-24"}
+{"full_name": "Mitchell Gibson", "kind": "roster", "player_id": 8481064, "team": "WSH", "updated_at": "2026-10-24"}
 {"full_name": "Yegor Sharangovich", "kind": "roster", "player_id": 8481068, "team": "CGY", "updated_at": "2026-10-24"}
 {"full_name": "Simon Benoit", "kind": "roster", "player_id": 8481122, "team": "PHI", "updated_at": "2026-10-24"}
 {"full_name": "Cole Reinhardt", "kind": "roster", "player_id": 8481133, "team": "FLA", "updated_at": "2026-10-24"}
@@ -791,7 +791,7 @@
 {"full_name": "Taylor Makar", "kind": "roster", "player_id": 8482953, "team": "COL", "updated_at": "2026-10-24"}
 {"full_name": "Arber Xhekaj", "kind": "roster", "player_id": 8482964, "team": "MTL", "updated_at": "2026-10-24"}
 {"full_name": "Jet Greaves", "kind": "roster", "player_id": 8482982, "team": "CBJ", "updated_at": "2026-10-24"}
-{"full_name": "Avery Hayes", "kind": "prospect", "player_id": 8482993, "team": "PIT", "updated_at": "2026-10-24"}
+{"full_name": "Avery Hayes", "kind": "roster", "player_id": 8482993, "team": "PIT", "updated_at": "2026-10-24"}
 {"full_name": "Brett Hyland", "kind": "prospect", "player_id": 8483007, "team": "WSH", "updated_at": "2026-10-24"}
 {"full_name": "Jon-Randall Avon", "kind": "prospect", "player_id": 8483010, "team": "SEA", "updated_at": "2026-10-24"}
 {"full_name": "Logan Morrison", "kind": "prospect", "player_id": 8483012, "team": "SEA", "updated_at": "2026-10-24"}
