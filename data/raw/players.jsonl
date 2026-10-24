@@ -510,7 +510,7 @@
 {"full_name": "Justus Annunen", "kind": "roster", "player_id": 8481020, "team": "NSH", "updated_at": "2026-10-24"}
 {"full_name": "Linus Karlsson", "kind": "roster", "player_id": 8481024, "team": "VAN", "updated_at": "2026-10-24"}
 {"full_name": "Martin Pospisil", "kind": "roster", "player_id": 8481028, "team": "CGY", "updated_at": "2026-10-24"}
-{"full_name": "Jack St. Ivany", "kind": "roster", "player_id": 8481030, "team": "WPG", "updated_at": "2026-10-24"}
+{"full_name": "John St. Ivany", "kind": "roster", "player_id": 8481030, "team": "WSH", "updated_at": "2026-10-24"}
 {"full_name": "Paul Cotter", "kind": "roster", "player_id": 8481032, "team": "VAN", "updated_at": "2026-10-24"}
 {"full_name": "Akira Schmid", "kind": "roster", "player_id": 8481033, "team": "FLA", "updated_at": "2026-10-24"}
 {"full_name": "Samuel Ersson", "kind": "roster", "player_id": 8481035, "team": "OTT", "updated_at": "2026-10-24"}
@@ -615,7 +615,7 @@
 {"full_name": "Jack Finley", "kind": "prospect", "player_id": 8482090, "team": "STL", "updated_at": "2026-10-24"}
 {"full_name": "Ridly Greig", "kind": "roster", "player_id": 8482092, "team": "OTT", "updated_at": "2026-10-24"}
 {"full_name": "Seth Jarvis", "kind": "roster", "player_id": 8482093, "team": "CAR", "updated_at": "2026-10-24"}
-{"full_name": "Daemon Hunt", "kind": "roster", "player_id": 8482094, "team": "MIN", "updated_at": "2026-10-24"}
+{"full_name": "Daemon Hunt", "kind": "roster", "player_id": 8482094, "team": "NSH", "updated_at": "2026-10-24"}
 {"full_name": "Tyler Kleven", "kind": "roster", "player_id": 8482095, "team": "OTT", "updated_at": "2026-10-24"}
 {"full_name": "Jack Quinn", "kind": "roster", "player_id": 8482097, "team": "BUF", "updated_at": "2026-10-24"}
 {"full_name": "Jake Sanderson", "kind": "roster", "player_id": 8482105, "team": "OTT", "updated_at": "2026-10-24"}
@@ -851,7 +851,7 @@
 {"full_name": "Frank Nazar", "kind": "roster", "player_id": 8483493, "team": "CHI", "updated_at": "2026-10-24"}
 {"full_name": "Ty Nelson", "kind": "prospect", "player_id": 8483494, "team": "SEA", "updated_at": "2026-10-24"}
 {"full_name": "Simon Nemec", "kind": "roster", "player_id": 8483495, "team": "CGY", "updated_at": "2026-10-24"}
-{"full_name": "Jani Nyman", "kind": "prospect", "player_id": 8483497, "team": "SEA", "updated_at": "2026-10-24"}
+{"full_name": "Jani Nyman", "kind": "roster", "player_id": 8483497, "team": "SEA", "updated_at": "2026-10-24"}
 {"full_name": "Liam Ohgren", "kind": "roster", "player_id": 8483499, "team": "VAN", "updated_at": "2026-10-24"}
 {"full_name": "Noah Ostlund", "kind": "roster", "player_id": 8483500, "team": "BUF", "updated_at": "2026-10-24"}
 {"full_name": "Alexander Perevalov", "kind": "prospect", "player_id": 8483501, "team": "CAR", "updated_at": "2026-10-24"}
