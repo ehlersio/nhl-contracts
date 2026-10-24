@@ -131,3 +131,14 @@ def test_span_inferred_from_signing_date_is_flagged():
     assert merge_contracts([july])[0][0]["start_season"] == "2026-27"
     stated = claim("Marat Khusnutdinov", "BOS", "2026-10-21", "A", "forge:k", term=3, start="2027-28", end="2029-30")
     assert "derived:span_from_signing_date" not in merge_contracts([stated])[0][0]["flags"]
+
+
+def test_span_rules_for_june_signings_and_known_start():
+    june = merge_contracts([claim("Matt Rempe", "NYR", "2025-06-18", "C", "espn:r", pid=1, term=2)])[0][0]
+    assert (june["start_season"], june["end_season"]) == ("2025-26", "2026-27")
+    march = merge_contracts([claim("Jordan Greenway", "BUF", "2025-03-05", "C", "espn:g", pid=2, term=2)])[0][0]
+    assert march["start_season"] == "2024-25"  # a mid-season deal takes effect at once
+    half = claim("Frank Vatrano", "ANA", "2025-01-06", "B", "forge:v", pid=3, term=3, start="2025-26",
+                 ctype="extension")
+    r = merge_contracts([half])[0][0]
+    assert r["end_season"] == "2027-28" and "derived:end_from_term" in r["flags"]

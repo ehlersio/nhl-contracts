@@ -152,6 +152,9 @@ def test_espn_rows(espn_payload):
     multi = claims_for("Signed F Caedan Bankier and Ds Carson Lambos and David Spacek to one-year, two-way contracts.")
     assert [c.player_name for c in multi] == ["Caedan Bankier", "Carson Lambos", "David Spacek"]
     assert all(c.one_way is False and c.term_years == 1 for c in multi)
+    ext = extract_espn({"key": "k2", "date": "2024-09-16T07:00Z", "team_abbrev": "PIT",
+                        "description": "Signed C Sidney Crosby to a two-year contract extension."})[0]
+    assert ext[0].contract_type == "extension" and ext[0].term_years == 2
     nj = claims_for("Re-signed F Ben Steeves to a one-year, two-way contract. "
                     "Re-signed G Jakub Málek to a two-year contract.")
     assert [(c.player_name, c.term_years, c.re_signed, c.team) for c in nj] == [

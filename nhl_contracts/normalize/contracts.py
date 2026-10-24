@@ -1095,7 +1095,7 @@ def extract_espn(row: dict[str, Any]) -> tuple[list[Claim], Source | None]:
             continue
         deal = m.group("deal")
         term = term_years(deal)
-        ctype = contract_type(deal, "")
+        ctype = contract_type(sent, "")  # "to a two-year contract extension": the deal phrase stops at "contract"
         one_way = True if ONE_WAY.search(deal) else (False if TWO_WAY.search(deal) else None)
         money = classify_money(deal)
         names = _espn_names(m.group("names"))

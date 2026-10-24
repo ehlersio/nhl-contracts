@@ -116,17 +116,31 @@ def assign_player_ids(claims: list[Claim], players: dict[int, tuple[str, str | N
 
 
 def infer_span(row: dict[str, Any]) -> None:
-    """Fill start/end season on a merged row from its signing date and term when no
-    source stated them: a deal signed July-June belongs to the season starting that
-    July; an extension starts the season after. Flagged, so consumers can drop it."""
-    if row["start_season"] or row["end_season"] or not row["term_years"] or not row["signed_at"]:
+    """Fill the season span of a merged row when no source stated it. Flagged, so
+    consumers can drop it.
+
+    - start known, end missing: end = start + term - 1 (``derived:end_from_term``).
+    - neither known: a deal signed July to April belongs to the season that July
+      starts (a mid-season signing takes effect at once); a deal signed in May or
+      June, after the season, belongs to the coming one; an extension starts the
+      season after the one it was signed in (``derived:span_from_signing_date``).
+    """
+    term = row["term_years"]
+    flags = set(filter(None, row["flags"].split(";")))
+    if row["start_season"] and not row["end_season"] and term:
+        row["end_season"] = shift_season(row["start_season"], term - 1)
+        flags.add("derived:end_from_term")
+    elif not row["start_season"] and not row["end_season"] and term and row["signed_at"]:
+        signed = date.fromisoformat(row["signed_at"])
+        start = season_from_date(signed)
+        if signed.month in (5, 6) or row["contract_type"] == "extension":
+            start = shift_season(start, 1)
+        row["start_season"] = start
+        row["end_season"] = shift_season(start, term - 1)
+        flags.add("derived:span_from_signing_date")
+    else:
         return
-    start = season_from_date(date.fromisoformat(row["signed_at"]))
-    if row["contract_type"] == "extension":
-        start = shift_season(start, 1)
-    row["start_season"] = start
-    row["end_season"] = shift_season(start, row["term_years"] - 1)
-    row["flags"] = ";".join(sorted(set(filter(None, row["flags"].split(";"))) | {"derived:span_from_signing_date"}))
+    row["flags"] = ";".join(sorted(flags))
 
 
 def _surname_key_lookup(who: str, c: Claim, by_player: dict[str, list[Claim]]) -> str:
