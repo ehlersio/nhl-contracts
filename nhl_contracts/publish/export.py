@@ -14,7 +14,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from .. import __version__
-from ..normalize.model import Claim, ClauseClaim, SeasonClaim, Source
+from ..normalize.model import Claim, ClauseClaim, DeadCapClaim, SeasonClaim, Source
 
 CONTRACT_COLUMNS = [
     "contract_key", "player_name", "player_id", "team", "signed_at", "signing_date_stated", "contract_type",
@@ -47,6 +47,14 @@ CLAUSE_CLAIM_COLUMNS = [
     "claim_id", "contract_key", "kind", "season_from", "season_to", "list_size", "list_type", "source_id",
     "confidence_tier", "evidence",
 ]
+DEAD_CAP_COLUMNS = [
+    "team", "kind", "player_name", "player_id", "counterparty", "season", "cap_hit_usd", "pct", "contract_key",
+    "event_date", "conflicts", "n_sources", "best_tier", "source_ids", "flags",
+]
+DEAD_CAP_CLAIM_COLUMNS = [
+    "claim_id", "team", "kind", "player_name", "player_id", "counterparty", "season", "cap_hit_usd", "pct",
+    "contract_key", "event_date", "source_id", "confidence_tier", "flags", "evidence",
+]
 SOURCE_COLUMNS = ["source_id", "kind", "url", "publisher", "author", "published_at",
                   "confidence_tier", "headline"]
 
@@ -56,7 +64,7 @@ SCHEMA_TYPES = {
     "minors_salary_usd": pa.int64(), "one_way": pa.bool_(), "re_signed": pa.bool_(),
     "n_sources": pa.int64(), "signing_date_stated": pa.bool_(), "base_salary_usd": pa.int64(),
     "signing_bonus_usd": pa.int64(), "performance_bonus_usd": pa.int64(), "total_salary_usd": pa.int64(),
-    "list_size": pa.int64(),
+    "list_size": pa.int64(), "pct": pa.float64(),
 }
 
 
@@ -101,6 +109,8 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
            season_claims: list[SeasonClaim] | None = None,
            clauses: list[dict[str, Any]] | None = None,
            clause_claims: list[ClauseClaim] | None = None,
+           dead_cap: list[dict[str, Any]] | None = None,
+           dead_cap_claims: list[DeadCapClaim] | None = None,
            store_counts: dict[str, int] | None = None) -> dict[str, Any]:
     dist.mkdir(parents=True, exist_ok=True)
     c_rows = _rows(contracts, CONTRACT_COLUMNS)
@@ -109,6 +119,8 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
     sc_rows = _rows([s.to_dict() for s in (season_claims or [])], SEASON_CLAIM_COLUMNS)
     cz_rows = _rows(clauses or [], CLAUSE_COLUMNS)
     cc_rows = _rows([c.to_dict() for c in (clause_claims or [])], CLAUSE_CLAIM_COLUMNS)
+    dc_rows = _rows(dead_cap or [], DEAD_CAP_COLUMNS)
+    dcc_rows = _rows([c.to_dict() for c in (dead_cap_claims or [])], DEAD_CAP_CLAIM_COLUMNS)
     seen: set[str] = set()
     s_rows = []
     for s in sources:
@@ -125,6 +137,8 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
     files += _write_set(sc_rows, SEASON_CLAIM_COLUMNS, dist, "season_claims")
     files += _write_set(cz_rows, CLAUSE_COLUMNS, dist, "clauses")
     files += _write_set(cc_rows, CLAUSE_CLAIM_COLUMNS, dist, "clause_claims")
+    files += _write_set(dc_rows, DEAD_CAP_COLUMNS, dist, "dead_cap")
+    files += _write_set(dcc_rows, DEAD_CAP_CLAIM_COLUMNS, dist, "dead_cap_claims")
     _write_csv(s_rows, SOURCE_COLUMNS, dist / "sources.csv")
     files += ["sources.csv", "timestamp.json"]
 
@@ -139,6 +153,8 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
         "n_season_claims": len(sc_rows),
         "n_clauses": len(cz_rows),
         "n_clause_claims": len(cc_rows),
+        "n_dead_cap": len(dc_rows),
+        "n_dead_cap_claims": len(dcc_rows),
         "tiers": {t: sum(1 for r in cl_rows if r["confidence_tier"] == t) for t in "ABCDE"},
         "earliest_signed_at": min((r["signed_at"] for r in c_rows), default=None),
         "latest_signed_at": max((r["signed_at"] for r in c_rows), default=None),

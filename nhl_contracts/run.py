@@ -26,10 +26,11 @@ from pathlib import Path
 from .collectors import espn_transactions, nhl_forge
 from .config import DIST_DIR, RAW_JSONL_DIR, STORE_PATH, WAYBACK_STORE
 from .http import Client
+from .normalize import dead_cap as dead_cap_mod
 from .normalize import llm_fallback
 from .normalize.contracts import normalize_all
 from .normalize.merge import assign_player_ids, merge_clauses, merge_contracts, merge_seasons
-from .normalize.model import Claim, ClauseClaim, SeasonClaim, Source
+from .normalize.model import Claim, ClauseClaim, DeadCapClaim, SeasonClaim, Source
 from .publish.export import export
 from .publish.gaps import find_gaps, write_gaps
 from .store import Store
@@ -169,6 +170,7 @@ def normalize_store(store: Store) -> dict[str, object]:
     sources: list[Source] = []
     season_claims: list[SeasonClaim] = []
     clause_claims: list[ClauseClaim] = []
+    dc_claims: list[DeadCapClaim] = []
 
     stories = list(store.stories())
     espn_rows = list(store.espn_rows())
@@ -190,6 +192,10 @@ def normalize_store(store: Store) -> dict[str, object]:
         sources += b_sources
         log.info("normalize: %d bluesky posts -> %d claims, %d season rows, %d clauses",
                  len(posts), len(b_claims), len(b_seasons), len(b_clauses))
+        d_claims, d_sources = dead_cap_mod.normalize_posts(posts)
+        dc_claims += d_claims
+        sources += d_sources
+        log.info("normalize: bluesky posts -> %d dead-cap rows (retained salary, buyouts)", len(d_claims))
 
     if store.counts().get("reddit_posts", 0):
         from .collectors import reddit_hockey
@@ -215,6 +221,10 @@ def normalize_store(store: Store) -> dict[str, object]:
         sources += w_sources
         log.info("normalize: %d archived CapFriendly pages -> %d claims, %d season rows, %d clauses",
                  n_pages, len(w_claims), len(w_seasons), len(w_clauses))
+        wd_claims, wd_sources = capfriendly.dead_cap_rows_from_store(store)
+        dc_claims += wd_claims
+        sources += wd_sources
+        log.info("normalize: archived team pages -> %d dead-cap rows", len(wd_claims))
 
     filled = assign_player_ids(claims, store.players())
     if filled:
@@ -222,11 +232,17 @@ def normalize_store(store: Store) -> dict[str, object]:
     contracts, key_map = merge_contracts(claims)
     seasons = merge_seasons(season_claims, key_map)
     clauses = merge_clauses(clause_claims, key_map)
+    assign_player_ids(dc_claims, store.players())  # type: ignore[arg-type]
+    extended = dead_cap_mod.extend_retentions(dc_claims, contracts)
+    dead_cap = dead_cap_mod.merge_dead_cap(dc_claims)
+    log.info("normalize: %d dead-cap claims (%d seasons filled from contracts) -> %d rows",
+             len(dc_claims), extended, len(dead_cap))
     if llm_fallback.wanted:
         log.info("llm fallback: %d stories eligible, %d answered%s", len(llm_fallback.wanted),
                  len(llm_fallback.used), "" if llm_fallback.is_enabled() else " (no extractor registered)")
     return {"claims": claims, "sources": sources, "contracts": contracts, "seasons": seasons,
-            "season_claims": season_claims, "clauses": clauses, "clause_claims": clause_claims}
+            "season_claims": season_claims, "clauses": clauses, "clause_claims": clause_claims,
+            "dead_cap": dead_cap, "dead_cap_claims": dc_claims}
 
 
 def do_export(store: Store, args: argparse.Namespace) -> None:
@@ -234,8 +250,9 @@ def do_export(store: Store, args: argparse.Namespace) -> None:
     stamp = export(n["contracts"], n["claims"], n["sources"], Path(args.dist),  # type: ignore[arg-type]
                    seasons=n["seasons"], season_claims=n["season_claims"],  # type: ignore[arg-type]
                    clauses=n["clauses"], clause_claims=n["clause_claims"],  # type: ignore[arg-type]
+                   dead_cap=n["dead_cap"], dead_cap_claims=n["dead_cap_claims"],  # type: ignore[arg-type]
                    store_counts=store.counts())
-    keys = ("n_contracts", "n_claims", "n_sources", "n_conflicts", "n_contract_seasons", "n_clauses")
+    keys = ("n_contracts", "n_claims", "n_sources", "n_conflicts", "n_contract_seasons", "n_clauses", "n_dead_cap")
     log.info("export: %s", json.dumps({k: stamp[k] for k in keys}))
     gaps = find_gaps(store, n["contracts"], n["seasons"])  # type: ignore[arg-type]
     counts = write_gaps(gaps, Path(args.dist))

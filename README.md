@@ -72,11 +72,17 @@ thestanleycap.com, and nothing from a paid API.
   (tier E).
 - Clauses (NMC, NTC, modified NTC with list size) from tier D posts and tier E
   team pages. Modified-clause list sizes are sometimes never made public.
+- Dead cap (`dead_cap`): salary retained on traded players and buyout charges,
+  per team and season, from PuckPedia's trade and buyout posts (tier D, from
+  mid-2023) and the archived CapFriendly team pages (tier E, every charge
+  running in July 2024 with its full remaining schedule). A retention whose
+  post does not say how many seasons are left is carried through the end of
+  the player's contract in this dataset and flagged. Not covered: LTIR,
+  performance-bonus overages, recapture penalties, and retentions that only
+  the trade call itself announced.
 - Not covered: contracts signed after July 2024 that no tier A–D source
-  described; retained-salary and buyout cap charges (tier E team pages carry
-  them but they are not modelled yet); performance-bonus achievement; anything
-  the sources got wrong (figures are kept as written and flagged when they fail
-  a sanity check).
+  described; performance-bonus achievement; anything the sources got wrong
+  (figures are kept as written and flagged when they fail a sanity check).
 
 ## Files (written to `dist/`, later attached to a GitHub Release tag)
 
@@ -88,6 +94,8 @@ thestanleycap.com, and nothing from a paid API.
 | `season_claims.*` | one row per (source, contract, season) | the per-source season rows |
 | `clauses.*` | one row per (contract, clause kind, season range) | NMC / NTC / M-NTC with list size and list type when stated |
 | `clause_claims.*` | one row per (source, contract, clause) | the per-source clause rows |
+| `dead_cap.*` | one row per (team, kind, player, season) | cap charges that are not roster contracts: `retained` salary on a traded player and `buyout` charges, with the retained `pct` and the acquiring `counterparty` when stated; merged with `conflicts` |
+| `dead_cap_claims.*` | one row per (source, team, player, season) | the per-source dead-cap rows with evidence and flags |
 | `sources.csv` | one row per source document | URL, publisher, author, published time, tier |
 | `gaps.csv` / `.json` | one row per current NHL roster player the dataset does not fully cover | `gap` = `no_contract` / `no_money` / `no_structure`; `status` says whether the player has older rows, is mentioned in the raw store (a parsing or matching gap) or is absent from every source; hints quote the latest ESPN row, NHL.com headline and Bluesky post that name them |
 | `timestamp.json` | run metadata | `updated_at`, counts per table and tier, file list, licence |
@@ -150,6 +158,21 @@ from) and `flags`.
 | `season_from`, `season_to` | the seasons the clause covers |
 | `list_size` | number of teams on a modified list, when stated |
 | `list_type` | `no-trade` when the list names teams the player cannot be traded to; null when the source does not say which kind of list it is |
+
+### `dead_cap`
+
+| column | meaning |
+|---|---|
+| `team` | the team carrying the charge (the retaining team, or the team that bought the player out) |
+| `kind` | `retained` or `buyout` |
+| `player_name`, `player_id` | the player; the id when a roster list or a source gives it |
+| `counterparty` | for a retention, the team that acquired the player, when the source names it (PuckPedia trade posts; the archived team pages do not) |
+| `season` | the season the charge applies to |
+| `cap_hit_usd` | the charge for that season, as stated, or the stated percentage of the player's cap hit on the trade line (`derived:charge_from_pct`) |
+| `pct` | the retained share when stated, or derived from a stated amount and cap hit (`derived:pct_from_amounts`); null for buyouts |
+| `contract_key` | the player's contract in `contracts` when the span was filled from it |
+| `event_date` | the trade or buyout date, when a dated post is the source |
+| flags | `end_season_unknown` (the post did not say how many seasons remain) with `derived:span_from_contract` once filled; `retainer_unknown` (a three-team deal the parser could not attribute); `charge_unknown` (a percentage with no cap hit on the line); `team_page_dead_cap` (tier E rows) |
 
 ### Flags
 
