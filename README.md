@@ -452,8 +452,10 @@ and upload `dist/*` to the same tag with `--clobber`, so clients always
 download the latest files from one fixed URL. The real schedule is `workflow_dispatch`
 called by the EyeWall Cloudflare Worker (hourly in season, every 15 minutes
 from July 1 to 15, since GitHub cron runs hours late); a daily GitHub cron is
-the safety net. The workflow passes `OPENROUTER_API_KEY` from the repository
-secrets when it exists.
+the safety net. Runs share the `update-contracts` concurrency group, so an
+overlapping dispatch queues behind the running one; it checks out the branch
+tip when it starts and rebases its data commit before pushing. The workflow
+passes `OPENROUTER_API_KEY` from the repository secrets when it exists.
 
 Repository: `ehlersio/nhl-contracts`; packages: `nhl-contracts` on PyPI and npm.
 
