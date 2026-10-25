@@ -865,7 +865,7 @@
 {"full_name": "Matyas Sapovaliv", "kind": "prospect", "player_id": 8483511, "team": "VGK", "updated_at": "2026-10-25"}
 {"full_name": "Matt Savoie", "kind": "roster", "player_id": 8483512, "team": "EDM", "updated_at": "2026-10-25"}
 {"full_name": "Reid Schaefer", "kind": "roster", "player_id": 8483513, "team": "NSH", "updated_at": "2026-10-25"}
-{"full_name": "Matthew Seminoff", "kind": "prospect", "player_id": 8483514, "team": "DAL", "updated_at": "2026-10-25"}
+{"full_name": "Matthew Seminoff", "kind": "roster", "player_id": 8483514, "team": "DAL", "updated_at": "2026-10-25"}
 {"full_name": "Juraj Slafkovský", "kind": "roster", "player_id": 8483515, "team": "MTL", "updated_at": "2026-10-25"}
 {"full_name": "Jimmy Snuggerud", "kind": "roster", "player_id": 8483516, "team": "STL", "updated_at": "2026-10-25"}
 {"full_name": "Alexander Suzdalev", "kind": "prospect", "player_id": 8483518, "team": "WSH", "updated_at": "2026-10-25"}
@@ -1366,7 +1366,7 @@
 {"full_name": "Vilho Vanhatalo", "kind": "prospect", "player_id": 8486111, "team": "FLA", "updated_at": "2026-10-25"}
 {"full_name": "Cole Zurawski", "kind": "prospect", "player_id": 8486116, "team": "FLA", "updated_at": "2026-10-25"}
 {"full_name": "Jack Anderson", "kind": "prospect", "player_id": 8486126, "team": "DAL", "updated_at": "2026-10-25"}
-{"full_name": "Dylan Hryckowian", "kind": "prospect", "player_id": 8486130, "team": "DAL", "updated_at": "2026-10-25"}
+{"full_name": "Dylan Hryckowian", "kind": "roster", "player_id": 8486130, "team": "DAL", "updated_at": "2026-10-25"}
 {"full_name": "Felix Trudeau", "kind": "prospect", "player_id": 8486134, "team": "STL", "updated_at": "2026-10-25"}
 {"full_name": "Lucas Wahlin", "kind": "prospect", "player_id": 8486141, "team": "WPG", "updated_at": "2026-10-25"}
 {"full_name": "Owen Michaels", "kind": "roster", "player_id": 8486161, "team": "EDM", "updated_at": "2026-10-25"}
