@@ -77,7 +77,14 @@ thestanleycap.com, and nothing from a paid API.
   mid-2023) and the archived CapFriendly team pages (tier E, every charge
   running in July 2024 with its full remaining schedule). A retention whose
   post does not say how many seasons are left is carried through the end of
-  the player's contract in this dataset and flagged. Not covered: LTIR,
+  the player's contract in this dataset and flagged. A buyout ends the
+  contract in `contracts`: `end_season` becomes the season before the first
+  buyout charge, the signed end stays in `end_season_signed`, `bought_out` is
+  true, and the contract's `contract_seasons` rows after the new end are
+  dropped (the charges are in `dead_cap`). The archived team pages show
+  charges from 2024-25 on only, so a buyout known from them alone gives an
+  end of 2023-24 at the latest (flag `buyout_season_upper_bound`; Parise's and
+  Suter's 2021 buyouts really ended their deals in 2020-21). Not covered: LTIR,
   performance-bonus overages, recapture penalties, and retentions that only
   the trade call itself announced.
 - Not covered: contracts signed after July 2024 that no tier A–D source
@@ -119,7 +126,9 @@ thestanleycap.com, and nothing from a paid API.
 | `total_usd` | int, nullable | stated total value; for one-year deals equals the stated salary |
 | `nhl_salary_usd` / `minors_salary_usd` | int, nullable | the two halves of a two-way contract when stated |
 | `one_way` | bool, nullable | true = one-way, false = two-way, null = not stated |
-| `start_season` / `end_season` | string, nullable | `2026-27` style, stated or derived (`through the 2029-30 season` + term) |
+| `start_season` / `end_season` | string, nullable | `2026-27` style, stated or derived (`through the 2029-30 season` + term); for a bought-out contract `end_season` is the last season before the buyout's first charge |
+| `end_season_signed` | string, nullable | the end the contract was signed through, on bought-out rows only (null otherwise) |
+| `bought_out` | bool | a `buyout` row in `dead_cap` buys this contract out (see the flags `bought_out*`) |
 | `expiry_status` | string, nullable | UFA / RFA (and variants) at expiry, when a source states it |
 | `agent` | string, nullable | the player's representative when a source names one (tier D) |
 | `re_signed` | bool | the source used "re-sign" wording |
@@ -170,7 +179,7 @@ from) and `flags`.
 | `season` | the season the charge applies to |
 | `cap_hit_usd` | the charge for that season, as stated, or the stated percentage of the player's cap hit on the trade line (`derived:charge_from_pct`) |
 | `pct` | the retained share when stated, or derived from a stated amount and cap hit (`derived:pct_from_amounts`); null for buyouts |
-| `contract_key` | the player's contract in `contracts` when the span was filled from it |
+| `contract_key` | the player's contract in `contracts`: the one a retention's span was filled from, or the one a buyout ended |
 | `event_date` | the trade or buyout date, when a dated post is the source |
 | flags | `end_season_unknown` (the post did not say how many seasons remain) with `derived:span_from_contract` once filled; `retainer_unknown` (a three-team deal the parser could not attribute); `charge_unknown` (a percentage with no cap hit on the line); `team_page_dead_cap` (tier E rows) |
 
@@ -201,6 +210,10 @@ Flags are `;`-separated on claims and unioned on merged rows. The important ones
 | `35_plus`, `franchise_relocated`, `varying_cap_hit`, `two_way_minors_salary_shown` | tier E oddities kept as written |
 | `player_id_from_roster`, `player_id_by_alias` | the NHL id was attached by name (and team) from the current roster and prospect lists, not stated by the source; `by_alias` means the first name was folded ("Zach" for "Zachary") or a middle name dropped |
 | `derived:span_from_signing_date` | no source stated the seasons; `start_season`/`end_season` were placed from the signing date and term (a deal signed July–June belongs to the season starting that July; an extension to the season after) |
+| `bought_out`, `derived:end_season_from_buyout` | a buyout charged from season S ended the contract: `end_season` is the season before S and the signed end is in `end_season_signed`. The player is matched by NHL id (else name) and the contract is the one whose signed span covers S, preferring the buyout team's rows; another team's deal that starts in or after S is the next contract and is left alone |
+| `bought_out_team_mismatch` | the bought-out contract was signed with another team (the player was traded before the buyout) |
+| `bought_out_before_start` | the buyout's first charge is in or before the contract's first season; `end_season` is kept as signed |
+| `buyout_season_upper_bound` | the first charge seen is the first season of the archived July 2024 team page (tier E); an older buyout ended the contract earlier than `end_season` |
 | `ref:<url>` | tier D: the puckpedia.com link in a PuckPedia post, or the outbound link (usually the quoted X post) of an r/hockey post; dropped from merged rows |
 | `insider:<tag>`, `report` | tier D (r/hockey): the quoted account, and a title phrased as a report ("Report:", a reporter's "agreed"/"signing") rather than an announcement |
 | `money_unlabeled`, `multiple_amounts`, `term_mismatch` | tier D (r/hockey): amounts the title does not tie to a role, several amounts, or a term stated twice differently |
