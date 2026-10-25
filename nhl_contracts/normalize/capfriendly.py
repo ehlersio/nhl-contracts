@@ -35,7 +35,7 @@ from html.parser import HTMLParser
 from typing import Any
 from urllib.parse import urlparse
 
-from .model import Claim, ClauseClaim, SeasonClaim, Source, claim_id, make_key
+from .model import Claim, ClauseClaim, DeadCapClaim, SeasonClaim, Source, claim_id, make_key
 
 PUBLISHER = "CapFriendly (Internet Archive snapshot)"
 SOURCE_KIND = "wayback_capfriendly"
@@ -437,14 +437,20 @@ def _team_row(cells: list[Node], idx: dict[str, int], season_cols: list[tuple[in
     }
 
 
-def parse_team_buyouts(html: str, snapshot_url: str, snapshot_ts: str) -> list[dict[str, Any]]:
-    """Rows of the "Buyout History" table: the buyout cap charge per remaining season.
-    Each season dict: season, cap_hit, aav, total_salary, signing_bonus (as written)."""
+DEAD_CAP_GROUPS = (("Buyout History", "buyout"), ("Retained Salary", "retained"))
+
+
+def parse_team_dead_cap(html: str, snapshot_url: str, snapshot_ts: str) -> list[dict[str, Any]]:
+    """Rows of the DEAD CAP tables: "Buyout History" (``kind`` buyout) and "Retained
+    Salary" (``kind`` retained), one per player with the charge per remaining season.
+    Each season dict: season, cap_hit, aav, total_salary, signing_bonus (as written).
+    The retained table does not name the acquiring team."""
     root = parse_html(html)
     slug, code = _page_team(root, snapshot_url)
     out: list[dict[str, Any]] = []
     for _section, group, table in _team_tables(root):
-        if not group.startswith("Buyout History"):
+        kind = next((k for prefix, k in DEAD_CAP_GROUPS if group.startswith(prefix)), None)
+        if kind is None:
             continue
         header = _header(table)
         season_cols = [(i, SEASON_RE.search(h).group(1)) for i, h in enumerate(header) if SEASON_RE.search(h)]
@@ -460,12 +466,55 @@ def parse_team_buyouts(html: str, snapshot_url: str, snapshot_ts: str) -> list[d
                 if sc:
                     seasons.append({k: sc[k] for k in ("season", "cap_hit", "aav", "total_salary", "signing_bonus")})
             out.append({
-                "name": flip_name(name_raw), "name_raw": name_raw,
+                "name": flip_name(name_raw), "name_raw": name_raw, "kind": kind, "group": group,
                 "player_path": path_of(link.attrs["href"]) if link else None,
                 "team_slug": slug, "team": code, "seasons": seasons,
                 "snapshot_url": snapshot_url, "snapshot_ts": snapshot_ts,
             })
     return out
+
+
+def parse_team_buyouts(html: str, snapshot_url: str, snapshot_ts: str) -> list[dict[str, Any]]:
+    """The buyout rows of :func:`parse_team_dead_cap` (kept for callers of the old name)."""
+    return [r for r in parse_team_dead_cap(html, snapshot_url, snapshot_ts) if r["kind"] == "buyout"]
+
+
+def dead_cap_claims(rows: list[dict[str, Any]]) -> tuple[list[DeadCapClaim], list[Source]]:
+    """Dead-cap table rows (newest snapshot per team only) -> tier E claims, one per
+    (player, season), and the page sources."""
+    newest: dict[str, str] = {}
+    for r in rows:
+        if r["snapshot_ts"] > newest.get(r["team_slug"], ""):
+            newest[r["team_slug"]] = r["snapshot_ts"]
+    claims: list[DeadCapClaim] = []
+    sources: dict[str, Source] = {}
+    for r in rows:
+        if r["snapshot_ts"] != newest[r["team_slug"]]:
+            continue
+        src = _source(r["snapshot_url"], r["snapshot_ts"], f"CapFriendly team page: {r['team_slug']}")
+        sources.setdefault(src.source_id, src)
+        for sc in r["seasons"]:
+            if sc.get("cap_hit") is None:
+                continue
+            claims.append(DeadCapClaim(
+                claim_id=claim_id(f"{src.source_id}#{r['kind']}:{sc['season']}", r["name"], None),
+                kind=r["kind"], player_name=r["name"], player_id=None, team=r.get("team"), counterparty=None,
+                season=sc["season"], cap_hit_usd=sc["cap_hit"], pct=None, contract_key=None, event_date=None,
+                source_id=src.source_id, confidence_tier=TIER, flags=["team_page_dead_cap"],
+                evidence=f"team page {r['group']}: {r['name_raw']} | {sc['season']} ${sc['cap_hit']:,}",
+            ))
+    return claims, list(sources.values())
+
+
+def dead_cap_rows_from_store(store: Any) -> tuple[list[DeadCapClaim], list[Source]]:
+    """Every stored ``ok`` team page -> dead-cap claims (buyouts and retained salary)."""
+    rows: list[dict[str, Any]] = []
+    for p in store.wayback_pages(kind="team"):
+        if "/teams/coyotes" in p["url"]:
+            continue
+        rows.extend(parse_team_dead_cap(gzip.decompress(p["html"]).decode("utf-8", "replace"),
+                                        p["snapshot_url"], p["snapshot_ts"]))
+    return dead_cap_claims(rows)
 
 
 def team_page_player_paths(html: str) -> list[str]:

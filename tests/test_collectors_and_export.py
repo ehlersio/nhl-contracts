@@ -81,7 +81,8 @@ def test_export_writes_all_files(tmp_path, espn_payload, teams):
     stamp = export(merged, claims, sources, tmp_path / "dist")
     names = {p.name for p in (tmp_path / "dist").iterdir()}
     expected = {"sources.csv", "timestamp.json"}
-    for stem in ("contracts", "claims", "contract_seasons", "season_claims", "clauses", "clause_claims"):
+    for stem in ("contracts", "claims", "contract_seasons", "season_claims", "clauses", "clause_claims", "dead_cap",
+                 "dead_cap_claims"):
         expected |= {f"{stem}.parquet", f"{stem}.csv", f"{stem}.json"}
     assert names == expected
     import pyarrow.parquet as pq

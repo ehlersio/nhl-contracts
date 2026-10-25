@@ -5,7 +5,7 @@ const REPO = process.env.NHL_CONTRACTS_REPO ?? "ehlersio/nhl-contracts";
 const TAG = process.env.NHL_CONTRACTS_TAG ?? "contracts";
 
 export const BASE_URL = `https://github.com/${REPO}/releases/download/${TAG}`;
-export const TABLES = ["contracts", "claims", "contract_seasons", "season_claims", "clauses", "clause_claims"];
+export const TABLES = ["contracts", "claims", "contract_seasons", "season_claims", "clauses", "clause_claims", "dead_cap", "dead_cap_claims"];
 
 export function fileUrl(name) {
   return `${BASE_URL}/${name}`;

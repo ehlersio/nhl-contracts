@@ -112,6 +112,36 @@ class ClauseClaim:
 
 
 @dataclass
+class DeadCapClaim:
+    """One (source document, team, player, season) cap charge that is not a roster
+    contract: a buyout charge or salary retained on a traded player. ``team`` is
+    the team carrying the charge; ``counterparty`` the acquiring team of a
+    retained deal when the source names it. ``cap_hit_usd`` is the charge for
+    ``season``; ``pct`` the retained share when stated or derivable."""
+
+    claim_id: str
+    kind: str                   # buyout | retained
+    player_name: str
+    player_id: int | None
+    team: str | None
+    counterparty: str | None
+    season: str                 # 2026-27
+    cap_hit_usd: int | None
+    pct: float | None
+    contract_key: str | None    # the underlying contract when matched
+    event_date: str | None      # trade or buyout date (YYYY-MM-DD) when known
+    source_id: str
+    confidence_tier: str
+    flags: list[str] = field(default_factory=list)
+    evidence: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        d = asdict(self)
+        d["flags"] = ";".join(self.flags)
+        return d
+
+
+@dataclass
 class Source:
     source_id: str
     url: str
