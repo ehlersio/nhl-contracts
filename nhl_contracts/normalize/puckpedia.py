@@ -280,7 +280,9 @@ def _is_signing(lines: list[str]) -> bool:
 
 
 def classify_post(text: str) -> str:
-    """"signing" | "trade" | "waivers" | "ltir" | "other", decided from the header line."""
+    """"signing" | "trade" | "waivers" | "ltir" | "buyout" | "other", decided from the header line.
+    A buyout post ("bought out the final 1 year @ $7M Cap Hit of ... Vlasic") is not a
+    signing: its charges go to ``dead_cap`` (``dead_cap.buyout_rows``)."""
     lines = _lines(normalize_text(text))
     if not lines:
         return "other"
@@ -291,6 +293,8 @@ def classify_post(text: str) -> str:
         return "ltir"
     if re.search(r"\bwaivers?\b|\bwaived\b|\bclaimed off\b", head, re.I):
         return "waivers"
+    if re.search(r"\bbought out\b|\bbuy ?out\b", head, re.I):
+        return "buyout"
     if _is_signing(lines):
         return "signing"
     return "other"

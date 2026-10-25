@@ -28,6 +28,7 @@ from .config import DIST_DIR, RAW_JSONL_DIR, STORE_PATH, WAYBACK_STORE
 from .http import Client
 from .normalize import dead_cap as dead_cap_mod
 from .normalize import llm_fallback
+from .normalize.buyouts import apply_buyouts
 from .normalize.contracts import normalize_all
 from .normalize.merge import assign_player_ids, merge_clauses, merge_contracts, merge_seasons
 from .normalize.model import Claim, ClauseClaim, DeadCapClaim, SeasonClaim, Source
@@ -237,6 +238,10 @@ def normalize_store(store: Store) -> dict[str, object]:
     dead_cap = dead_cap_mod.merge_dead_cap(dc_claims)
     log.info("normalize: %d dead-cap claims (%d seasons filled from contracts) -> %d rows",
              len(dc_claims), extended, len(dead_cap))
+    bo = apply_buyouts(contracts, seasons, dead_cap)
+    contracts, seasons, dead_cap = bo["contracts"], bo["seasons"], bo["dead_cap"]
+    log.info("normalize: %d contracts bought out (%d before they started), %d season rows after the buyout "
+             "dropped", bo["n_bought_out"], bo["n_bought_out_before_start"], bo["n_seasons_dropped"])
     if llm_fallback.wanted:
         log.info("llm fallback: %d stories eligible, %d answered%s", len(llm_fallback.wanted),
                  len(llm_fallback.used), "" if llm_fallback.is_enabled() else " (no extractor registered)")
@@ -252,7 +257,8 @@ def do_export(store: Store, args: argparse.Namespace) -> None:
                    clauses=n["clauses"], clause_claims=n["clause_claims"],  # type: ignore[arg-type]
                    dead_cap=n["dead_cap"], dead_cap_claims=n["dead_cap_claims"],  # type: ignore[arg-type]
                    store_counts=store.counts())
-    keys = ("n_contracts", "n_claims", "n_sources", "n_conflicts", "n_contract_seasons", "n_clauses", "n_dead_cap")
+    keys = ("n_contracts", "n_claims", "n_sources", "n_conflicts", "n_contract_seasons", "n_clauses", "n_dead_cap",
+            "n_bought_out")
     log.info("export: %s", json.dumps({k: stamp[k] for k in keys}))
     gaps = find_gaps(store, n["contracts"], n["seasons"])  # type: ignore[arg-type]
     counts = write_gaps(gaps, Path(args.dist))

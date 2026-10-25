@@ -19,8 +19,8 @@ from ..normalize.model import Claim, ClauseClaim, DeadCapClaim, SeasonClaim, Sou
 CONTRACT_COLUMNS = [
     "contract_key", "player_name", "player_id", "team", "signed_at", "signing_date_stated", "contract_type",
     "term_years", "aav_usd", "cap_hit_usd", "total_usd", "nhl_salary_usd", "minors_salary_usd",
-    "one_way", "start_season", "end_season", "expiry_status", "agent", "re_signed", "conflicts",
-    "n_sources", "best_tier", "tiers", "source_ids", "claim_ids", "flags",
+    "one_way", "start_season", "end_season", "end_season_signed", "bought_out", "expiry_status", "agent",
+    "re_signed", "conflicts", "n_sources", "best_tier", "tiers", "source_ids", "claim_ids", "flags",
 ]
 CLAIM_COLUMNS = [
     "claim_id", "contract_key", "player_name", "player_id", "team", "signed_at", "signing_date_stated",
@@ -61,7 +61,7 @@ SOURCE_COLUMNS = ["source_id", "kind", "url", "publisher", "author", "published_
 SCHEMA_TYPES = {
     "player_id": pa.int64(), "term_years": pa.int64(), "aav_usd": pa.int64(),
     "cap_hit_usd": pa.int64(), "total_usd": pa.int64(), "nhl_salary_usd": pa.int64(),
-    "minors_salary_usd": pa.int64(), "one_way": pa.bool_(), "re_signed": pa.bool_(),
+    "minors_salary_usd": pa.int64(), "one_way": pa.bool_(), "re_signed": pa.bool_(), "bought_out": pa.bool_(),
     "n_sources": pa.int64(), "signing_date_stated": pa.bool_(), "base_salary_usd": pa.int64(),
     "signing_bonus_usd": pa.int64(), "performance_bonus_usd": pa.int64(), "total_salary_usd": pa.int64(),
     "list_size": pa.int64(), "pct": pa.float64(),
@@ -154,6 +154,7 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
         "n_clauses": len(cz_rows),
         "n_clause_claims": len(cc_rows),
         "n_dead_cap": len(dc_rows),
+        "n_bought_out": sum(1 for r in c_rows if r["bought_out"]),
         "n_dead_cap_claims": len(dcc_rows),
         "tiers": {t: sum(1 for r in cl_rows if r["confidence_tier"] == t) for t in "ABCDE"},
         "earliest_signed_at": min((r["signed_at"] for r in c_rows), default=None),

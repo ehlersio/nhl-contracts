@@ -5,6 +5,7 @@ export interface LoadOptions { fetch?: typeof fetch }
 export interface Timestamp {
   updated_at: string; version: string; n_contracts: number; n_claims: number; n_sources: number;
   n_conflicts: number; n_contract_seasons: number; n_clauses: number; n_dead_cap?: number;
+  n_bought_out?: number;
   tiers: Record<string, number>; files: string[]; license: { data: string; code: string };
 }
 export interface Contract {
@@ -12,8 +13,8 @@ export interface Contract {
   signed_at: string; signing_date_stated: boolean; contract_type: "ELC" | "standard" | "extension" | "PTO";
   term_years: number | null; aav_usd: number | null; cap_hit_usd: number | null; total_usd: number | null;
   nhl_salary_usd: number | null; minors_salary_usd: number | null; one_way: boolean | null;
-  start_season: string | null; end_season: string | null; expiry_status: string | null; agent: string | null;
-  re_signed: boolean; conflicts: string; n_sources: number; best_tier: string; tiers: string;
+  start_season: string | null; end_season: string | null; end_season_signed: string | null; bought_out: boolean;
+  expiry_status: string | null; agent: string | null; re_signed: boolean; conflicts: string; n_sources: number; best_tier: string; tiers: string;
   source_ids: string; claim_ids: string; flags: string;
 }
 export interface ContractSeason {
