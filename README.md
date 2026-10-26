@@ -215,6 +215,8 @@ Flags are `;`-separated on claims and unioned on merged rows. The important ones
 | `span_from_season_breakdown` | the release names every season of the term in a salary breakdown ("$775,000 in 2025-26 ... $775,000 in 2026-27"), and those set `start_season`/`end_season` |
 | `derived:span_after_expired_contract` | an "extension" signed July–September with no stated seasons, whose player's previous contract ended the season before: a re-signing that starts in the signing season, not the season after |
 | `term_vs_breakdown_mismatch:<n>` | tier D: the post's header says `n` years but its own "Yr 1 … Yr N" schedule lists more; the term is taken from the schedule |
+| `signed_at_from_first_season` | contributed: the source states a deal's seasons but not when it was signed; `signed_at` is the first day of its first season (with `signing_date_unknown`) |
+| `derived:start_from_term` | merged rows: a stated end season and term, no stated start; `start_season` = end − term + 1 |
 | `describes_earlier_contract`, `signing_date_from_related_story` | contributed: the cited story is about a later deal but states this one ("entering the final season of a two-year, entry-level contract he signed on March 2, 2025"); `signed_at` may come from the club's signing release |
 | `source_typo:contact` | tier C: ESPN wrote "contact" for "contract"; read as a contract |
 | `derived:span_from_signing_date` | no source stated the seasons; `start_season`/`end_season` were placed from the signing date and term (a deal signed July–June belongs to the season starting that July; an extension to the season after) |
