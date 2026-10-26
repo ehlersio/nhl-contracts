@@ -113,7 +113,7 @@ thestanleycap.com, and nothing from a paid API.
 
 | column | type | meaning |
 |---|---|---|
-| `contract_key` | string | stable grouping key: NHL player id (or normalized name) + team + signing month |
+| `contract_key` | string | stable grouping key: NHL player id when any claim in the group carries one (else normalized name) + team + signing month; a name key stays when another contract of the player, same team and month, holds the id key |
 | `player_name` | string | as written by the best-tier source |
 | `player_id` | int, nullable | NHL player id, when a source tags or links the player (about a third of club releases, nearly all NHL.com stories) |
 | `team` | string | NHL tri-code (`BOS`, `UTA`, …), from the Forge `teamid-` tag or the club author tag |
@@ -142,9 +142,10 @@ thestanleycap.com, and nothing from a paid API.
 ### `claims`
 
 Same contract columns, plus `claim_id`, `source_id`, `source_url`, `publisher`,
-`published_at`, `confidence_tier`, `extracted_by` (`regex`, or `llm` if a
-fallback extractor is registered), `evidence` (the sentence the values came
-from) and `flags`.
+`published_at`, `confidence_tier`, `extracted_by` (`regex`; `llm` if a
+fallback extractor is registered; `contributed` for a row read by hand, see
+[Contributed claims](#contributed-claims)), `evidence` (the sentence the values
+came from) and `flags`.
 
 ### `contract_seasons`
 
@@ -317,6 +318,7 @@ nhl_contracts/
   normalize/puckpedia.py            post text -> claims, seasons, clauses
   normalize/reddit.py               r/hockey titles -> claims (rumours and non-NHL leagues rejected)
   normalize/capfriendly.py          archived HTML -> contract history, seasons, clauses
+  normalize/contributed.py          hand-read claims from data/contributed/claims.csv
   normalize/merge.py                cross-source merge; conflicts named, never resolved
   normalize/llm_fallback.py         OpenRouter extractor for stories the regex cannot read (off without a key)
   publish/export.py                 parquet / csv / json / timestamp.json
@@ -416,6 +418,21 @@ roster and prospect lists from the NHL API are stored with the players).
 is missing, has no money, or has no per-season rows, with what the raw store
 knows about each, so the remaining work is a list rather than a percentage.
 `timestamp.json` carries the counts (`n_gaps_*`).
+
+### Contributed claims
+
+`data/contributed/claims.csv` holds claims a person read by hand from a cited
+public source: mostly NHL.com stories that left Forge's 25-item lists before
+the collector first polled them, plus a few the parser does not yet read. It
+uses the columns of `claims.csv`, with `claim_id` and `contract_key` built the
+way the normalizers build them, the story URL in `source_url` and the quoted
+sentence in `evidence`. Its rows keep their source's tier (A for a club
+release, B for a staff story), carry `extracted_by` = `contributed`, and appear
+in `sources.csv` with `kind` = `contributed` when no collector stored the
+document. When a normalizer produces a claim from the same source about the
+same player, that claim replaces the contributed row, so fixing the parser or
+collecting the story later never doubles a claim. `tests/test_contributed.py`
+checks the file on every CI run.
 
 ### Repository hygiene
 

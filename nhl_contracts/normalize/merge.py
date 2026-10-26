@@ -8,6 +8,7 @@ the merged tables so a consumer can always see who said what.
 
 from __future__ import annotations
 
+from collections import Counter
 from datetime import date
 from typing import Any
 
@@ -207,18 +208,41 @@ def _consensus(values: set[Any]) -> tuple[Any, bool]:
     return None, False
 
 
+def _id_key(key: str, player_id: int | None) -> str:
+    """The id form of a contract key built from a normalized name (the best claim had
+    no id when it was built), once any claim in the group carries the player's id."""
+    who, sep, rest = key.partition("|")
+    if player_id and sep and not who.isdigit():
+        return f"{player_id}|{rest}"
+    return key
+
+
+def _rekey_by_id(groups: list[tuple[dict[str, Any], list[Claim]]]) -> None:
+    """Give name-keyed contracts their id key unless another contract of the player,
+    same team and month, already holds it: a shared key would merge their seasons."""
+    used = Counter(row["contract_key"] for row, _ in groups)
+    for row, _ in groups:
+        key = _id_key(row["contract_key"], row["player_id"])
+        if key != row["contract_key"] and not used[key]:
+            used[row["contract_key"]] -= 1
+            used[key] += 1
+            row["contract_key"] = key
+
+
 def merge_contracts(claims: list[Claim]) -> tuple[list[dict[str, Any]], dict[str, str]]:
     """Return merged contract rows and a map claim_id -> merged contract_key."""
     rows = []
     key_map: dict[str, str] = {}
+    groups: list[tuple[dict[str, Any], list[Claim]]] = []
     for g in group_claims(claims):
         g.sort(key=lambda c: (_tier_rank(c.confidence_tier), not c.signing_date_stated, c.signed_at))
         best = g[0]
         dated = [c for c in g if c.signing_date_stated] or g
+        player_id = next((c.player_id for c in g if c.player_id), None)
         row: dict[str, Any] = {
             "contract_key": best.contract_key,
             "player_name": best.player_name,
-            "player_id": next((c.player_id for c in g if c.player_id), None),
+            "player_id": player_id,
             "team": next((c.team for c in g if c.team), None),
             "signed_at": min(c.signed_at for c in dated),
             "signing_date_stated": any(c.signing_date_stated for c in g),
@@ -241,6 +265,9 @@ def merge_contracts(claims: list[Claim]) -> tuple[list[dict[str, Any]], dict[str
         row["claim_ids"] = ";".join(c.claim_id for c in g)
         row["flags"] = ";".join(sorted({f for c in g for f in c.flags if not f.startswith("ref:")}))
         infer_span(row)
+        groups.append((row, g))
+    _rekey_by_id(groups)
+    for row, g in groups:
         for c in g:
             c.contract_key = row["contract_key"]
             key_map[c.claim_id] = row["contract_key"]
