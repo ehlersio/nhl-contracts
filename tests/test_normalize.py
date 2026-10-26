@@ -180,3 +180,10 @@ def test_espn_contact_typo_is_read_and_flagged():
     claims, _ = extract_espn(row)
     assert [c.player_name for c in claims] == ["Filip Roos", "Adam Gaudette"]
     assert all(c.one_way is False and "source_typo:contact" in c.flags for c in claims)
+
+
+def test_one_year_season_stated_in_the_headline(teams):
+    c, _ = one("senators-agree-to-contract-extension-with-leevi-merilainen", teams)
+    # headline: "... contract extension with Leevi Meriläinen for the 2026-27 season"
+    assert (c.contract_type, c.term_years, c.aav_usd) == ("extension", 1, 1_100_000)
+    assert (c.start_season, c.end_season) == ("2026-27", "2026-27")

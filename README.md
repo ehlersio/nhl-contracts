@@ -213,6 +213,9 @@ Flags are `;`-separated on claims and unioned on merged rows. The important ones
 | `derived:aav_from_total` | merged rows: the sources state a total and term but neither AAV nor cap hit, so `aav_usd` = total / term; skipped when the total includes performance bonuses or the sources disagree on total or term |
 | `derived:aav_from_season_salaries` | a release gives the NHL salary of every season of the term, with no bonus and summing to any stated total, so `aav_usd` is their average |
 | `span_from_season_breakdown` | the release names every season of the term in a salary breakdown ("$775,000 in 2025-26 ... $775,000 in 2026-27"), and those set `start_season`/`end_season` |
+| `derived:span_after_expired_contract` | an "extension" signed July–September with no stated seasons, whose player's previous contract ended the season before: a re-signing that starts in the signing season, not the season after |
+| `term_vs_breakdown_mismatch:<n>` | tier D: the post's header says `n` years but its own "Yr 1 … Yr N" schedule lists more; the term is taken from the schedule |
+| `describes_earlier_contract`, `signing_date_from_related_story` | contributed: the cited story is about a later deal but states this one ("entering the final season of a two-year, entry-level contract he signed on March 2, 2025"); `signed_at` may come from the club's signing release |
 | `source_typo:contact` | tier C: ESPN wrote "contact" for "contract"; read as a contract |
 | `derived:span_from_signing_date` | no source stated the seasons; `start_season`/`end_season` were placed from the signing date and term (a deal signed July–June belongs to the season starting that July; an extension to the season after) |
 | `bought_out`, `derived:end_season_from_buyout` | a buyout charged from season S ended the contract: `end_season` is the season before S and the signed end is in `end_season_signed`. The player is matched by NHL id (else name) and the contract is the one whose signed span covers S, preferring the buyout team's rows; another team's deal that starts in or after S is the next contract and is left alone |
@@ -429,12 +432,17 @@ knows about each, so the remaining work is a list rather than a percentage.
 ### Contributed claims
 
 `data/contributed/claims.csv` holds claims a person read by hand from a cited
-public source: mostly NHL.com stories that left Forge's 25-item lists before
-the collector first polled them, plus a few the parser does not yet read. It
-uses the columns of `claims.csv`, with `claim_id` and `contract_key` built the
+public source: NHL.com stories that left Forge's 25-item lists before the
+collector first polled them or that the parser does not yet read, and reports
+from other outlets (Daily Faceoff, The Hockey News, Sportsnet, ESPN and others).
+It uses the columns of `claims.csv`, with `claim_id` and `contract_key` built the
 way the normalizers build them, the story URL in `source_url` and the quoted
-sentence in `evidence`. Its rows keep their source's tier (A for a club
-release, B for a staff story), carry `extracted_by` = `contributed`, and appear
+sentences in `evidence`. NHL.com rows keep their source's tier (A for a club
+release, B for a staff story, `source_id` = `forge:<slug>`); other outlets are
+tier D (`source_id` = `web:<host>/<path>`), reported second-hand and often
+quoting an insider, whom `evidence` names and `attributed_report` flags. A row
+that cites a story about one deal for a statement about an earlier one is
+flagged `describes_earlier_contract`. Rows carry `extracted_by` = `contributed`, and appear
 in `sources.csv` with `kind` = `contributed` when no collector stored the
 document. When a normalizer produces a claim from the same source about the
 same player, that claim replaces the contributed row, so fixing the parser or

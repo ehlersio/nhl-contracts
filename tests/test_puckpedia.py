@@ -369,3 +369,15 @@ def test_stored_posts_feed_the_parser(tmp_path):
     claims, seasons, clauses, sources = pp.normalize_posts(store.bsky_posts("puckpedia.com"))
     assert [(c.player_name, c.team, c.cap_hit_usd) for c in claims] == [("Luke Glendening", "NYR", 850_000)]
     assert "ref:https://puckpedia.com/signing/a3" in claims[0].flags and len(sources) == 1
+
+
+def test_header_term_contradicted_by_its_own_schedule():
+    post = {"uri": "at://did:plc:x/app.bsky.feed.post/3lt3wrlzf6n2s", "created_at": "2025-07-04T00:00:38.107Z",
+            "links": [], "text": (
+                "The #ALLCAPS signed 28 y/o UFA F Anthony Beauvillier to a 1 year $2.75M contract\n\n"
+                "Yr 1: $850K Salary & $2.275M SB\nYr 2: $850K Salary & $1.525M SB\n\n"
+                "Rep'd by Philippe Lecavalier @QuartexxHockey")}
+    claims, seasons, _, _ = pp.extract_post(post)
+    (c,) = claims
+    assert c.term_years == 2 and "term_vs_breakdown_mismatch:1" in c.flags and "derived:term_from_seasons" in c.flags
+    assert sorted(by_season(seasons)) == ["2025-26", "2026-27"]

@@ -782,6 +782,12 @@ def extract_post(post: dict[str, Any]) -> tuple[list[Claim], list[SeasonClaim], 
     cap, aav = _cap_and_aav(lines, term_line, flags)
 
     rows, first_season, had_yr = _year_rows(lines, is_elc, flags)
+    if (term is not None and had_yr and len(rows) > term
+            and set(rows) == set(range(1, len(rows) + 1))):
+        # "to a 1 year $2.75M contract / Yr 1: ... / Yr 2: ...": the header contradicts its
+        # own schedule (PuckPedia reposted it as "2 year" an hour later); the schedule counts
+        flags.append(f"term_vs_breakdown_mismatch:{term}")
+        term = None
     if term is None and rows and set(rows) == set(range(1, len(rows) + 1)):
         term = len(rows)
         flags.append("derived:term_from_seasons")

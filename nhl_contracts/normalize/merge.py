@@ -145,6 +145,37 @@ def infer_span(row: dict[str, Any]) -> None:
     row["flags"] = ";".join(sorted(flags))
 
 
+def place_resignings(rows: list[dict[str, Any]]) -> int:
+    """An "extension" signed July to September with no stated seasons was placed a
+    season out (an extension starts after the deal it extends). When the player's
+    previous contract ended the season before and none covers the signing season,
+    nothing was left to extend: clubs call an RFA re-signing an extension ("signed
+    forward Colton Dach to a two-year contract extension", 12 July, ELC ended 2025-26).
+    Such a deal starts in the signing season (``derived:span_after_expired_contract``).
+    Returns the number of rows moved."""
+    by_player: dict[str, list[dict[str, Any]]] = {}
+    for r in rows:
+        by_player.setdefault(str(r["player_id"] or alias_key(r["player_name"])), []).append(r)
+    moved = 0
+    for r in rows:
+        flags = set(filter(None, r["flags"].split(";")))
+        if (r["contract_type"] != "extension" or "derived:span_from_signing_date" not in flags
+                or not r["term_years"] or not r["signed_at"] or int(r["signed_at"][5:7]) not in (7, 8, 9)):
+            continue
+        season = season_from_date(date.fromisoformat(r["signed_at"]))
+        others = [o for o in by_player[str(r["player_id"] or alias_key(r["player_name"]))]
+                  if o is not r and o["end_season"]]
+        if any((o["start_season"] or "0000") <= season <= o["end_season"] for o in others):
+            continue
+        if not any(o["end_season"] == shift_season(season, -1) for o in others):
+            continue
+        r["start_season"], r["end_season"] = season, shift_season(season, r["term_years"] - 1)
+        flags.add("derived:span_after_expired_contract")
+        r["flags"] = ";".join(sorted(flags))
+        moved += 1
+    return moved
+
+
 def derive_aav(row: dict[str, Any]) -> None:
     """AAV = total / term on a merged row that states a total and term but neither AAV
     nor cap hit (``derived:aav_from_total``). Skipped when the total includes
@@ -283,6 +314,7 @@ def merge_contracts(claims: list[Claim]) -> tuple[list[dict[str, Any]], dict[str
         infer_span(row)
         derive_aav(row)
         groups.append((row, g))
+    place_resignings([row for row, _ in groups])
     _rekey_by_id(groups)
     for row, g in groups:
         for c in g:

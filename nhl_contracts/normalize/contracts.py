@@ -634,6 +634,13 @@ def extract_story(story: Story, teams: dict[int, str]) -> tuple[list[Claim], Sou
                 start, end, sflags = seasons_from(window, pub_date, term,
                                                   ctype == "extension")
                 flags += sflags
+                if term == 1 and not start and not end:
+                    # "... contract extension with Leevi Meriläinen for the 2026-27 season" (headline)
+                    last = name_key(name).split()[-1]
+                    stated = {m.group(1) for t in (headline, clean(story.title), clean(story.summary))
+                              if last in name_key(t) for m in ONE_YEAR_SEASON.finditer(t)}
+                    if len(stated) == 1:
+                        start = end = stated.pop()
                 pid = players.get(name)
                 if pid is None:
                     for pname, ppid in players.items():
