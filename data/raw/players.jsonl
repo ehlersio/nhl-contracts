@@ -197,7 +197,7 @@
 {"full_name": "Artturi Lehkonen", "kind": "roster", "player_id": 8477476, "team": "COL", "updated_at": "2026-10-26"}
 {"full_name": "William Carrier", "kind": "roster", "player_id": 8477478, "team": "CAR", "updated_at": "2026-10-26"}
 {"full_name": "Tyler Bertuzzi", "kind": "roster", "player_id": 8477479, "team": "CHI", "updated_at": "2026-10-26"}
-{"full_name": "Spencer Martin", "kind": "roster", "player_id": 8477484, "team": "NYR", "updated_at": "2026-10-26"}
+{"full_name": "Spencer Martin", "kind": "prospect", "player_id": 8477484, "team": "NYR", "updated_at": "2026-10-26"}
 {"full_name": "Brett Pesce", "kind": "roster", "player_id": 8477488, "team": "NJD", "updated_at": "2026-10-26"}
 {"full_name": "Nathan MacKinnon", "kind": "roster", "player_id": 8477492, "team": "COL", "updated_at": "2026-10-26"}
 {"full_name": "Aleksander Barkov", "kind": "roster", "player_id": 8477493, "team": "FLA", "updated_at": "2026-10-26"}
@@ -533,7 +533,7 @@
 {"full_name": "Peyton Krebs", "kind": "roster", "player_id": 8481522, "team": "BUF", "updated_at": "2026-10-26"}
 {"full_name": "Kirby Dach", "kind": "roster", "player_id": 8481523, "team": "MTL", "updated_at": "2026-10-26"}
 {"full_name": "Bowen Byram", "kind": "roster", "player_id": 8481524, "team": "CHI", "updated_at": "2026-10-26"}
-{"full_name": "Matthew Robertson", "kind": "roster", "player_id": 8481525, "team": "NYR", "updated_at": "2026-10-26"}
+{"full_name": "Matthew Robertson", "kind": "prospect", "player_id": 8481525, "team": "NYR", "updated_at": "2026-10-26"}
 {"full_name": "Taylor Gauthier", "kind": "prospect", "player_id": 8481526, "team": "PIT", "updated_at": "2026-10-26"}
 {"full_name": "Kaedan Korczak", "kind": "roster", "player_id": 8481527, "team": "PIT", "updated_at": "2026-10-26"}
 {"full_name": "Dylan Cozens", "kind": "roster", "player_id": 8481528, "team": "OTT", "updated_at": "2026-10-26"}
