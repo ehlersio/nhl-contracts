@@ -24,12 +24,13 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from .collectors import espn_transactions, nhl_forge
-from .config import DIST_DIR, RAW_JSONL_DIR, STORE_PATH, WAYBACK_STORE
+from .config import CONTRIBUTED_CLAIMS, DIST_DIR, RAW_JSONL_DIR, STORE_PATH, WAYBACK_STORE
 from .http import Client
 from .normalize import dead_cap as dead_cap_mod
 from .normalize import llm_fallback
 from .normalize.buyouts import apply_buyouts
 from .normalize.contracts import normalize_all
+from .normalize.contributed import contributed_rows
 from .normalize.merge import assign_player_ids, merge_clauses, merge_contracts, merge_seasons
 from .normalize.model import Claim, ClauseClaim, DeadCapClaim, SeasonClaim, Source
 from .publish.export import export
@@ -165,7 +166,7 @@ def do_backfill(store: Store, args: argparse.Namespace) -> None:
             _collect_wayback(store, args)
 
 
-def normalize_store(store: Store) -> dict[str, object]:
+def normalize_store(store: Store, contributed: Path = CONTRIBUTED_CLAIMS) -> dict[str, object]:
     teams = load_teams(store, None)
     claims: list[Claim] = []
     sources: list[Source] = []
@@ -226,6 +227,12 @@ def normalize_store(store: Store) -> dict[str, object]:
         dc_claims += wd_claims
         sources += wd_sources
         log.info("normalize: archived team pages -> %d dead-cap rows", len(wd_claims))
+
+    c_claims, c_sources = contributed_rows(contributed, claims)
+    if c_claims:
+        claims += c_claims
+        sources += c_sources
+        log.info("normalize: %d contributed claims from %s", len(c_claims), contributed)
 
     filled = assign_player_ids(claims, store.players())
     if filled:
