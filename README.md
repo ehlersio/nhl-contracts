@@ -205,11 +205,15 @@ Flags are `;`-separated on claims and unioned on merged rows. The important ones
 | `start_season_assumed` | tier D: the post did not say when the deal starts; a non-extension signed May–June or later is placed in the coming season, an extension in the season after that |
 | `surname_only`, `name_from_link`, `first_name_from_link` | tier D: the post named only a surname; the full name came from the linked player page when possible |
 | `signing_date_unknown`, `term_is_remaining_seasons`, `not_on_player_page` | tier E: a row from a team page only, dated by the snapshot; its term is the number of visible seasons |
-| `total_includes_performance_bonuses` | tier E: CapFriendly's contract value includes maximum performance bonuses (entry-level deals) |
+| `total_includes_performance_bonuses` | the total is the most the deal can pay with performance bonuses: CapFriendly's contract value (tier E), or a release's "bonuses that could reach a maximum value of $X" (the base salary goes to `nhl_salary_usd`); no AAV is derived from it |
 | `retained_salary_adjusted` | tier E: the cap hit shown is after retention in a trade |
 | `unconfirmed` | tier E: the page said the contract details were not yet confirmed |
 | `35_plus`, `franchise_relocated`, `varying_cap_hit`, `two_way_minors_salary_shown` | tier E oddities kept as written |
 | `player_id_from_roster`, `player_id_by_alias` | the NHL id was attached by name (and team) from the current roster and prospect lists, not stated by the source; `by_alias` means the first name was folded ("Zach" for "Zachary") or a middle name dropped |
+| `derived:aav_from_total` | merged rows: the sources state a total and term but neither AAV nor cap hit, so `aav_usd` = total / term; skipped when the total includes performance bonuses or the sources disagree on total or term |
+| `derived:aav_from_season_salaries` | a release gives the NHL salary of every season of the term, with no bonus and summing to any stated total, so `aav_usd` is their average |
+| `span_from_season_breakdown` | the release names every season of the term in a salary breakdown ("$775,000 in 2025-26 ... $775,000 in 2026-27"), and those set `start_season`/`end_season` |
+| `source_typo:contact` | tier C: ESPN wrote "contact" for "contract"; read as a contract |
 | `derived:span_from_signing_date` | no source stated the seasons; `start_season`/`end_season` were placed from the signing date and term (a deal signed July–June belongs to the season starting that July; an extension to the season after) |
 | `bought_out`, `derived:end_season_from_buyout` | a buyout charged from season S ended the contract: `end_season` is the season before S and the signed end is in `end_season_signed`. The player is matched by NHL id (else name) and the contract is the one whose signed span covers S, preferring the buyout team's rows; another team's deal that starts in or after S is the next contract and is left alone |
 | `bought_out_team_mismatch` | the bought-out contract was signed with another team (the player was traded before the buyout) |
@@ -405,7 +409,10 @@ through OpenRouter when `OPENROUTER_API_KEY` is set; `NHL_CONTRACTS_LLM_MODEL`
 picks the model (default `anthropic/claude-haiku-5.5`, about $0.10 per million
 input tokens). The model is only allowed to read: every amount, term and season
 it returns is checked against the story text and dropped if the text does not
-state it, so a computed AAV or a guessed season never enters the dataset. Rows
+state it, so a computed AAV or a guessed season never enters the dataset. An
+"extension" in a story about an offer sheet that never uses the word is read
+as a new contract, since only a player without one can sign an offer sheet;
+cached answers get this check when they are read. Rows
 it touched carry `extracted_by` = `llm` or `regex+llm` and the flag
 `llm:<model>`. About 277 stories in the current store are eligible, roughly 40 a
 season going forward. `--no-llm` disables it for a run.

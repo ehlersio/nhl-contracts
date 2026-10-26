@@ -99,3 +99,28 @@ def test_answers_are_cached_in_the_store(tmp_path, teams):
     finally:
         llm_fallback.register(None)
         llm_fallback.season_rows.clear()
+
+
+def test_contract_type_must_be_named_in_the_text(tmp_path, teams):
+    from nhl_contracts.normalize.contracts import clean
+    from nhl_contracts.store import Store
+
+    story = load_story("leo-carlsson-signs-5-year-contract-with-ducks-match-flyers-offer-sheet")
+    full = f"{clean(story.headline)}\n{clean(story.body)}"
+    # a matched offer sheet: only a player without a contract can sign one
+    row = {"player_name": "Leo Carlsson", "contract_type": "extension", "term_years": 5, "total_usd": 90_000_000}
+    assert verify_row(row, full)["contract_type"] == "standard"
+    assert verify_row({"player_name": "Pyotr Kochetkov", "contract_type": "extension", "term_years": 2},
+                      KOCHETKOV_TEXT)["contract_type"] == "extension"
+    # an extension the story implies without the word stays one
+    implied = "Lucas Raymond signed an eight-year contract that begins next season."
+    assert verify_row({"player_name": "Lucas Raymond", "contract_type": "extension", "term_years": 8},
+                      implied)["contract_type"] == "extension"
+    # an answer cached before the check is re-typed on read, without a call
+    store = Store(tmp_path / "s.sqlite")
+    extractor = OpenRouterExtractor("test-key", transport=httpx.MockTransport(lambda r: httpx.Response(500)),
+                                    store=store)
+    key = extractor.cache_key(story, clean(story.body)[:12000])
+    store.llm_cache_put(key, story.slug, extractor.model, [dict(row, flags=["llm:x"])], 0, 0, "2026-07-09")
+    (cached,) = extractor(story)
+    assert cached["contract_type"] == "standard" and extractor.calls == 0

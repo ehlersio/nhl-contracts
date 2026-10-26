@@ -95,6 +95,21 @@ def stated_amounts(text: str) -> set[int]:
     return out
 
 
+EXTENSION_WORD = re.compile(r"\bextension|\bextend(?:s|ed)?\b", re.I)
+OFFER_SHEET = re.compile(r"\boffer[\s-]sheet\b", re.I)
+
+
+def stated_type(ctype: Any, text: str) -> str:
+    """The model's contract type, except an "extension" in a story about an offer sheet
+    that never calls the deal an extension: only a player without a contract can sign
+    an offer sheet, so a matched one is a new contract."""
+    if ctype not in ("ELC", "standard", "extension", "PTO"):
+        return "standard"
+    if ctype == "extension" and OFFER_SHEET.search(text) and not EXTENSION_WORD.search(text):
+        return "standard"
+    return ctype
+
+
 def verify_row(row: dict[str, Any], text: str) -> dict[str, Any] | None:
     """Drop any number the text does not state; drop the row when its player is not
     named in the text. Returns the cleaned row or None."""
@@ -119,8 +134,7 @@ def verify_row(row: dict[str, Any], text: str) -> dict[str, Any] | None:
     for f in ("start_season", "end_season"):
         v = row.get(f)
         cleaned[f] = v if isinstance(v, str) and v in seasons_in_text else None
-    ctype = row.get("contract_type")
-    cleaned["contract_type"] = ctype if ctype in ("ELC", "standard", "extension", "PTO") else "standard"
+    cleaned["contract_type"] = stated_type(row.get("contract_type"), text)
     one_way = row.get("one_way")
     cleaned["one_way"] = one_way if isinstance(one_way, bool) else None
     team = row.get("team_abbrev")
@@ -183,6 +197,9 @@ class OpenRouterExtractor:
             cached = self.store.llm_cache_get(key)
             if cached is not None:
                 self.cache_hits += 1
+                full = f"{clean(story.headline)}\n{text}"
+                for row in cached:  # answers cached before a check was added get it on read
+                    row["contract_type"] = stated_type(row.get("contract_type"), full)
                 return cached or None
         prompt = PROMPT_TEMPLATE.format(headline=clean(story.headline), published=story.content_date[:10],
                                         body=text)

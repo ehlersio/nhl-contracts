@@ -166,3 +166,22 @@ def test_id_key_is_not_taken_from_another_contract_of_the_player():
     rows, _ = merge_contracts([story, archive])
     assert len(rows) == 2
     assert sorted(r["contract_key"] for r in rows) == ["8477932|FLA|2016-07", "aaron ekblad|FLA|2016-07"]
+
+
+def test_aav_derived_from_total_and_term():
+    story = claim("Leon Draisaitl", "EDM", "2024-09-03", "B", "forge:a", pid=8477934, term=8, total=112_000_000,
+                  start="2025-26", end="2032-33")
+    (r,), _ = merge_contracts([story])
+    assert r["aav_usd"] == 14_000_000 and "derived:aav_from_total" in r["flags"].split(";")
+    bonus = claim("Old Vet", "EDM", "2026-07-01", "A", "forge:b", term=1, total=3_000_000, aav=None,
+                  flags=["total_includes_performance_bonuses"])
+    bonus.aav_usd = None
+    (r,), _ = merge_contracts([bonus])
+    assert r["aav_usd"] is None
+    a = claim("Some Player", "EDM", "2026-07-01", "A", "forge:c", term=3, total=9_000_000)
+    b = claim("Some Player", "EDM", "2026-07-02", "B", "forge:d", term=3, total=9_600_000)
+    (r,), _ = merge_contracts([a, b])
+    assert r["conflicts"] == "total_usd" and r["aav_usd"] is None
+    stated = claim("Some Player", "EDM", "2026-07-01", "A", "forge:e", term=3, total=9_000_000, cap=3_100_000)
+    (r,), _ = merge_contracts([stated])
+    assert r["aav_usd"] is None and r["cap_hit_usd"] == 3_100_000
