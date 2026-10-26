@@ -70,6 +70,19 @@ def test_committed_file_is_consistent():
     assert len({c.claim_id for c in claims}) == len(claims)
     for c in claims:
         # same id and key scheme as the normalizers, so a parsed claim replaces the contributed one
-        assert c.claim_id == claim_id(c.source_id, c.player_name, c.player_id), c.player_name
+        sid = f"{c.source_id}#{c.signed_at[:7]}" if "describes_earlier_contract" in c.flags else c.source_id
+        assert c.claim_id == claim_id(sid, c.player_name, c.player_id), c.player_name
         assert c.contract_key == make_key(c.player_id, c.player_name, c.team, c.signed_at), c.player_name
         assert c.source_url.startswith("https://") and c.evidence and c.confidence_tier in "ABCDE"
+
+
+def test_row_about_an_earlier_contract_survives_the_story_s_own_claim(tmp_path):
+    p = tmp_path / "claims.csv"
+    earlier = dict(ROW, signed_at="2025-03-02", contract_key="8484999|WSH|2025-03",
+                   flags="describes_earlier_contract")
+    _write(p, [earlier])
+    (row,) = read_claims(p)
+    later = read_claims(p)[0]
+    later.signed_at, later.contract_type, later.term_years = "2026-09-10", "standard", 6
+    assert len(contributed_rows(p, [later])[0]) == 1  # the six-year deal does not replace the ELC row
+    assert contributed_rows(p, [row]) == ([], [])     # a parsed claim for the same month does

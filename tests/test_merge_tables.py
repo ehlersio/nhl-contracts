@@ -185,3 +185,25 @@ def test_aav_derived_from_total_and_term():
     stated = claim("Some Player", "EDM", "2026-07-01", "A", "forge:e", term=3, total=9_000_000, cap=3_100_000)
     (r,), _ = merge_contracts([stated])
     assert r["aav_usd"] is None and r["cap_hit_usd"] == 3_100_000
+
+
+def test_july_extension_after_an_expired_contract_starts_that_season():
+    elc = claim("Colton Dach", "CHI", "2022-07-01", "E", "wayback:a", pid=8482703, term=3, cap=925_000,
+                start="2023-24", end="2025-26")
+    resign = claim("Colton Dach", "EDM", "2026-07-12", "A", "forge:b", pid=8482703, term=2, aav=1_200_000,
+                   ctype="extension")
+    rows, _ = merge_contracts([elc, resign])
+    r = next(r for r in rows if r["team"] == "EDM")
+    assert (r["start_season"], r["end_season"]) == ("2026-27", "2027-28")
+    assert "derived:span_after_expired_contract" in r["flags"].split(";")
+    # an ELC still running through the signing season: a true extension, starts the season after
+    elc2 = claim("Macklin Celebrini", "SJS", "2024-07-06", "C", "espn:c", pid=8484801, term=3, ctype="ELC",
+                 start="2024-25", end="2026-27")
+    ext = claim("Macklin Celebrini", "SJS", "2026-07-29", "A", "forge:d", pid=8484801, term=5, total=94_000_000,
+                ctype="extension")
+    rows, _ = merge_contracts([elc2, ext])
+    r = next(r for r in rows if r["signed_at"] == "2026-07-29")
+    assert r["start_season"] == "2027-28" and "derived:span_after_expired_contract" not in r["flags"]
+    # no earlier contract on file: unknown, so the extension rule stands
+    (r,), _ = merge_contracts([claim("New Guy", "SJS", "2026-07-29", "A", "forge:e", pid=1, term=2, ctype="extension")])
+    assert r["start_season"] == "2027-28"
