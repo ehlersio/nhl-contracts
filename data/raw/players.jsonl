@@ -261,6 +261,7 @@
 {"full_name": "Igor Shesterkin", "kind": "roster", "player_id": 8478048, "team": "NYR", "updated_at": "2026-10-26"}
 {"full_name": "Gustav Forsling", "kind": "roster", "player_id": 8478055, "team": "FLA", "updated_at": "2026-10-26"}
 {"full_name": "Victor Olofsson", "kind": "roster", "player_id": 8478109, "team": "VGK", "updated_at": "2026-10-26"}
+{"full_name": "Pierre Engvall", "kind": "roster", "player_id": 8478115, "team": "NYI", "updated_at": "2026-10-26"}
 {"full_name": "Jake Evans", "kind": "roster", "player_id": 8478133, "team": "MTL", "updated_at": "2026-10-26"}
 {"full_name": "Jake Middleton", "kind": "roster", "player_id": 8478136, "team": "CGY", "updated_at": "2026-10-26"}
 {"full_name": "Bokondji Imama", "kind": "roster", "player_id": 8478147, "team": "FLA", "updated_at": "2026-10-26"}
@@ -1239,6 +1240,7 @@
 {"full_name": "Jackson Parsons", "kind": "prospect", "player_id": 8485142, "team": "OTT", "updated_at": "2026-10-26"}
 {"full_name": "Bryce Pickford", "kind": "prospect", "player_id": 8485218, "team": "MTL", "updated_at": "2026-10-26"}
 {"full_name": "Bill Zonnon", "kind": "prospect", "player_id": 8485351, "team": "PIT", "updated_at": "2026-10-26"}
+{"full_name": "Kashawn Aitcheson", "kind": "roster", "player_id": 8485352, "team": "NYI", "updated_at": "2026-10-26"}
 {"full_name": "Mason West", "kind": "prospect", "player_id": 8485353, "team": "CHI", "updated_at": "2026-10-26"}
 {"full_name": "Malcolm Spence", "kind": "prospect", "player_id": 8485359, "team": "NYR", "updated_at": "2026-10-26"}
 {"full_name": "Nathan Behm", "kind": "prospect", "player_id": 8485365, "team": "CHI", "updated_at": "2026-10-26"}
