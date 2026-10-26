@@ -207,3 +207,11 @@ def test_july_extension_after_an_expired_contract_starts_that_season():
     # no earlier contract on file: unknown, so the extension rule stands
     (r,), _ = merge_contracts([claim("New Guy", "SJS", "2026-07-29", "A", "forge:e", pid=1, term=2, ctype="extension")])
     assert r["start_season"] == "2027-28"
+
+
+def test_start_season_from_a_stated_end_and_term():
+    elc = claim("Zeev Buium", "MIN", "2025-04-13", "C", "espn:a", pid=8484798, term=3, ctype="ELC")
+    later = claim("Zeev Buium", "MIN", "2025-04-13", "D", "web:b", pid=8484798, cap=966_667, end="2026-27", ctype="ELC")
+    (r,), _ = merge_contracts([elc, later])
+    assert (r["start_season"], r["end_season"]) == ("2024-25", "2026-27")
+    assert "derived:start_from_term" in r["flags"].split(";")

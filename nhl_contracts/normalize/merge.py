@@ -122,6 +122,7 @@ def infer_span(row: dict[str, Any]) -> None:
     consumers can drop it.
 
     - start known, end missing: end = start + term - 1 (``derived:end_from_term``).
+    - end known, start missing: start = end - term + 1 (``derived:start_from_term``).
     - neither known: a deal signed July to April belongs to the season that July
       starts (a mid-season signing takes effect at once); a deal signed in May or
       June, after the season, belongs to the coming one; an extension starts the
@@ -132,6 +133,9 @@ def infer_span(row: dict[str, Any]) -> None:
     if row["start_season"] and not row["end_season"] and term:
         row["end_season"] = shift_season(row["start_season"], term - 1)
         flags.add("derived:end_from_term")
+    elif row["end_season"] and not row["start_season"] and term:
+        row["start_season"] = shift_season(row["end_season"], -(term - 1))
+        flags.add("derived:start_from_term")
     elif not row["start_season"] and not row["end_season"] and term and row["signed_at"]:
         signed = date.fromisoformat(row["signed_at"])
         start = season_from_date(signed)
