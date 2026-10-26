@@ -30,7 +30,8 @@ ASSUMED = {
                    "term_is_remaining_seasons"),
     "term_years": ("term_is_remaining_seasons", "derived:term_from_seasons"),
     "total_usd": ("total_includes_performance_bonuses", "derived:total_from_seasons", "derived:total_one_year"),
-    "aav_usd": ("derived:aav_one_year", "derived:aav_from_nhl_salary", "derived:all_salary_from_cap_hit"),
+    "aav_usd": ("derived:aav_one_year", "derived:aav_from_nhl_salary", "derived:all_salary_from_cap_hit",
+                "derived:aav_from_season_salaries"),
 }
 
 
@@ -141,6 +142,21 @@ def infer_span(row: dict[str, Any]) -> None:
         flags.add("derived:span_from_signing_date")
     else:
         return
+    row["flags"] = ";".join(sorted(flags))
+
+
+def derive_aav(row: dict[str, Any]) -> None:
+    """AAV = total / term on a merged row that states a total and term but neither AAV
+    nor cap hit (``derived:aav_from_total``). Skipped when the total includes
+    performance bonuses or the sources disagree on the total or term."""
+    flags = set(filter(None, row["flags"].split(";")))
+    conflicts = set(filter(None, row["conflicts"].split(";")))
+    if (row["aav_usd"] is not None or row["cap_hit_usd"] is not None or not row["total_usd"]
+            or not row["term_years"] or conflicts & {"total_usd", "term_years", "aav_usd", "cap_hit_usd"}
+            or "total_includes_performance_bonuses" in flags):
+        return
+    row["aav_usd"] = round(row["total_usd"] / row["term_years"])
+    flags.add("derived:aav_from_total")
     row["flags"] = ";".join(sorted(flags))
 
 
@@ -265,6 +281,7 @@ def merge_contracts(claims: list[Claim]) -> tuple[list[dict[str, Any]], dict[str
         row["claim_ids"] = ";".join(c.claim_id for c in g)
         row["flags"] = ";".join(sorted({f for c in g for f in c.flags if not f.startswith("ref:")}))
         infer_span(row)
+        derive_aav(row)
         groups.append((row, g))
     _rekey_by_id(groups)
     for row, g in groups:

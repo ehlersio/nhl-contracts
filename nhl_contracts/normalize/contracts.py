@@ -215,6 +215,16 @@ INTRODUCES_NEXT = re.compile(
 )
 
 
+# "bonuses that could reach a maximum value of $5 million": the most the deal can pay with
+# performance bonuses, kept as a total flagged ``total_includes_performance_bonuses``
+BONUS_CAP_BEFORE = re.compile(r"\bbonus(?:es)?\b[^$]{0,40}?(?:maximum|could reach|can reach|up to)[^$]{0,25}$", re.I)
+# "a base salary of $2 million": the NHL salary, not a total
+BASE_SALARY_BEFORE = re.compile(r"\bbase salary\s*(?:of|is|at|:)?\s*$", re.I)
+# "$775,000 (NHL) and $175,000 (AHL)": labelled halves of a two-way salary
+NHL_LABEL = re.compile(r"\s*\(NHL\)")
+MINORS_LABEL = re.compile(r"\s*\((?:AHL|minors?|minor league)\)", re.I)
+
+
 def _season_figures(text: str, matches: list[re.Match[str]]) -> set[int]:
     """Indexes of the figures in ``text`` that are amounts for one season of a schedule."""
     out: set[int] = set()
@@ -233,7 +243,7 @@ def _season_figures(text: str, matches: list[re.Match[str]]) -> set[int]:
 def classify_money(text: str) -> dict[str, int | None]:
     """Assign every dollar figure in ``text`` to total / aav / cap hit / salaries."""
     out: dict[str, int | None] = {"total": None, "aav": None, "cap_hit": None,
-                                  "nhl_salary": None, "minors_salary": None}
+                                  "nhl_salary": None, "minors_salary": None, "total_with_bonuses": None}
     matches = list(MONEY.finditer(text))
     per_season = _season_figures(text, matches)
     for i, m in enumerate(matches):
@@ -258,11 +268,17 @@ def classify_money(text: str) -> dict[str, int | None]:
         if before.endswith("/"):
             out["minors_salary"] = out["minors_salary"] or value
             continue
+        if BASE_SALARY_BEFORE.search(before) and i not in per_season:
+            out["nhl_salary"] = out["nhl_salary"] or value
+            continue
+        if BONUS_CAP_BEFORE.search(before):
+            out["total_with_bonuses"] = out["total_with_bonuses"] or value
+            continue
         if SKIP_CTX.search(near_before) or SKIP_CTX.search(after[:30]):
             continue
-        is_minors = bool(MINORS_CTX.search(after[:40])
+        is_minors = bool(MINORS_CTX.search(after[:40]) or MINORS_LABEL.match(after)
                          or re.search(r"(AHL|American Hockey League)\s+(level|salary)\s*(?:of|is|at)?\s*$", before))
-        is_nhl = bool(NHL_LEVEL_CTX.search(after[:25])
+        is_nhl = bool(NHL_LEVEL_CTX.search(after[:25]) or NHL_LABEL.match(after)
                       or re.search(r"NHL\s+(level|salary)\s*(?:of|is|at)?\s*$", before))
         is_aav = bool(AAV_CTX.search(near_before) or AAV_CTX.search(after[:30]))
         if i in per_season:
@@ -548,6 +564,7 @@ def extract_story(story: Story, teams: dict[int, str]) -> tuple[list[Claim], Sou
                 ):
                     window = f"{window} {nxt}"
             for name, deal, paren in segs:
+                raw_name = name
                 name = _expand_name(_title_name(name), texts, players)
                 if not _valid_name(name):
                     continue
@@ -558,7 +575,12 @@ def extract_story(story: Story, teams: dict[int, str]) -> tuple[list[Claim], Sou
                 term = term_years(deal) or term_years(sent)
                 money = classify_money(paren or "") if paren else {}
                 if len(segs) == 1:
-                    m2 = classify_money(window)
+                    # when the deal follows the name ("signed Mario Ferraro to a three-year ..."),
+                    # figures before the name belong to someone else ("In addition to adding
+                    # Skinner on a contract with an AAV of $3.75 million, Winnipeg signed ...")
+                    at = window.find(raw_name)
+                    trim = 0 < at < window.find(deal[:40], at)
+                    m2 = classify_money(window[at:] if trim else window)
                     for k, v in m2.items():
                         if money.get(k) is None:
                             money[k] = v
@@ -594,6 +616,9 @@ def extract_story(story: Story, teams: dict[int, str]) -> tuple[list[Claim], Sou
                     flags.append("per_season_breakdown")
                 aav, cap_hit, total = money.get("aav"), money.get("cap_hit"), money.get("total")
                 nhl_sal, min_sal = money.get("nhl_salary"), money.get("minors_salary")
+                if total is None and money.get("total_with_bonuses"):
+                    total = money["total_with_bonuses"]
+                    flags.append("total_includes_performance_bonuses")
                 if term == 1:
                     if aav is None and cap_hit is None and total is None and nhl_sal:
                         aav = nhl_sal
@@ -601,7 +626,7 @@ def extract_story(story: Story, teams: dict[int, str]) -> tuple[list[Claim], Sou
                     if total is None and (aav or cap_hit):
                         total = aav or cap_hit
                         flags.append("derived:total_one_year")
-                    if aav is None and total:
+                    if aav is None and total and "total_includes_performance_bonuses" not in flags:
                         aav = total
                         flags.append("derived:aav_one_year")
                 flags += consistency_flags(term, aav or cap_hit, total)
@@ -713,11 +738,13 @@ def _merge_into(base: Claim, new: Claim) -> None:
     for fl in new.flags:
         if fl not in base.flags and not fl.startswith("derived:"):
             base.flags.append(fl)
-    if base.term_years == 1:
+    if base.term_years == 1 and "total_includes_performance_bonuses" not in base.flags:
         if base.total_usd is None and base.aav_usd:
             base.total_usd = base.aav_usd
+            base.flags.append("derived:total_one_year")
         if base.aav_usd is None and base.total_usd:
             base.aav_usd = base.total_usd
+            base.flags.append("derived:aav_one_year")
     base.flags = [f for f in base.flags if f != "total_vs_aav_mismatch"]
     base.flags += consistency_flags(base.term_years, base.aav_usd or base.cap_hit_usd, base.total_usd)
     base.contract_key = make_key(base.player_id, base.player_name, base.team, base.signed_at)
@@ -987,6 +1014,40 @@ def _add_flag(claim: Claim, flag: str) -> None:
         claim.flags.append(flag)
 
 
+def _span_and_aav_from_breakdown(c: Claim, acc: dict[str, tuple[dict[str, Any], list[str]]],
+                                 placed: set[str]) -> None:
+    """A breakdown that names every season of the term states the span ("$775,000 in
+    2025-26 ... and $775,000 in 2026-27"); and when it gives the NHL salary of each of
+    those seasons with no bonus, adding up to any stated total, the AAV is their average
+    (``derived:aav_from_season_salaries``)."""
+    term = c.term_years
+    stated = sorted(s for s in acc if s not in placed)
+    if not term or len(stated) != term or any(shift_season(stated[0], i) != s for i, s in enumerate(stated)):
+        return
+    if not c.start_season and not c.end_season:
+        c.start_season, c.end_season = stated[0], stated[-1]
+        _add_flag(c, "span_from_season_breakdown")
+    if c.aav_usd is not None or c.cap_hit_usd is not None:
+        return
+    if any(f.startswith(("bonus_unclear", "signing_bonus", "performance_bonus")) for f in c.flags):
+        return
+    if "season_breakdown_mismatch" in c.flags:
+        return
+    salaries = []
+    for s in stated:
+        vals = acc[s][0]
+        if vals.get("signing") or vals.get("perf"):
+            return
+        salary = vals.get("base") or vals.get("total")
+        if not salary:
+            return
+        salaries.append(salary)
+    if c.total_usd and abs(sum(salaries) - c.total_usd) > max(0.02 * c.total_usd, 60_000):
+        return  # the season rows disagree with the stated total; trust neither for an AAV
+    c.aav_usd = round(sum(salaries) / term)
+    _add_flag(c, "derived:aav_from_season_salaries")
+
+
 def extract_story_seasons(story: Story, claims: list[Claim], teams: dict[int, str]) -> list[SeasonClaim]:
     """Per-season rows for the claims :func:`extract_story` read from ``story``.
 
@@ -1025,6 +1086,7 @@ def extract_story_seasons(story: Story, claims: list[Claim], teams: dict[int, st
         acc = by_claim[c.claim_id]
         if not acc:
             continue
+        _span_and_aav_from_breakdown(c, acc, placed[c.claim_id])
         seasons, derived = seasons_of[c.claim_id]
         if derived and placed[c.claim_id] & set(seasons):
             _add_flag(c, "derived:season_from_signing_date")
@@ -1060,12 +1122,15 @@ def extract_story_seasons(story: Story, claims: list[Claim], teams: dict[int, st
 ESPN_POS = r"(?:Fs?|Cs?|Ds?|Gs?|LWs?|RWs?|LDs?|RDs?|Ws?)(?:/(?:F|C|D|G|LW|RW|LD|RD|W))?"
 ESPN_ACTION = re.compile(
     r"(?:^|\.\s+)(?P<verb>Re-signed|Signed|Agreed to terms with)\s+(?P<names>.+?)\s+(?:to|on)\s+(?:a|an\s+|the\s+)?\s*"
-    r"(?P<deal>.*?(?:contract|agreement|extension|deal|PTO)s?)\b",
+    r"(?P<deal>.*?(?:contract|contact|agreement|extension|deal|PTO)s?)\b",
     re.I,
 )
 ESPN_ACTION2 = re.compile(
-    r"(?:^|\.\s+)(?P<verb>Signed)\s+(?P<names>[A-Z][^,.]+?)\s+(?:a|an)\s+(?P<deal>.*?(?:contract|agreement)s?)\b",
+    r"(?:^|\.\s+)(?P<verb>Signed)\s+(?P<names>[A-Z][^,.]+?)\s+(?:a|an)\s+(?P<deal>.*?(?:contract|contact|agreement)s?)\b",
 )
+# ESPN writes "contact" for "contract" now and then ("a three-year, entry-level contact"):
+# read as written and flagged
+ESPN_CONTACT_TYPO = re.compile(r"\bcontacts?\b", re.I)
 
 
 def _espn_names(blob: str) -> list[str]:
@@ -1101,6 +1166,8 @@ def extract_espn(row: dict[str, Any]) -> tuple[list[Claim], Source | None]:
         names = _espn_names(m.group("names"))
         for name in names:
             flags = ["multi_player_story"] if len(names) > 1 else []
+            if ESPN_CONTACT_TYPO.search(deal):
+                flags.append("source_typo:contact")
             total, aav = money.get("total"), money.get("aav")
             if term == 1 and total and aav is None:
                 aav, flags = total, flags + ["derived:aav_one_year"]

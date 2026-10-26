@@ -159,3 +159,24 @@ def test_espn_rows(espn_payload):
                     "Re-signed G Jakub Málek to a two-year contract.")
     assert [(c.player_name, c.term_years, c.re_signed, c.team) for c in nj] == [
         ("Ben Steeves", 1, True, "NJD"), ("Jakub Málek", 2, True, "NJD")]
+
+
+def test_money_before_the_name_belongs_to_someone_else(teams):
+    claims, _ = extract_story(load_story("hellebuyck-status-didn-t-spark-stuart-skinner"), teams)
+    ferraro = next(c for c in claims if c.player_name == "Mario Ferraro")
+    # "In addition to adding Skinner on a contract with an average annual value of $3.75 million,
+    # Winnipeg signed Mario Ferraro to a three-year, $12 million contract ($4 million AAV) ..."
+    assert (ferraro.term_years, ferraro.total_usd, ferraro.aav_usd) == (3, 12_000_000, 4_000_000)
+    assert "total_vs_aav_mismatch" not in ferraro.flags
+
+
+def test_espn_contact_typo_is_read_and_flagged():
+    row = {"key": "x", "date": "2024-07-06T07:00Z", "team_abbrev": "SJ",
+           "description": "Signed C Macklin Celebrini to a three-year, entry-level contact."}
+    (c,), _ = extract_espn(row)
+    assert (c.player_name, c.contract_type, c.term_years) == ("Macklin Celebrini", "ELC", 3)
+    assert "source_typo:contact" in c.flags
+    row["description"] = "Signed D Filip Roos and C Adam Gaudette to one-year, two-way contacts."
+    claims, _ = extract_espn(row)
+    assert [c.player_name for c in claims] == ["Filip Roos", "Adam Gaudette"]
+    assert all(c.one_way is False and "source_typo:contact" in c.flags for c in claims)

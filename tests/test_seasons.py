@@ -208,3 +208,48 @@ def test_normalize_all_returns_season_rows_keyed_to_contracts(stories, espn_payl
     for s in seasons:
         assert s.contract_key in keys and by_claim[s.claim_id].contract_key == s.contract_key
     assert len({(s.claim_id, s.season) for s in seasons}) == len(seasons)
+
+
+def test_giroux_bonus_ceiling_is_not_the_contract_value(teams):
+    c, _ = one_claim("senators-agree-to-one-year-contract-with-claude-giroux", teams)
+    # "a base salary of $2 million ... with bonuses that could reach a maximum value of $5 million":
+    # the release states the base and the ceiling with bonuses, not an AAV or cap hit
+    assert (c.nhl_salary_usd, c.total_usd, c.aav_usd, c.cap_hit_usd) == (2_000_000, 5_000_000, None, None)
+    assert "total_includes_performance_bonuses" in c.flags and "bonus_unclear:5000000" in c.flags
+
+
+def test_bonus_ceiling_from_a_later_sentence_is_not_an_aav(teams):
+    claims, _ = seasons_for("claude-giroux-signs-1-year-contract-to-remain-with-ottawa", teams)
+    (c,) = claims
+    # "It has a base salary of $2 million with bonuses that could reach a maximum value of $4.75 million."
+    assert (c.nhl_salary_usd, c.total_usd, c.aav_usd) == (2_000_000, 4_750_000, None)
+
+
+def test_no_aav_from_seasons_that_disagree_with_the_total(teams):
+    claims, _ = seasons_for("blues-sign-tucker-to-two-year-extension", teams)
+    (c,) = claims
+    # "$1.85 million ($900,000 in 2025-26, $950,000 in 2026-27)"
+    assert c.total_usd == 1_850_000 and "derived:aav_from_season_salaries" not in c.flags
+
+
+def test_ellis_labelled_nhl_and_ahl_halves(teams):
+    c, rows = one_claim("ellis-agrees-to-two-year-extension-with-blues", teams)
+    # "$775,000 (NHL) and $175,000 (AHL) in the 2025-26 season, and $775,000 (NHL) and $225,000 (AHL) in 2026-27"
+    assert c.total_usd is None and c.nhl_salary_usd == 775_000 and c.minors_salary_usd == 175_000
+    assert {s: r.minors_salary_usd for s, r in rows.items()} == {"2025-26": 175_000, "2026-27": 225_000}
+    assert (c.start_season, c.end_season) == ("2025-26", "2026-27")
+    assert c.aav_usd == 775_000 and "derived:aav_from_season_salaries" in c.flags
+    assert "season_sum_mismatch" not in c.flags
+
+
+def test_wilsby_breakdown_states_the_span(teams):
+    c, rows = one_claim("predators-sign-adam-wilsby-to-two-year-contract", teams)
+    # signed Feb. 2025: "$775,000 at the NHL level in 2025-26 (two-way) and $775,000 in 2026-27 (one-way)"
+    assert list(rows) == ["2025-26", "2026-27"]
+    assert (c.start_season, c.end_season) == ("2025-26", "2026-27") and "span_from_season_breakdown" in c.flags
+    assert c.aav_usd == 775_000
+
+
+def test_no_aav_from_seasons_with_a_signing_bonus(teams):
+    c, _ = one_claim("canes-sign-kochetkov", teams)
+    assert "derived:aav_from_season_salaries" not in c.flags
