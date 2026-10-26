@@ -142,3 +142,27 @@ def test_span_rules_for_june_signings_and_known_start():
                  ctype="extension")
     r = merge_contracts([half])[0][0]
     assert r["end_season"] == "2027-28" and "derived:end_from_term" in r["flags"]
+
+
+def test_name_keyed_best_claim_takes_the_player_id_from_the_group():
+    # the tier A release names the player without an id; a tier B story carries it
+    release = claim("Claude Giroux", "OTT", "2026-07-07", "A", "forge:a", term=1, total=2_000_000)
+    story = claim("Claude Giroux", "OTT", "2026-07-08", "B", "forge:b", pid=8473512, term=1)
+    rows, key_map = merge_contracts([release, story])
+    assert len(rows) == 1
+    assert rows[0]["contract_key"] == "8473512|OTT|2026-07"
+    assert key_map[release.claim_id] == key_map[story.claim_id] == "8473512|OTT|2026-07"
+    no_id = claim("Some Prospect", "OTT", "2026-07-07", "A", "forge:c", term=3)
+    assert merge_contracts([no_id])[0][0]["contract_key"] == "some prospect|OTT|2026-07"
+
+
+def test_id_key_is_not_taken_from_another_contract_of_the_player():
+    # an undated archive row and a story about a different deal, same player, team and month
+    story = claim("Aaron Ekblad", "FLA", "2016-07-01", "B", "forge:a", pid=8477932, term=8, start="2017-18",
+                  end="2024-25")
+    archive = claim("Aaron Ekblad", "FLA", "2016-07-20", "E", "wayback:b", pid=8477932, term=3, start="2014-15",
+                    end="2016-17", flags=["signing_date_unknown", "player_id_from_roster"])
+    archive.contract_key = make_key(None, "Aaron Ekblad", "FLA", "2016-07-20")  # keyed before the id was filled
+    rows, _ = merge_contracts([story, archive])
+    assert len(rows) == 2
+    assert sorted(r["contract_key"] for r in rows) == ["8477932|FLA|2016-07", "aaron ekblad|FLA|2016-07"]
