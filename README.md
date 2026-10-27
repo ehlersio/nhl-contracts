@@ -241,6 +241,27 @@ present, not a vote.
 
 ## Coverage
 
+### Current rosters, 2026-27 (release of 2026-10-27)
+
+Measured against the 810 players on current NHL rosters, as in `gaps.csv`. A
+player is covered when a contract row spans 2026-27; "with money" adds a cap hit
+or AAV; "with season rows" adds the per-season structure.
+
+| roster players | 2026-10-24 | 2026-10-27 |
+|---|---|---|
+| with a current contract | 748 of 809 (92.5%) | 808 of 810 (99.8%) |
+| … with money | 666 (82.3%) | 766 (94.6%) |
+| … with season rows | 502 (62.1%) | 516 (63.7%) |
+| gaps (`n_gaps_*`): no contract / no money / no structure | 61 / 82 / 164 | 2 / 42 / 250 |
+
+Most of the gain came from [contributed claims](#contributed-claims) (113 in the
+release: 56 tier A, 15 tier B, 42 tier D) and from parser fixes they exposed.
+Season rows barely moved because hand-read claims carry money, not year-by-year
+salaries, so players who gained money moved into the no-structure gap. The two
+players with no current contract are a conflict between a 2026 club profile
+and the July 2024 CapFriendly archive (an entry-level deal that slid) and a
+player whose only source so far is Wikipedia.
+
 ### Official tiers, measured on the committed fixtures (2026-10-23)
 
 The fixtures under `tests/fixtures/forge/` are 253 real Forge responses: every
@@ -287,20 +308,20 @@ rows), almost all New Jersey, Carolina and two-way one-year deals.
 Measured on the live store after the crawl; see `timestamp.json` and the
 section "Live store" below.
 
-### Live store (2026-10-23, after the full backfill)
+### Live store (release of 2026-10-27)
 
 | measure | result |
 |---|---|
-| merged contracts | 6,961 (claims 9,679 from 6,331 source documents) |
-| … with a stated signing date | 3,855 (tier E player pages) |
-| … with an NHL player id | 3,474 (ids come from current rosters and prospect lists, so retired players lack them) |
-| … with a cap hit or AAV | 5,096 |
-| … with per-season rows | 4,876 (12,925 season rows) |
+| merged contracts | 7,031 (claims 10,093 from 6,670 source documents) |
+| … with a stated signing date | 3,856 (tier E player pages) |
+| … with an NHL player id | 3,674 (ids come from current rosters and prospect lists, so retired players lack them) |
+| … with a cap hit or AAV | 5,262 |
+| … with per-season rows | 4,913 (12,906 season rows) |
 | … with clauses | 594 (941 clause rows) |
-| contracts covering 2026-27 or later | 1,165; 1,015 with money, 962 with season rows, 876 with a player id |
-| signings since June 2026 | 485; 316 with money, 322 with season rows, 44 with clauses |
-| contracts where two sources disagree on a field | 60 |
-| claims by tier | A 542 · B 556 · C 3,583 · D 840 · E 4,158 |
+| contracts covering 2026-27 or later | 1,546; 1,273 with money, 981 with season rows, 1,209 with a player id |
+| signings since June 2026 | 499; 356 with money, 326 with season rows, 44 with clauses |
+| contracts where two sources disagree on a field | 68 |
+| claims by tier | A 676 · B 653 · C 3,723 · D 883 · E 4,158 |
 | CapFriendly pages read | 33 team pages, 1,494 player pages (2 missing, 5 unreadable) |
 
 Tier E carries the contract history back to the early 2000s for every player
@@ -424,8 +445,9 @@ season going forward. `--no-llm` disables it for a run.
 
 ### Gaps report
 
-Coverage is measured against the 800 players on current NHL rosters (the
-roster and prospect lists from the NHL API are stored with the players).
+Coverage is measured against the players on current NHL rosters (810 on
+2026-10-27; the roster and prospect lists from the NHL API are stored with the
+players). The current figures are under [Coverage](#current-rosters-2026-27-release-of-2026-10-27).
 `gaps.csv` on every release lists the roster players whose current contract
 is missing, has no money, or has no per-season rows, with what the raw store
 knows about each, so the remaining work is a list rather than a percentage.
