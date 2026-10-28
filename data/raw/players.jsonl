@@ -798,7 +798,7 @@
 {"full_name": "Taylor Makar", "kind": "prospect", "player_id": 8482953, "team": "COL", "updated_at": "2026-10-28"}
 {"full_name": "Arber Xhekaj", "kind": "roster", "player_id": 8482964, "team": "MTL", "updated_at": "2026-10-28"}
 {"full_name": "Jet Greaves", "kind": "roster", "player_id": 8482982, "team": "CBJ", "updated_at": "2026-10-28"}
-{"full_name": "Avery Hayes", "kind": "roster", "player_id": 8482993, "team": "PIT", "updated_at": "2026-10-28"}
+{"full_name": "Avery Hayes", "kind": "prospect", "player_id": 8482993, "team": "PIT", "updated_at": "2026-10-28"}
 {"full_name": "Brett Hyland", "kind": "prospect", "player_id": 8483007, "team": "WSH", "updated_at": "2026-10-28"}
 {"full_name": "Jon-Randall Avon", "kind": "prospect", "player_id": 8483010, "team": "SEA", "updated_at": "2026-10-28"}
 {"full_name": "Logan Morrison", "kind": "prospect", "player_id": 8483012, "team": "SEA", "updated_at": "2026-10-28"}
@@ -1210,7 +1210,7 @@
 {"full_name": "Alexandre Blais", "kind": "prospect", "player_id": 8485009, "team": "ANA", "updated_at": "2026-10-28"}
 {"full_name": "Jakub Milota", "kind": "prospect", "player_id": 8485011, "team": "NSH", "updated_at": "2026-10-28"}
 {"full_name": "Blake Montgomery", "kind": "prospect", "player_id": 8485016, "team": "OTT", "updated_at": "2026-10-28"}
-{"full_name": "Chase Pietila", "kind": "roster", "player_id": 8485019, "team": "PIT", "updated_at": "2026-10-28"}
+{"full_name": "Chase Pietila", "kind": "prospect", "player_id": 8485019, "team": "PIT", "updated_at": "2026-10-28"}
 {"full_name": "Tomas Mrsic", "kind": "prospect", "player_id": 8485021, "team": "STL", "updated_at": "2026-10-28"}
 {"full_name": "Viktor Norringer", "kind": "prospect", "player_id": 8485022, "team": "NSH", "updated_at": "2026-10-28"}
 {"full_name": "Nicholas Kempf", "kind": "prospect", "player_id": 8485023, "team": "WSH", "updated_at": "2026-10-28"}
