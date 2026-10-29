@@ -437,7 +437,7 @@
 {"full_name": "Ryan Poehling", "kind": "roster", "player_id": 8480068, "team": "ANA", "updated_at": "2026-10-29"}
 {"full_name": "Cale Makar", "kind": "roster", "player_id": 8480069, "team": "COL", "updated_at": "2026-10-29"}
 {"full_name": "Alexandre Texier", "kind": "roster", "player_id": 8480074, "team": "MTL", "updated_at": "2026-10-29"}
-{"full_name": "Cameron Crotty", "kind": "roster", "player_id": 8480075, "team": "OTT", "updated_at": "2026-10-29"}
+{"full_name": "Cameron Crotty", "kind": "roster", "player_id": 8480075, "team": "MIN", "updated_at": "2026-10-29"}
 {"full_name": "Filip Chytil", "kind": "roster", "player_id": 8480078, "team": "VAN", "updated_at": "2026-10-29"}
 {"full_name": "Nick DeSimone", "kind": "roster", "player_id": 8480084, "team": "UTA", "updated_at": "2026-10-29"}
 {"full_name": "Alex Iafallo", "kind": "roster", "player_id": 8480113, "team": "WPG", "updated_at": "2026-10-29"}
@@ -649,6 +649,7 @@
 {"full_name": "Alex Laferriere", "kind": "roster", "player_id": 8482155, "team": "LAK", "updated_at": "2026-10-29"}
 {"full_name": "Will Cuylle", "kind": "roster", "player_id": 8482157, "team": "NYR", "updated_at": "2026-10-29"}
 {"full_name": "Tyson Foerster", "kind": "roster", "player_id": 8482159, "team": "PHI", "updated_at": "2026-10-29"}
+{"full_name": "Martin Chromiak", "kind": "roster", "player_id": 8482160, "team": "LAK", "updated_at": "2026-10-29"}
 {"full_name": "Yan Kuznetsov", "kind": "roster", "player_id": 8482165, "team": "CGY", "updated_at": "2026-10-29"}
 {"full_name": "Shakir Mukhamadullin", "kind": "roster", "player_id": 8482166, "team": "EDM", "updated_at": "2026-10-29"}
 {"full_name": "Bogdan Trineyev", "kind": "prospect", "player_id": 8482167, "team": "WSH", "updated_at": "2026-10-29"}
