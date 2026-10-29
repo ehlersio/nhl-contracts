@@ -332,6 +332,7 @@
 {"full_name": "Pavel Karnaukhov", "kind": "prospect", "player_id": 8478865, "team": "CGY", "updated_at": "2026-10-29"}
 {"full_name": "Spencer Smallman", "kind": "prospect", "player_id": 8478867, "team": "WSH", "updated_at": "2026-10-29"}
 {"full_name": "Karel Vejmelka", "kind": "roster", "player_id": 8478872, "team": "UTA", "updated_at": "2026-10-29"}
+{"full_name": "Troy Terry", "kind": "roster", "player_id": 8478873, "team": "ANA", "updated_at": "2026-10-29"}
 {"full_name": "Adam Gaudette", "kind": "roster", "player_id": 8478874, "team": "SJS", "updated_at": "2026-10-29"}
 {"full_name": "Vladislav Gavrikov", "kind": "roster", "player_id": 8478882, "team": "NYR", "updated_at": "2026-10-29"}
 {"full_name": "Sergei Boikov", "kind": "prospect", "player_id": 8478884, "team": "COL", "updated_at": "2026-10-29"}
@@ -1041,6 +1042,7 @@
 {"full_name": "Matthew Wood", "kind": "roster", "player_id": 8484241, "team": "NSH", "updated_at": "2026-10-29"}
 {"full_name": "Brayden Yager", "kind": "prospect", "player_id": 8484242, "team": "WPG", "updated_at": "2026-10-29"}
 {"full_name": "Sam Malinski", "kind": "roster", "player_id": 8484258, "team": "COL", "updated_at": "2026-10-29"}
+{"full_name": "Travis Mitchell", "kind": "roster", "player_id": 8484262, "team": "ANA", "updated_at": "2026-10-29"}
 {"full_name": "Cole McWard", "kind": "roster", "player_id": 8484287, "team": "TOR", "updated_at": "2026-10-29"}
 {"full_name": "Uvis Balinskis", "kind": "roster", "player_id": 8484304, "team": "FLA", "updated_at": "2026-10-29"}
 {"full_name": "Zach Metsa", "kind": "roster", "player_id": 8484305, "team": "BUF", "updated_at": "2026-10-29"}
