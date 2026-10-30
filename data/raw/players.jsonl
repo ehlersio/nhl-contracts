@@ -750,7 +750,7 @@
 {"full_name": "Ville Koivunen", "kind": "roster", "player_id": 8482758, "team": "PIT", "updated_at": "2026-10-30"}
 {"full_name": "Carl Lindbom", "kind": "prospect", "player_id": 8482761, "team": "VGK", "updated_at": "2026-10-30"}
 {"full_name": "Isak Rosen", "kind": "roster", "player_id": 8482765, "team": "WPG", "updated_at": "2026-10-30"}
-{"full_name": "William Stromgren", "kind": "prospect", "player_id": 8482766, "team": "CGY", "updated_at": "2026-10-30"}
+{"full_name": "William Stromgren", "kind": "roster", "player_id": 8482766, "team": "CGY", "updated_at": "2026-10-30"}
 {"full_name": "Fedor Svechkov", "kind": "roster", "player_id": 8482768, "team": "COL", "updated_at": "2026-10-30"}
 {"full_name": "Prokhor Poltapov", "kind": "prospect", "player_id": 8482769, "team": "BUF", "updated_at": "2026-10-30"}
 {"full_name": "Vladislav Lukashevich", "kind": "prospect", "player_id": 8482770, "team": "FLA", "updated_at": "2026-10-30"}
@@ -797,7 +797,7 @@
 {"full_name": "Shane Lachance", "kind": "prospect", "player_id": 8482941, "team": "NJD", "updated_at": "2026-10-30"}
 {"full_name": "Daniil Pylenkov", "kind": "prospect", "player_id": 8482944, "team": "TBL", "updated_at": "2026-10-30"}
 {"full_name": "Ivan Vorobyov", "kind": "prospect", "player_id": 8482945, "team": "STL", "updated_at": "2026-10-30"}
-{"full_name": "Arsenii Sergeev", "kind": "prospect", "player_id": 8482949, "team": "CGY", "updated_at": "2026-10-30"}
+{"full_name": "Arsenii Sergeev", "kind": "roster", "player_id": 8482949, "team": "CGY", "updated_at": "2026-10-30"}
 {"full_name": "Taylor Makar", "kind": "prospect", "player_id": 8482953, "team": "COL", "updated_at": "2026-10-30"}
 {"full_name": "Arber Xhekaj", "kind": "roster", "player_id": 8482964, "team": "MTL", "updated_at": "2026-10-30"}
 {"full_name": "Jet Greaves", "kind": "roster", "player_id": 8482982, "team": "CBJ", "updated_at": "2026-10-30"}
