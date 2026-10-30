@@ -757,7 +757,7 @@
 {"full_name": "Jack Harvey", "kind": "prospect", "player_id": 8482774, "team": "TBL", "updated_at": "2026-10-30"}
 {"full_name": "Oliver Kapanen", "kind": "roster", "player_id": 8482775, "team": "MTL", "updated_at": "2026-10-30"}
 {"full_name": "Andrei Buyalsky", "kind": "prospect", "player_id": 8482779, "team": "COL", "updated_at": "2026-10-30"}
-{"full_name": "Carson Lambos", "kind": "roster", "player_id": 8482781, "team": "MIN", "updated_at": "2026-10-30"}
+{"full_name": "Carson Lambos", "kind": "prospect", "player_id": 8482781, "team": "MIN", "updated_at": "2026-10-30"}
 {"full_name": "Aleksei Kolosov", "kind": "prospect", "player_id": 8482783, "team": "PHI", "updated_at": "2026-10-30"}
 {"full_name": "Zach Dean", "kind": "prospect", "player_id": 8482784, "team": "STL", "updated_at": "2026-10-30"}
 {"full_name": "Justin Robidas", "kind": "prospect", "player_id": 8482785, "team": "CAR", "updated_at": "2026-10-30"}
@@ -873,7 +873,7 @@
 {"full_name": "Matyas Sapovaliv", "kind": "prospect", "player_id": 8483511, "team": "VGK", "updated_at": "2026-10-30"}
 {"full_name": "Matt Savoie", "kind": "roster", "player_id": 8483512, "team": "EDM", "updated_at": "2026-10-30"}
 {"full_name": "Reid Schaefer", "kind": "roster", "player_id": 8483513, "team": "NSH", "updated_at": "2026-10-30"}
-{"full_name": "Matthew Seminoff", "kind": "roster", "player_id": 8483514, "team": "DAL", "updated_at": "2026-10-30"}
+{"full_name": "Matthew Seminoff", "kind": "prospect", "player_id": 8483514, "team": "DAL", "updated_at": "2026-10-30"}
 {"full_name": "Juraj Slafkovský", "kind": "roster", "player_id": 8483515, "team": "MTL", "updated_at": "2026-10-30"}
 {"full_name": "Jimmy Snuggerud", "kind": "roster", "player_id": 8483516, "team": "STL", "updated_at": "2026-10-30"}
 {"full_name": "Alexander Suzdalev", "kind": "prospect", "player_id": 8483518, "team": "WSH", "updated_at": "2026-10-30"}
