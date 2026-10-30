@@ -1032,7 +1032,7 @@
 {"full_name": "Jayson Shaugabay", "kind": "prospect", "player_id": 8484226, "team": "TBL", "updated_at": "2026-10-30"}
 {"full_name": "Will Smith", "kind": "roster", "player_id": 8484227, "team": "SJS", "updated_at": "2026-10-30"}
 {"full_name": "Jakub Stancl", "kind": "prospect", "player_id": 8484229, "team": "STL", "updated_at": "2026-10-30"}
-{"full_name": "Otto Stenberg", "kind": "roster", "player_id": 8484230, "team": "STL", "updated_at": "2026-10-30"}
+{"full_name": "Otto Stenberg", "kind": "prospect", "player_id": 8484230, "team": "STL", "updated_at": "2026-10-30"}
 {"full_name": "Charlie Stramel", "kind": "prospect", "player_id": 8484231, "team": "MIN", "updated_at": "2026-10-30"}
 {"full_name": "Andrew Strathmann", "kind": "prospect", "player_id": 8484232, "team": "CBJ", "updated_at": "2026-10-30"}
 {"full_name": "Aydar Suniev", "kind": "roster", "player_id": 8484234, "team": "CGY", "updated_at": "2026-10-30"}
@@ -1264,7 +1264,7 @@
 {"full_name": "Milton Gastrin", "kind": "prospect", "player_id": 8485393, "team": "STL", "updated_at": "2026-10-30"}
 {"full_name": "James Hagens", "kind": "roster", "player_id": 8485395, "team": "BOS", "updated_at": "2026-10-30"}
 {"full_name": "Logan Hensler", "kind": "prospect", "player_id": 8485397, "team": "OTT", "updated_at": "2026-10-30"}
-{"full_name": "Roger McQueen", "kind": "prospect", "player_id": 8485400, "team": "ANA", "updated_at": "2026-10-30"}
+{"full_name": "Roger McQueen", "kind": "roster", "player_id": 8485400, "team": "ANA", "updated_at": "2026-10-30"}
 {"full_name": "Michael Misa", "kind": "roster", "player_id": 8485402, "team": "SJS", "updated_at": "2026-10-30"}
 {"full_name": "Porter Martone", "kind": "roster", "player_id": 8485406, "team": "PHI", "updated_at": "2026-10-30"}
 {"full_name": "Vaclav Nestrasil", "kind": "prospect", "player_id": 8485410, "team": "CHI", "updated_at": "2026-10-30"}
