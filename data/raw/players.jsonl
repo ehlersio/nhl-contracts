@@ -1007,7 +1007,7 @@
 {"full_name": "Rasmus Kumpulainen", "kind": "prospect", "player_id": 8484184, "team": "MIN", "updated_at": "2026-10-30"}
 {"full_name": "Nick Lardis", "kind": "prospect", "player_id": 8484185, "team": "CHI", "updated_at": "2026-10-30"}
 {"full_name": "Ryan Leonard", "kind": "roster", "player_id": 8484186, "team": "WSH", "updated_at": "2026-10-30"}
-{"full_name": "Theo Lindstein", "kind": "prospect", "player_id": 8484188, "team": "STL", "updated_at": "2026-10-30"}
+{"full_name": "Theo Lindstein", "kind": "roster", "player_id": 8484188, "team": "STL", "updated_at": "2026-10-30"}
 {"full_name": "Jaden Lipinski", "kind": "prospect", "player_id": 8484189, "team": "CGY", "updated_at": "2026-10-30"}
 {"full_name": "Aram Minnetian", "kind": "prospect", "player_id": 8484194, "team": "DAL", "updated_at": "2026-10-30"}
 {"full_name": "Martin Misiak", "kind": "prospect", "player_id": 8484195, "team": "CHI", "updated_at": "2026-10-30"}
@@ -1192,6 +1192,7 @@
 {"full_name": "Aatos Koivu", "kind": "prospect", "player_id": 8484877, "team": "MTL", "updated_at": "2026-10-30"}
 {"full_name": "Lleyton Roed", "kind": "prospect", "player_id": 8484891, "team": "SEA", "updated_at": "2026-10-30"}
 {"full_name": "Cooper Black", "kind": "roster", "player_id": 8484900, "team": "FLA", "updated_at": "2026-10-30"}
+{"full_name": "Jacob Quillan", "kind": "roster", "player_id": 8484901, "team": "VAN", "updated_at": "2026-10-30"}
 {"full_name": "Victor Ostman", "kind": "prospect", "player_id": 8484910, "team": "SEA", "updated_at": "2026-10-30"}
 {"full_name": "Collin Graf", "kind": "roster", "player_id": 8484911, "team": "SJS", "updated_at": "2026-10-30"}
 {"full_name": "Mikulas Hovorka", "kind": "prospect", "player_id": 8484933, "team": "FLA", "updated_at": "2026-10-30"}
