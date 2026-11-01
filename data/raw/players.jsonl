@@ -540,7 +540,7 @@
 {"full_name": "Peyton Krebs", "kind": "roster", "player_id": 8481522, "team": "BUF", "updated_at": "2026-11-01"}
 {"full_name": "Kirby Dach", "kind": "roster", "player_id": 8481523, "team": "MTL", "updated_at": "2026-11-01"}
 {"full_name": "Bowen Byram", "kind": "roster", "player_id": 8481524, "team": "CHI", "updated_at": "2026-11-01"}
-{"full_name": "Matthew Robertson", "kind": "prospect", "player_id": 8481525, "team": "NYR", "updated_at": "2026-11-01"}
+{"full_name": "Matthew Robertson", "kind": "roster", "player_id": 8481525, "team": "NYR", "updated_at": "2026-11-01"}
 {"full_name": "Taylor Gauthier", "kind": "prospect", "player_id": 8481526, "team": "PIT", "updated_at": "2026-11-01"}
 {"full_name": "Kaedan Korczak", "kind": "roster", "player_id": 8481527, "team": "PIT", "updated_at": "2026-11-01"}
 {"full_name": "Dylan Cozens", "kind": "roster", "player_id": 8481528, "team": "OTT", "updated_at": "2026-11-01"}
@@ -855,7 +855,7 @@
 {"full_name": "Ben MacDonald", "kind": "prospect", "player_id": 8483484, "team": "SEA", "updated_at": "2026-11-01"}
 {"full_name": "Denton Mateychuk", "kind": "roster", "player_id": 8483485, "team": "CBJ", "updated_at": "2026-11-01"}
 {"full_name": "Bryce McConnell-Barker", "kind": "prospect", "player_id": 8483486, "team": "NYR", "updated_at": "2026-11-01"}
-{"full_name": "Rutger McGroarty", "kind": "roster", "player_id": 8483487, "team": "PIT", "updated_at": "2026-11-01"}
+{"full_name": "Rutger McGroarty", "kind": "prospect", "player_id": 8483487, "team": "PIT", "updated_at": "2026-11-01"}
 {"full_name": "Filip Mesar", "kind": "prospect", "player_id": 8483488, "team": "MTL", "updated_at": "2026-11-01"}
 {"full_name": "Fraser Minten", "kind": "roster", "player_id": 8483489, "team": "BOS", "updated_at": "2026-11-01"}
 {"full_name": "Pavel Mintyukov", "kind": "roster", "player_id": 8483490, "team": "ANA", "updated_at": "2026-11-01"}
