@@ -88,6 +88,7 @@
 {"full_name": "Colin Blackwell", "kind": "roster", "player_id": 8476278, "team": "DAL", "updated_at": "2026-11-02"}
 {"full_name": "Ondrej Palat", "kind": "roster", "player_id": 8476292, "team": "NYI", "updated_at": "2026-11-02"}
 {"full_name": "Josh Manson", "kind": "roster", "player_id": 8476312, "team": "COL", "updated_at": "2026-11-02"}
+{"full_name": "Laurent Brossoit", "kind": "roster", "player_id": 8476316, "team": "ANA", "updated_at": "2026-11-02"}
 {"full_name": "Dylan DeMelo", "kind": "roster", "player_id": 8476331, "team": "WPG", "updated_at": "2026-11-02"}
 {"full_name": "Anton Forsberg", "kind": "roster", "player_id": 8476341, "team": "LAK", "updated_at": "2026-11-02"}
 {"full_name": "Nick Seeler", "kind": "roster", "player_id": 8476372, "team": "PHI", "updated_at": "2026-11-02"}
@@ -369,7 +370,7 @@
 {"full_name": "Logan Stanley", "kind": "roster", "player_id": 8479378, "team": "NYI", "updated_at": "2026-11-02"}
 {"full_name": "Jordan Kyrou", "kind": "roster", "player_id": 8479385, "team": "WSH", "updated_at": "2026-11-02"}
 {"full_name": "Keaton Middleton", "kind": "roster", "player_id": 8479387, "team": "COL", "updated_at": "2026-11-02"}
-{"full_name": "Taylor Raddysh", "kind": "roster", "player_id": 8479390, "team": "NYR", "updated_at": "2026-11-02"}
+{"full_name": "Taylor Raddysh", "kind": "prospect", "player_id": 8479390, "team": "NYR", "updated_at": "2026-11-02"}
 {"full_name": "Carter Hart", "kind": "roster", "player_id": 8479394, "team": "VGK", "updated_at": "2026-11-02"}
 {"full_name": "Dennis Cholowski", "kind": "prospect", "player_id": 8479395, "team": "NYR", "updated_at": "2026-11-02"}
 {"full_name": "Samuel Girard", "kind": "roster", "player_id": 8479398, "team": "PIT", "updated_at": "2026-11-02"}
@@ -781,7 +782,7 @@
 {"full_name": "Philip Svedeback", "kind": "prospect", "player_id": 8482870, "team": "BOS", "updated_at": "2026-11-02"}
 {"full_name": "Topias Vilen", "kind": "prospect", "player_id": 8482873, "team": "NJD", "updated_at": "2026-11-02"}
 {"full_name": "Jacob Melanson", "kind": "roster", "player_id": 8482874, "team": "SEA", "updated_at": "2026-11-02"}
-{"full_name": "Jaroslav Chmelar", "kind": "prospect", "player_id": 8482877, "team": "NYR", "updated_at": "2026-11-02"}
+{"full_name": "Jaroslav Chmelar", "kind": "roster", "player_id": 8482877, "team": "NYR", "updated_at": "2026-11-02"}
 {"full_name": "Semyon Vyazovoi", "kind": "prospect", "player_id": 8482884, "team": "SEA", "updated_at": "2026-11-02"}
 {"full_name": "Bryce Montgomery", "kind": "prospect", "player_id": 8482888, "team": "CAR", "updated_at": "2026-11-02"}
 {"full_name": "Tyson Kozak", "kind": "roster", "player_id": 8482896, "team": "BUF", "updated_at": "2026-11-02"}
