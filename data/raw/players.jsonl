@@ -1047,7 +1047,7 @@
 {"full_name": "Carey Terrance", "kind": "prospect", "player_id": 8484236, "team": "NYR", "updated_at": "2026-11-05"}
 {"full_name": "Tom Willander", "kind": "roster", "player_id": 8484240, "team": "VAN", "updated_at": "2026-11-05"}
 {"full_name": "Matthew Wood", "kind": "roster", "player_id": 8484241, "team": "SEA", "updated_at": "2026-11-05"}
-{"full_name": "Brayden Yager", "kind": "prospect", "player_id": 8484242, "team": "WPG", "updated_at": "2026-11-05"}
+{"full_name": "Brayden Yager", "kind": "roster", "player_id": 8484242, "team": "WPG", "updated_at": "2026-11-05"}
 {"full_name": "Sam Malinski", "kind": "roster", "player_id": 8484258, "team": "COL", "updated_at": "2026-11-05"}
 {"full_name": "Travis Mitchell", "kind": "roster", "player_id": 8484262, "team": "ANA", "updated_at": "2026-11-05"}
 {"full_name": "Cole McWard", "kind": "roster", "player_id": 8484287, "team": "TOR", "updated_at": "2026-11-05"}
@@ -1295,7 +1295,7 @@
 {"full_name": "Callum Tung", "kind": "prospect", "player_id": 8485489, "team": "NYR", "updated_at": "2026-11-05"}
 {"full_name": "Quinn Hutson", "kind": "prospect", "player_id": 8485511, "team": "EDM", "updated_at": "2026-11-05"}
 {"full_name": "Tim Washe", "kind": "roster", "player_id": 8485512, "team": "ANA", "updated_at": "2026-11-05"}
-{"full_name": "Michal Postava", "kind": "roster", "player_id": 8485545, "team": "DET", "updated_at": "2026-10-29"}
+{"full_name": "Michal Postava", "kind": "roster", "player_id": 8485545, "team": "DET", "updated_at": "2026-11-05"}
 {"full_name": "Dillon Boucher", "kind": "roster", "player_id": 8485554, "team": "CHI", "updated_at": "2026-11-05"}
 {"full_name": "Alexander Zharovsky", "kind": "prospect", "player_id": 8485562, "team": "MTL", "updated_at": "2026-11-05"}
 {"full_name": "Charlie Cerrato", "kind": "prospect", "player_id": 8485563, "team": "CAR", "updated_at": "2026-11-05"}
