@@ -340,6 +340,7 @@
 {"full_name": "Sergei Boikov", "kind": "prospect", "player_id": 8478884, "team": "COL", "updated_at": "2026-11-06"}
 {"full_name": "Cameron Hughes", "kind": "prospect", "player_id": 8478888, "team": "DAL", "updated_at": "2026-11-06"}
 {"full_name": "Mason Appleton", "kind": "roster", "player_id": 8478891, "team": "DET", "updated_at": "2026-11-06"}
+{"full_name": "Steven Lorentz", "kind": "roster", "player_id": 8478904, "team": "CBJ", "updated_at": "2026-11-06"}
 {"full_name": "Matt Roy", "kind": "roster", "player_id": 8478911, "team": "WSH", "updated_at": "2026-11-06"}
 {"full_name": "Joey Daccord", "kind": "roster", "player_id": 8478916, "team": "SEA", "updated_at": "2026-11-06"}
 {"full_name": "Jalen Chatfield", "kind": "roster", "player_id": 8478970, "team": "CAR", "updated_at": "2026-11-06"}
@@ -1291,6 +1292,7 @@
 {"full_name": "Mason Moe", "kind": "prospect", "player_id": 8485445, "team": "NJD", "updated_at": "2026-11-06"}
 {"full_name": "Elijah Neuenschwander", "kind": "prospect", "player_id": 8485446, "team": "ANA", "updated_at": "2026-11-06"}
 {"full_name": "Trey Taylor", "kind": "prospect", "player_id": 8485468, "team": "DAL", "updated_at": "2026-11-06"}
+{"full_name": "Jack Williams", "kind": "roster", "player_id": 8485469, "team": "CBJ", "updated_at": "2026-11-06"}
 {"full_name": "Tyler Kopff", "kind": "prospect", "player_id": 8485470, "team": "WSH", "updated_at": "2026-11-06"}
 {"full_name": "Harrison Scott", "kind": "prospect", "player_id": 8485485, "team": "DAL", "updated_at": "2026-11-06"}
 {"full_name": "Callum Tung", "kind": "prospect", "player_id": 8485489, "team": "NYR", "updated_at": "2026-11-06"}
