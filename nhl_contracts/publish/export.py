@@ -14,6 +14,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from .. import __version__
+from ..normalize.clause_status import STATUS_COLUMNS as CLAUSE_STATUS_COLUMNS
 from ..normalize.model import Claim, ClauseClaim, DeadCapClaim, SeasonClaim, Source
 
 CONTRACT_COLUMNS = [
@@ -111,6 +112,7 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
            clause_claims: list[ClauseClaim] | None = None,
            dead_cap: list[dict[str, Any]] | None = None,
            dead_cap_claims: list[DeadCapClaim] | None = None,
+           clause_status: list[dict[str, Any]] | None = None,
            store_counts: dict[str, int] | None = None) -> dict[str, Any]:
     dist.mkdir(parents=True, exist_ok=True)
     c_rows = _rows(contracts, CONTRACT_COLUMNS)
@@ -121,6 +123,7 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
     cc_rows = _rows([c.to_dict() for c in (clause_claims or [])], CLAUSE_CLAIM_COLUMNS)
     dc_rows = _rows(dead_cap or [], DEAD_CAP_COLUMNS)
     dcc_rows = _rows([c.to_dict() for c in (dead_cap_claims or [])], DEAD_CAP_CLAIM_COLUMNS)
+    cs_rows = _rows(clause_status or [], CLAUSE_STATUS_COLUMNS)
     seen: set[str] = set()
     s_rows = []
     for s in sources:
@@ -139,6 +142,7 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
     files += _write_set(cc_rows, CLAUSE_CLAIM_COLUMNS, dist, "clause_claims")
     files += _write_set(dc_rows, DEAD_CAP_COLUMNS, dist, "dead_cap")
     files += _write_set(dcc_rows, DEAD_CAP_CLAIM_COLUMNS, dist, "dead_cap_claims")
+    files += _write_set(cs_rows, CLAUSE_STATUS_COLUMNS, dist, "clause_status")
     _write_csv(s_rows, SOURCE_COLUMNS, dist / "sources.csv")
     files += ["sources.csv", "timestamp.json"]
 
@@ -156,6 +160,9 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
         "n_dead_cap": len(dc_rows),
         "n_bought_out": sum(1 for r in c_rows if r["bought_out"]),
         "n_dead_cap_claims": len(dcc_rows),
+        "n_clause_status": len(cs_rows),
+        "clause_status": {k: sum(1 for r in cs_rows if r["status"] == k) for k in ("clause", "none", "none_likely",
+                                                                                 "unknown")},
         "tiers": {t: sum(1 for r in cl_rows if r["confidence_tier"] == t) for t in "ABCDE"},
         "earliest_signed_at": min((r["signed_at"] for r in c_rows), default=None),
         "latest_signed_at": max((r["signed_at"] for r in c_rows), default=None),

@@ -5,7 +5,8 @@ export interface LoadOptions { fetch?: typeof fetch }
 export interface Timestamp {
   updated_at: string; version: string; n_contracts: number; n_claims: number; n_sources: number;
   n_conflicts: number; n_contract_seasons: number; n_clauses: number; n_dead_cap?: number;
-  n_bought_out?: number;
+  n_bought_out?: number; n_clause_status?: number;
+  clause_status?: { clause: number; none: number; none_likely: number; unknown: number };
   tiers: Record<string, number>; files: string[]; license: { data: string; code: string };
 }
 export interface Contract {
@@ -35,9 +36,14 @@ export interface DeadCap {
   contract_key: string | null; event_date: string | null; conflicts: string; n_sources: number;
   best_tier: string; source_ids: string; flags: string;
 }
+export interface ClauseStatus {
+  contract_key: string; season: string; status: "clause" | "none" | "none_likely" | "unknown";
+  basis: "source" | "stated" | "capfriendly_2024" | "breakdown_without_clause" | null; source_ids: string;
+}
 export function load(table: "contracts", options?: LoadOptions): Promise<Contract[]>;
 export function load(table: "contract_seasons", options?: LoadOptions): Promise<ContractSeason[]>;
 export function load(table: "clauses", options?: LoadOptions): Promise<Clause[]>;
 export function load(table: "dead_cap", options?: LoadOptions): Promise<DeadCap[]>;
+export function load(table: "clause_status", options?: LoadOptions): Promise<ClauseStatus[]>;
 export function load(table: string, options?: LoadOptions): Promise<Record<string, unknown>[]>;
 export function parseCsv(text: string): Record<string, string>[];
