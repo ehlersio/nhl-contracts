@@ -101,6 +101,7 @@ thestanleycap.com, and nothing from a paid API.
 | `season_claims.*` | one row per (source, contract, season) | the per-source season rows |
 | `clauses.*` | one row per (contract, clause kind, season range) | NMC / NTC / M-NTC with list size and list type when stated |
 | `clause_claims.*` | one row per (source, contract, clause) | the per-source clause rows |
+| `clause_status.*` | one row per (contract, season) | whether the season has a clause, none, or isn't known, and from what (`clauses` alone can't tell "none" from "not reported") |
 | `dead_cap.*` | one row per (team, kind, player, season) | cap charges that are not roster contracts: `retained` salary on a traded player and `buyout` charges, with the retained `pct` and the acquiring `counterparty` when stated; merged with `conflicts` |
 | `dead_cap_claims.*` | one row per (source, team, player, season) | the per-source dead-cap rows with evidence and flags |
 | `sources.csv` | one row per source document | URL, publisher, author, published time, tier |
@@ -168,6 +169,22 @@ came from) and `flags`.
 | `season_from`, `season_to` | the seasons the clause covers |
 | `list_size` | number of teams on a modified list, when stated |
 | `list_type` | `no-trade` when the list names teams the player cannot be traded to; null when the source does not say which kind of list it is |
+
+### `clause_status`
+
+One row for every season of every contract. `clauses` only holds clauses a source stated, so a season without a clause row could mean "none" or "not reported"; this table says which, where a source allows it. The first matching rule wins:
+
+| `status` | `basis` | when |
+|---|---|---|
+| `clause` | `source` | a `clauses` row covers the season (a range left open covers the contract's start or end) |
+| `none` | `stated` | a PuckPedia post says the deal has no trade protection |
+| `none` | `capfriendly_2024` | an archived CapFriendly page lists the season with a blank Clause cell (it showed every season's clause) |
+| `none_likely` | `breakdown_without_clause` | a PuckPedia year-by-year breakdown covers the season and names no clause for it. PuckPedia lists clauses when a deal has one, so this is likely none, but it's an inference |
+| `unknown` | | nothing above |
+
+`source_ids` names the rows the answer rests on. A source that states a clause always beats one that leaves it out.
+
+The CBA settles more seasons for a reader with birth dates: a no-trade or no-move clause only takes effect in a player's UFA years (27 by June 30, or 7 accrued seasons), and accrued seasons start at 18, so a player under 25 on the June 30 before a season can't have one in effect. The dataset has no birth dates and leaves that rule to the reader.
 
 ### `dead_cap`
 

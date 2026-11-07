@@ -24,7 +24,7 @@ REPO = os.environ.get("NHL_CONTRACTS_REPO", "ehlersio/nhl-contracts")
 TAG = os.environ.get("NHL_CONTRACTS_TAG", "contracts")
 BASE_URL = f"https://github.com/{REPO}/releases/download/{TAG}"
 TABLES = ("contracts", "claims", "contract_seasons", "season_claims", "clauses", "clause_claims", "dead_cap",
-          "dead_cap_claims")
+          "dead_cap_claims", "clause_status")
 FORMATS = ("json", "csv", "parquet")
 
 

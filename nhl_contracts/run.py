@@ -29,6 +29,7 @@ from .http import Client
 from .normalize import dead_cap as dead_cap_mod
 from .normalize import llm_fallback
 from .normalize.buyouts import apply_buyouts
+from .normalize.clause_status import clause_status
 from .normalize.contracts import normalize_all
 from .normalize.contributed import contributed_rows
 from .normalize.merge import assign_player_ids, merge_clauses, merge_contracts, merge_seasons
@@ -249,12 +250,15 @@ def normalize_store(store: Store, contributed: Path = CONTRIBUTED_CLAIMS) -> dic
     contracts, seasons, dead_cap = bo["contracts"], bo["seasons"], bo["dead_cap"]
     log.info("normalize: %d contracts bought out (%d before they started), %d season rows after the buyout "
              "dropped", bo["n_bought_out"], bo["n_bought_out_before_start"], bo["n_seasons_dropped"])
+    statuses = clause_status(contracts, clauses, season_claims, claims)
+    log.info("normalize: clause status for %d contract-seasons: %s", len(statuses),
+             {k: sum(1 for r in statuses if r["status"] == k) for k in ("clause", "none", "none_likely", "unknown")})
     if llm_fallback.wanted:
         log.info("llm fallback: %d stories eligible, %d answered%s", len(llm_fallback.wanted),
                  len(llm_fallback.used), "" if llm_fallback.is_enabled() else " (no extractor registered)")
     return {"claims": claims, "sources": sources, "contracts": contracts, "seasons": seasons,
             "season_claims": season_claims, "clauses": clauses, "clause_claims": clause_claims,
-            "dead_cap": dead_cap, "dead_cap_claims": dc_claims}
+            "dead_cap": dead_cap, "dead_cap_claims": dc_claims, "clause_status": statuses}
 
 
 def do_export(store: Store, args: argparse.Namespace) -> None:
@@ -263,6 +267,7 @@ def do_export(store: Store, args: argparse.Namespace) -> None:
                    seasons=n["seasons"], season_claims=n["season_claims"],  # type: ignore[arg-type]
                    clauses=n["clauses"], clause_claims=n["clause_claims"],  # type: ignore[arg-type]
                    dead_cap=n["dead_cap"], dead_cap_claims=n["dead_cap_claims"],  # type: ignore[arg-type]
+                   clause_status=n["clause_status"],  # type: ignore[arg-type]
                    store_counts=store.counts())
     keys = ("n_contracts", "n_claims", "n_sources", "n_conflicts", "n_contract_seasons", "n_clauses", "n_dead_cap",
             "n_bought_out")
