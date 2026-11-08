@@ -6,6 +6,8 @@ export interface Timestamp {
   updated_at: string; version: string; n_contracts: number; n_claims: number; n_sources: number;
   n_conflicts: number; n_contract_seasons: number; n_clauses: number; n_dead_cap?: number;
   n_bought_out?: number; n_clause_status?: number; n_ltir?: number; n_ltir_active?: number;
+  n_deadline_rosters?: number; n_deadline_teams?: number;
+  deadline_rosters?: { seasons: string[]; earliest_as_of: string | null; latest_as_of: string | null };
   clause_status?: { clause: number; none: number; none_likely: number; unknown: number };
   tiers: Record<string, number>; files: string[]; license: { data: string; code: string };
 }
@@ -47,11 +49,29 @@ export interface Ltir {
   active: boolean; stated_relief_usd: number | null; stated_at: string | null; stated_source: string | null;
   sources: string; conflicts: string; flags: string;
 }
+export interface DeadlineRoster {
+  season: string; target: string; as_of: string; team: string | null; team_slug: string | null;
+  player_id: number | null; player_name: string; birth_date: string | null; capfriendly_path: string | null;
+  position: string | null; group: "Forwards" | "Defense" | "Goalies" | "LTIR" | "IR" | "Taxi Squad";
+  section: "ROSTER" | "NON-ROSTER"; status: string | null; cap_hit_usd: number | null; aav_usd: number | null;
+  two_way: boolean; years_remaining: number | null; extension_years: number | null; years_left: number | null;
+  end_season: string | null; expiry_status: string | null; clause: string | null;
+  clause_status: "clause" | "none" | null; clause_detail: string | null; clause_seasons: string | null;
+  ltir: boolean; injured_reserve: boolean; unconfirmed: boolean; tier: "E"; publisher: string; snapshot_url: string;
+}
+export interface DeadlineTeam {
+  season: string; target: string; as_of: string; team: string | null; team_slug: string | null; players: number;
+  roster_players: number; projected_cap_hit_usd: number | null; projected_ltir_used_usd: number | null;
+  projected_cap_space_usd: number | null; ltir_players: number; ltir_cap_hit_usd: number; tier: "E";
+  publisher: string; snapshot_url: string;
+}
 export function load(table: "contracts", options?: LoadOptions): Promise<Contract[]>;
 export function load(table: "contract_seasons", options?: LoadOptions): Promise<ContractSeason[]>;
 export function load(table: "clauses", options?: LoadOptions): Promise<Clause[]>;
 export function load(table: "dead_cap", options?: LoadOptions): Promise<DeadCap[]>;
 export function load(table: "clause_status", options?: LoadOptions): Promise<ClauseStatus[]>;
 export function load(table: "ltir", options?: LoadOptions): Promise<Ltir[]>;
+export function load(table: "deadline_rosters", options?: LoadOptions): Promise<DeadlineRoster[]>;
+export function load(table: "deadline_teams", options?: LoadOptions): Promise<DeadlineTeam[]>;
 export function load(table: string, options?: LoadOptions): Promise<Record<string, unknown>[]>;
 export function parseCsv(text: string): Record<string, string>[];
