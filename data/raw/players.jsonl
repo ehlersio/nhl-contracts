@@ -608,7 +608,7 @@
 {"full_name": "Isak Walther", "kind": "prospect", "player_id": 8481730, "team": "NSH", "updated_at": "2026-11-08"}
 {"full_name": "Andre Lee", "kind": "roster", "player_id": 8481732, "team": "LAK", "updated_at": "2026-11-08"}
 {"full_name": "Maxim Denezhkin", "kind": "prospect", "player_id": 8481734, "team": "EDM", "updated_at": "2026-11-08"}
-{"full_name": "Marc Del Gaizo", "kind": "prospect", "player_id": 8481743, "team": "NYR", "updated_at": "2026-11-08"}
+{"full_name": "Marc Del Gaizo", "kind": "roster", "player_id": 8481743, "team": "NYR", "updated_at": "2026-11-08"}
 {"full_name": "Tomas Mazura", "kind": "prospect", "player_id": 8481752, "team": "EDM", "updated_at": "2026-11-08"}
 {"full_name": "Nikita Nesterenko", "kind": "roster", "player_id": 8481754, "team": "ANA", "updated_at": "2026-11-08"}
 {"full_name": "Tye Kartye", "kind": "roster", "player_id": 8481789, "team": "NYR", "updated_at": "2026-11-08"}
@@ -813,7 +813,7 @@
 {"full_name": "Avery Hayes", "kind": "prospect", "player_id": 8482993, "team": "PIT", "updated_at": "2026-11-08"}
 {"full_name": "Brett Hyland", "kind": "prospect", "player_id": 8483007, "team": "WSH", "updated_at": "2026-11-08"}
 {"full_name": "Jon-Randall Avon", "kind": "prospect", "player_id": 8483010, "team": "SEA", "updated_at": "2026-11-08"}
-{"full_name": "Logan Morrison", "kind": "prospect", "player_id": 8483012, "team": "SEA", "updated_at": "2026-11-08"}
+{"full_name": "Logan Morrison", "kind": "roster", "player_id": 8483012, "team": "SEA", "updated_at": "2026-11-08"}
 {"full_name": "Frederic Brunet", "kind": "roster", "player_id": 8483017, "team": "BOS", "updated_at": "2026-11-08"}
 {"full_name": "Mikael Diotte", "kind": "prospect", "player_id": 8483085, "team": "NJD", "updated_at": "2026-11-08"}
 {"full_name": "Jeremy Hanzel", "kind": "prospect", "player_id": 8483086, "team": "NJD", "updated_at": "2026-11-08"}
