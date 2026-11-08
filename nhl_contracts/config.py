@@ -10,6 +10,7 @@ FORGE_STORIES = f"{FORGE_BASE}/stories"
 NHL_TEAMS = "https://api.nhle.com/stats/rest/en/team"
 NHL_STANDINGS = "https://api-web.nhle.com/v1/standings/now"
 ESPN_TRANSACTIONS = "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/transactions"
+ESPN_INJURIES = "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/injuries"
 
 # Every Forge list is capped at 25 items and ignores paging, so the collector
 # polls several narrow lists per team. The plain ``teamid-N`` list catches club

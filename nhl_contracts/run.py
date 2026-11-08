@@ -1,7 +1,7 @@
 """Command line entrypoint.
 
     python -m nhl_contracts.run all            # collect + normalize + export (hourly job)
-    python -m nhl_contracts.run collect        # poll NHL.com, ESPN and PuckPedia's Bluesky feed
+    python -m nhl_contracts.run collect        # poll NHL.com, ESPN (transactions, injuries), PuckPedia's Bluesky
     python -m nhl_contracts.run backfill       # one-off history: per-player NHL.com lists, ESPN since
                                                # 2016, the whole Bluesky feed, CapFriendly snapshots
     python -m nhl_contracts.run normalize      # rebuild dist/ from the raw store (offline)
@@ -30,6 +30,7 @@ from .config import CONTRIBUTED_CLAIMS, DEADLINE_DIR, DIST_DIR, RAW_JSONL_DIR, S
 from .http import Client
 from .normalize import dead_cap as dead_cap_mod
 from .normalize import llm_fallback
+from .normalize import ltir as ltir_mod
 from .normalize.buyouts import apply_buyouts
 from .normalize.clause_status import clause_status
 from .normalize.contracts import normalize_all
@@ -43,7 +44,7 @@ from .teams import load_teams
 
 log = logging.getLogger("nhl_contracts")
 
-SOURCES = ("forge", "espn", "bluesky", "reddit", "wayback")
+SOURCES = ("forge", "espn", "injuries", "bluesky", "reddit", "wayback")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -56,7 +57,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--raw-dir", default=str(RAW_JSONL_DIR), help="JSONL copies of the live-source tables")
     p.add_argument("--wayback-store", default=str(WAYBACK_STORE), help="SQLite file holding the archived pages")
     p.add_argument("--no-dump", action="store_true", help="do not refresh the JSONL copies after collecting")
-    p.add_argument("--sources", default="forge,espn,bluesky,reddit",
+    p.add_argument("--sources", default="forge,espn,injuries,bluesky,reddit",
                    help=f"comma list of sources to collect/backfill; any of {','.join(SOURCES)}")
     p.add_argument("--espn-days", type=int, default=45, help="days back to (re)fetch ESPN transactions")
     p.add_argument("--espn-from", type=date.fromisoformat, default=None,
@@ -119,6 +120,10 @@ def do_collect(store: Store, args: argparse.Namespace) -> None:
         if "espn" in chosen:
             start = args.espn_from or (date.today() - timedelta(days=args.espn_days))
             espn_transactions.collect(store, client, start, date.today())
+        if "injuries" in chosen:
+            from .collectors import espn_injuries
+
+            espn_injuries.collect(store, client)
         if "bluesky" in chosen:
             from .collectors import bluesky_puckpedia
 
@@ -161,6 +166,10 @@ def do_backfill(store: Store, args: argparse.Namespace) -> None:
         if "espn" in chosen:
             start = args.espn_from or date(2016, 7, 1)
             espn_transactions.collect(store, client, start, date.today())
+        if "injuries" in chosen:  # no history to page back through: one snapshot
+            from .collectors import espn_injuries
+
+            espn_injuries.collect(store, client)
         if "bluesky" in chosen:
             from .collectors import bluesky_puckpedia
 
@@ -256,6 +265,10 @@ def normalize_store(store: Store, contributed: Path = CONTRIBUTED_CLAIMS) -> dic
     log.info("normalize: %d contracts bought out (%d before they started), %d season rows after the buyout "
              "dropped", bo["n_bought_out"], bo["n_bought_out_before_start"], bo["n_seasons_dropped"])
     statuses = clause_status(contracts, clauses, season_claims, claims)
+    ltir_rows, ltir_sources = ltir_mod.normalize(
+        espn_rows, posts, list(store.injuries()), store.latest_injury_snapshot(), store.players(), contracts)
+    sources += ltir_sources
+    log.info("normalize: %d LTIR stints, %d active", len(ltir_rows), sum(1 for r in ltir_rows if r["active"]))
     log.info("normalize: clause status for %d contract-seasons: %s", len(statuses),
              {k: sum(1 for r in statuses if r["status"] == k) for k in ("clause", "none", "none_likely", "unknown")})
     if llm_fallback.wanted:
@@ -263,7 +276,8 @@ def normalize_store(store: Store, contributed: Path = CONTRIBUTED_CLAIMS) -> dic
                  len(llm_fallback.used), "" if llm_fallback.is_enabled() else " (no extractor registered)")
     return {"claims": claims, "sources": sources, "contracts": contracts, "seasons": seasons,
             "season_claims": season_claims, "clauses": clauses, "clause_claims": clause_claims,
-            "dead_cap": dead_cap, "dead_cap_claims": dc_claims, "clause_status": statuses}
+            "dead_cap": dead_cap, "dead_cap_claims": dc_claims, "clause_status": statuses,
+            "ltir": ltir_rows}
 
 
 def do_deadline(store: Store, args: argparse.Namespace) -> None:
@@ -294,9 +308,10 @@ def do_export(store: Store, args: argparse.Namespace) -> None:
                    clauses=n["clauses"], clause_claims=n["clause_claims"],  # type: ignore[arg-type]
                    dead_cap=n["dead_cap"], dead_cap_claims=n["dead_cap_claims"],  # type: ignore[arg-type]
                    clause_status=n["clause_status"],  # type: ignore[arg-type]
+                   ltir=n["ltir"],  # type: ignore[arg-type]
                    store_counts=store.counts())
     keys = ("n_contracts", "n_claims", "n_sources", "n_conflicts", "n_contract_seasons", "n_clauses", "n_dead_cap",
-            "n_bought_out")
+            "n_bought_out", "n_ltir", "n_ltir_active")
     log.info("export: %s", json.dumps({k: stamp[k] for k in keys}))
     gaps = find_gaps(store, n["contracts"], n["seasons"])  # type: ignore[arg-type]
     counts = write_gaps(gaps, Path(args.dist))

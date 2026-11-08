@@ -15,6 +15,7 @@ import pyarrow.parquet as pq
 
 from .. import __version__
 from ..normalize.clause_status import STATUS_COLUMNS as CLAUSE_STATUS_COLUMNS
+from ..normalize.ltir import LTIR_COLUMNS
 from ..normalize.model import Claim, ClauseClaim, DeadCapClaim, SeasonClaim, Source
 
 CONTRACT_COLUMNS = [
@@ -65,7 +66,7 @@ SCHEMA_TYPES = {
     "minors_salary_usd": pa.int64(), "one_way": pa.bool_(), "re_signed": pa.bool_(), "bought_out": pa.bool_(),
     "n_sources": pa.int64(), "signing_date_stated": pa.bool_(), "base_salary_usd": pa.int64(),
     "signing_bonus_usd": pa.int64(), "performance_bonus_usd": pa.int64(), "total_salary_usd": pa.int64(),
-    "list_size": pa.int64(), "pct": pa.float64(),
+    "list_size": pa.int64(), "pct": pa.float64(), "active": pa.bool_(), "stated_relief_usd": pa.int64(),
 }
 
 
@@ -113,6 +114,7 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
            dead_cap: list[dict[str, Any]] | None = None,
            dead_cap_claims: list[DeadCapClaim] | None = None,
            clause_status: list[dict[str, Any]] | None = None,
+           ltir: list[dict[str, Any]] | None = None,
            store_counts: dict[str, int] | None = None) -> dict[str, Any]:
     dist.mkdir(parents=True, exist_ok=True)
     c_rows = _rows(contracts, CONTRACT_COLUMNS)
@@ -124,6 +126,7 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
     dc_rows = _rows(dead_cap or [], DEAD_CAP_COLUMNS)
     dcc_rows = _rows([c.to_dict() for c in (dead_cap_claims or [])], DEAD_CAP_CLAIM_COLUMNS)
     cs_rows = _rows(clause_status or [], CLAUSE_STATUS_COLUMNS)
+    lt_rows = _rows(ltir or [], LTIR_COLUMNS)
     seen: set[str] = set()
     s_rows = []
     for s in sources:
@@ -143,6 +146,7 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
     files += _write_set(dc_rows, DEAD_CAP_COLUMNS, dist, "dead_cap")
     files += _write_set(dcc_rows, DEAD_CAP_CLAIM_COLUMNS, dist, "dead_cap_claims")
     files += _write_set(cs_rows, CLAUSE_STATUS_COLUMNS, dist, "clause_status")
+    files += _write_set(lt_rows, LTIR_COLUMNS, dist, "ltir")
     _write_csv(s_rows, SOURCE_COLUMNS, dist / "sources.csv")
     files += ["sources.csv", "timestamp.json"]
 
@@ -163,6 +167,8 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
         "n_clause_status": len(cs_rows),
         "clause_status": {k: sum(1 for r in cs_rows if r["status"] == k) for k in ("clause", "none", "none_likely",
                                                                                  "unknown")},
+        "n_ltir": len(lt_rows),
+        "n_ltir_active": sum(1 for r in lt_rows if r["active"]),
         "tiers": {t: sum(1 for r in cl_rows if r["confidence_tier"] == t) for t in "ABCDE"},
         "earliest_signed_at": min((r["signed_at"] for r in c_rows), default=None),
         "latest_signed_at": max((r["signed_at"] for r in c_rows), default=None),

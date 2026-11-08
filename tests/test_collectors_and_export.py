@@ -82,7 +82,7 @@ def test_export_writes_all_files(tmp_path, espn_payload, teams):
     names = {p.name for p in (tmp_path / "dist").iterdir()}
     expected = {"sources.csv", "timestamp.json"}
     for stem in ("contracts", "claims", "contract_seasons", "season_claims", "clauses", "clause_claims", "dead_cap",
-                 "dead_cap_claims", "clause_status"):
+                 "dead_cap_claims", "clause_status", "ltir"):
         expected |= {f"{stem}.parquet", f"{stem}.csv", f"{stem}.json"}
     assert names == expected
     import pyarrow.parquet as pq
@@ -93,6 +93,7 @@ def test_export_writes_all_files(tmp_path, espn_payload, teams):
     ts = json.loads((tmp_path / "dist" / "timestamp.json").read_text())
     assert ts["license"] == {"data": "CC0-1.0", "code": "MIT"} and ts["n_claims"] == len(claims)
     assert ts["n_clause_status"] == 0 and set(ts["clause_status"]) == {"clause", "none", "none_likely", "unknown"}
+    assert ts["n_ltir"] == 0 and ts["n_ltir_active"] == 0
 
 
 def test_jsonl_and_wayback_roundtrip(tmp_path, espn_payload):
@@ -112,7 +113,8 @@ def test_jsonl_and_wayback_roundtrip(tmp_path, espn_payload):
     src.commit()
     counts = src.dump_jsonl(tmp_path / "raw")
     assert counts == {"forge_stories": 1, "espn_transactions": len(espn_payload["transactions"]), "bsky_posts": 1,
-                      "players": 1, "teams": 0, "llm_cache": 0, "reddit_posts": 0}
+                      "players": 1, "teams": 0, "llm_cache": 0, "reddit_posts": 0, "espn_injuries": 0,
+                      "espn_injury_snapshots": 0}
     first = (tmp_path / "raw" / "forge_stories.jsonl").read_text(encoding="utf-8")
     assert '"tags": [' in first  # JSON columns are expanded, not double-encoded
     assert src.dump_wayback(tmp_path / "wb.sqlite") == 1
