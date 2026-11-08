@@ -82,7 +82,7 @@ def test_export_writes_all_files(tmp_path, espn_payload, teams):
     names = {p.name for p in (tmp_path / "dist").iterdir()}
     expected = {"sources.csv", "timestamp.json"}
     for stem in ("contracts", "claims", "contract_seasons", "season_claims", "clauses", "clause_claims", "dead_cap",
-                 "dead_cap_claims", "clause_status", "ltir"):
+                 "dead_cap_claims", "clause_status", "ltir", "deadline_rosters", "deadline_teams"):
         expected |= {f"{stem}.parquet", f"{stem}.csv", f"{stem}.json"}
     assert names == expected
     import pyarrow.parquet as pq
@@ -94,6 +94,7 @@ def test_export_writes_all_files(tmp_path, espn_payload, teams):
     assert ts["license"] == {"data": "CC0-1.0", "code": "MIT"} and ts["n_claims"] == len(claims)
     assert ts["n_clause_status"] == 0 and set(ts["clause_status"]) == {"clause", "none", "none_likely", "unknown"}
     assert ts["n_ltir"] == 0 and ts["n_ltir_active"] == 0
+    assert ts["n_deadline_rosters"] == 0 and ts["deadline_rosters"]["seasons"] == []
 
 
 def test_jsonl_and_wayback_roundtrip(tmp_path, espn_payload):

@@ -15,6 +15,7 @@ import pyarrow.parquet as pq
 
 from .. import __version__
 from ..normalize.clause_status import STATUS_COLUMNS as CLAUSE_STATUS_COLUMNS
+from ..normalize.deadline_rosters import ROSTER_COLUMNS, TEAM_COLUMNS
 from ..normalize.ltir import LTIR_COLUMNS
 from ..normalize.model import Claim, ClauseClaim, DeadCapClaim, SeasonClaim, Source
 
@@ -67,6 +68,12 @@ SCHEMA_TYPES = {
     "n_sources": pa.int64(), "signing_date_stated": pa.bool_(), "base_salary_usd": pa.int64(),
     "signing_bonus_usd": pa.int64(), "performance_bonus_usd": pa.int64(), "total_salary_usd": pa.int64(),
     "list_size": pa.int64(), "pct": pa.float64(), "active": pa.bool_(), "stated_relief_usd": pa.int64(),
+    # deadline_rosters / deadline_teams
+    "years_remaining": pa.int64(), "extension_years": pa.int64(), "years_left": pa.int64(),
+    "two_way": pa.bool_(), "ltir": pa.bool_(), "injured_reserve": pa.bool_(), "unconfirmed": pa.bool_(),
+    "players": pa.int64(), "roster_players": pa.int64(), "projected_cap_hit_usd": pa.int64(),
+    "projected_ltir_used_usd": pa.int64(), "projected_cap_space_usd": pa.int64(), "ltir_players": pa.int64(),
+    "ltir_cap_hit_usd": pa.int64(),
 }
 
 
@@ -115,6 +122,8 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
            dead_cap_claims: list[DeadCapClaim] | None = None,
            clause_status: list[dict[str, Any]] | None = None,
            ltir: list[dict[str, Any]] | None = None,
+           deadline_rosters: list[dict[str, Any]] | None = None,
+           deadline_teams: list[dict[str, Any]] | None = None,
            store_counts: dict[str, int] | None = None) -> dict[str, Any]:
     dist.mkdir(parents=True, exist_ok=True)
     c_rows = _rows(contracts, CONTRACT_COLUMNS)
@@ -127,6 +136,8 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
     dcc_rows = _rows([c.to_dict() for c in (dead_cap_claims or [])], DEAD_CAP_CLAIM_COLUMNS)
     cs_rows = _rows(clause_status or [], CLAUSE_STATUS_COLUMNS)
     lt_rows = _rows(ltir or [], LTIR_COLUMNS)
+    dr_rows = _rows(deadline_rosters or [], list(ROSTER_COLUMNS))
+    dt_rows = _rows(deadline_teams or [], list(TEAM_COLUMNS))
     seen: set[str] = set()
     s_rows = []
     for s in sources:
@@ -147,6 +158,8 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
     files += _write_set(dcc_rows, DEAD_CAP_CLAIM_COLUMNS, dist, "dead_cap_claims")
     files += _write_set(cs_rows, CLAUSE_STATUS_COLUMNS, dist, "clause_status")
     files += _write_set(lt_rows, LTIR_COLUMNS, dist, "ltir")
+    files += _write_set(dr_rows, list(ROSTER_COLUMNS), dist, "deadline_rosters")
+    files += _write_set(dt_rows, list(TEAM_COLUMNS), dist, "deadline_teams")
     _write_csv(s_rows, SOURCE_COLUMNS, dist / "sources.csv")
     files += ["sources.csv", "timestamp.json"]
 
@@ -169,6 +182,13 @@ def export(contracts: list[dict[str, Any]], claims: list[Claim], sources: list[S
                                                                                  "unknown")},
         "n_ltir": len(lt_rows),
         "n_ltir_active": sum(1 for r in lt_rows if r["active"]),
+        "n_deadline_rosters": len(dr_rows),
+        "n_deadline_teams": len(dt_rows),
+        "deadline_rosters": {
+            "seasons": sorted({r["season"] for r in dt_rows}),
+            "earliest_as_of": min((r["as_of"] for r in dt_rows), default=None),
+            "latest_as_of": max((r["as_of"] for r in dt_rows), default=None),
+        },
         "tiers": {t: sum(1 for r in cl_rows if r["confidence_tier"] == t) for t in "ABCDE"},
         "earliest_signed_at": min((r["signed_at"] for r in c_rows), default=None),
         "latest_signed_at": max((r["signed_at"] for r in c_rows), default=None),

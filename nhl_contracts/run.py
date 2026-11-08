@@ -8,7 +8,8 @@
     python -m nhl_contracts.run load           # rebuild data/raw.sqlite from data/raw/*.jsonl + wayback_pages.sqlite
     python -m nhl_contracts.run dump           # write data/raw/*.jsonl (and the wayback file with --sources wayback)
     python -m nhl_contracts.run deadline       # CapFriendly team pages before the 2019-20..2023-24 deadlines
-                                               # -> data/deadline_rosters/ (not part of dist/)
+                                               # (collect + write data/deadline_rosters/; `export`
+                                               # publishes the same rows in dist/)
 
 The working store (data/raw.sqlite) is a cache. Its portable copies are the JSONL
 files under data/raw/ (committed) and data/wayback_pages.sqlite (a release
@@ -274,10 +275,17 @@ def normalize_store(store: Store, contributed: Path = CONTRIBUTED_CLAIMS) -> dic
     if llm_fallback.wanted:
         log.info("llm fallback: %d stories eligible, %d answered%s", len(llm_fallback.wanted),
                  len(llm_fallback.used), "" if llm_fallback.is_enabled() else " (no extractor registered)")
+    from .normalize import deadline_rosters
+
+    deadline_players, deadline_teams, problems = deadline_rosters.rows_from_store(store)
+    for p in problems:
+        log.warning("deadline rosters: %s", p)
+    log.info("normalize: %d archived pre-deadline team pages -> %d roster rows", len(deadline_teams),
+             len(deadline_players))
     return {"claims": claims, "sources": sources, "contracts": contracts, "seasons": seasons,
             "season_claims": season_claims, "clauses": clauses, "clause_claims": clause_claims,
             "dead_cap": dead_cap, "dead_cap_claims": dc_claims, "clause_status": statuses,
-            "ltir": ltir_rows}
+            "ltir": ltir_rows, "deadline_rosters": deadline_players, "deadline_teams": deadline_teams}
 
 
 def do_deadline(store: Store, args: argparse.Namespace) -> None:
@@ -309,9 +317,11 @@ def do_export(store: Store, args: argparse.Namespace) -> None:
                    dead_cap=n["dead_cap"], dead_cap_claims=n["dead_cap_claims"],  # type: ignore[arg-type]
                    clause_status=n["clause_status"],  # type: ignore[arg-type]
                    ltir=n["ltir"],  # type: ignore[arg-type]
+                   deadline_rosters=n["deadline_rosters"],  # type: ignore[arg-type]
+                   deadline_teams=n["deadline_teams"],  # type: ignore[arg-type]
                    store_counts=store.counts())
     keys = ("n_contracts", "n_claims", "n_sources", "n_conflicts", "n_contract_seasons", "n_clauses", "n_dead_cap",
-            "n_bought_out", "n_ltir", "n_ltir_active")
+            "n_bought_out", "n_ltir", "n_ltir_active", "n_deadline_rosters", "n_deadline_teams")
     log.info("export: %s", json.dumps({k: stamp[k] for k in keys}))
     gaps = find_gaps(store, n["contracts"], n["seasons"])  # type: ignore[arg-type]
     counts = write_gaps(gaps, Path(args.dist))

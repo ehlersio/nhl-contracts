@@ -89,6 +89,12 @@ thestanleycap.com, and nothing from a paid API.
   Suter's 2021 buyouts really ended their deals in 2020-21). Not covered:
   performance-bonus overages, recapture penalties, and retentions that only
   the trade call itself announced.
+- Rosters before past trade deadlines (`deadline_rosters`, `deadline_teams`):
+  every team's archived CapFriendly page from before each Jan 1, Feb 1,
+  deadline − 14 days and trade deadline, 2019-20 to 2023-24 (tier E), with each
+  player's cap hit, years left, expiry, clause (blank = none) and LTIR status,
+  and the team's projected LTIR used. Each row is the roster as of its capture
+  date, which can be weeks before the target (months for 2019-20).
 - LTIR (`ltir`): who is on long-term injured reserve, for which team, since
   when, and until when, from ESPN's injury list, ESPN's transaction wire (from
   2016) and PuckPedia's LTIR posts (from mid-2023), with the relief PuckPedia
@@ -114,6 +120,8 @@ thestanleycap.com, and nothing from a paid API.
 | `clause_status.*` | one row per (contract, season) | whether the season has a clause, none, or isn't known, and from what (`clauses` alone can't tell "none" from "not reported") |
 | `dead_cap.*` | one row per (team, kind, player, season) | cap charges that are not roster contracts: `retained` salary on a traded player and `buyout` charges, with the retained `pct` and the acquiring `counterparty` when stated; merged with `conflicts` |
 | `dead_cap_claims.*` | one row per (source, team, player, season) | the per-source dead-cap rows with evidence and flags |
+| `deadline_rosters.*` | one row per (archived team page, player), 2019-20 to 2023-24 | tier E: CapFriendly team pages captured before each Jan 1, Feb 1, deadline − 14 days and trade deadline, with the capture date (`as_of`); cap hit, years left, expiry, the season's clause (blank = none), LTIR / IR |
+| `deadline_teams.*` | one row per archived team page | the page's projected cap hit, projected LTIR used, projected cap space, and LTIR players |
 | `ltir.*` | one row per LTIR stint (player, team, placement to activation) | whether it's active now, the placement date, the relief PuckPedia stated, and where sources disagree; history from 2016 is kept |
 | `sources.csv` | one row per source document | URL, publisher, author, published time, tier |
 | `gaps.csv` / `.json` | one row per current NHL roster player the dataset does not fully cover | `gap` = `no_contract` / `no_money` / `no_structure`; `status` says whether the player has older rows, is mentioned in the raw store (a parsing or matching gap) or is absent from every source; hints quote the latest ESPN row, NHL.com headline and Bluesky post that name them |
@@ -231,6 +239,26 @@ One row per stint: a player on long-term injured reserve with one team, from pla
 | flags | `activation_from_ir` (ended by a plain "activated from injured reserve", which is how ESPN writes most LTIR activations), `placement_not_found` (an activation with no placement on record), `end_not_found` (no source recorded the end; the stint is from an earlier season), `retroactive` (the placement was back-dated), `offseason` (placed in July or August: summer LTIR works against the offseason cap), `name_unresolved` |
 
 Relief is the injured player's cap hit minus the team's cap space when he was placed: Washington had $125K of space when Sandin ($3.975M) went on LTIR, so they could exceed the cap by $3.85M. A team under the cap gets less than the cap hit, so the sum of LTIR cap hits is only an upper bound.
+
+### `deadline_rosters`
+
+Tier E, one row per player per archived CapFriendly team page. A page is the last valid capture before `target`, so each row describes the roster as of `as_of`, not the target date (see "Deadline rosters" under How it works for staleness).
+
+| column | meaning |
+|---|---|
+| `season`, `target`, `as_of` | the cap season; the date the capture was chosen to precede (Jan 1, Feb 1, deadline − 14 days, or the deadline); the capture date |
+| `team`, `team_slug` | tri-code in that season (the Coyotes are `ARI` through 2023-24) and CapFriendly's slug |
+| `player_id`, `player_name`, `birth_date`, `capfriendly_path` | the id only when the name matches one player on today's rosters; long-retired players stay null, so match on name + `birth_date` |
+| `position`, `group`, `section`, `status` | CapFriendly's position; `Forwards` / `Defense` / `Goalies` / `LTIR` / `IR` / `Taxi Squad`; `ROSTER` or `NON-ROSTER`; the page's status (`NHL`, `Minor`, `LTIR`, `Loan`, ...) |
+| `cap_hit_usd`, `aav_usd`, `two_way` | this season's cell. In two-way (non-roster) cells the salary views show the minor-league figure; the cap hit is the NHL one |
+| `years_remaining`, `extension_years`, `years_left`, `end_season`, `expiry_status` | seasons left including this one and any extension already signed; the extension's length when the page lists it separately ("1 - 8 UFA"); seasons after this one; the last season; `UFA` / `RFA` / `10.2(c)` |
+| `clause`, `clause_status`, `clause_detail`, `clause_seasons` | this season's label (`NMC`, `NTC`, `M-NTC`, `M-NTC, NMC`, ...); `clause` or `none` (the page lists clauses per season, so a blank cell is none; null when the player has no cell this season); the tooltip; JSON `[[season, label], ...]` for every season with one |
+| `ltir`, `injured_reserve`, `unconfirmed` | on LTIR (group or status); on IR; CapFriendly marked the contract unconfirmed |
+| `tier`, `publisher`, `snapshot_url` | always `E`, the archive publisher, the Wayback URL |
+
+### `deadline_teams`
+
+One row per archived team page: `season`, `target`, `as_of`, `team`, `team_slug`, `players` and `roster_players` (rows parsed, NHL-roster rows), `projected_cap_hit_usd`, `projected_ltir_used_usd` (cap space the team exceeded the cap by while on LTIR, as CapFriendly projected it; negative = space banked) and `projected_cap_space_usd` from the page header, `ltir_players` and `ltir_cap_hit_usd` (LTIR rows and their summed cap hit), `tier`, `publisher`, `snapshot_url`.
 
 ### Flags
 
@@ -485,8 +513,8 @@ One-off history (resumable; the Wayback crawl is slow by design):
 .venv/bin/python -m nhl_contracts.run backfill --sources wayback
 ```
 
-Rosters before past trade deadlines (2019-20 to 2023-24; not part of `dist/`
-yet, see below):
+Rosters before past trade deadlines (2019-20 to 2023-24, see below; a one-off
+crawl, then re-upload `wayback_pages.sqlite`):
 
 ```bash
 .venv/bin/python -m nhl_contracts.run deadline
@@ -510,7 +538,9 @@ the target's season. Pages go into `wayback_pages` as kind `team_deadline`, keye
 resumable; `--offline` only re-parses.
 
 It writes `data/deadline_rosters/deadline_rosters.csv`, with one row per player
-per stored page. Each row has the season, `target`, `as_of` (capture date), team
+per stored page. Every export publishes the same rows as `deadline_rosters.*` and
+`deadline_teams.*` in `dist/` (columns in the data dictionary), as long as the
+store has the pages, i.e. the release's `wayback_pages.sqlite` carries them. Each row has the season, `target`, `as_of` (capture date), team
 (the Coyotes are `ARI` through 2023-24), name, birth date, CapFriendly path, a
 `player_id` when the name matches one player on today's rosters, position,
 group (Forwards / Defense / Goalies / LTIR / IR / Taxi Squad) and roster or
