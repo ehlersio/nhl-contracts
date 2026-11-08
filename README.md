@@ -359,12 +359,14 @@ nhl_contracts/
   collectors/espn_transactions.py   ESPN transactions by date range
   collectors/bluesky_puckpedia.py   PuckPedia's public Bluesky feed (incremental or back to 2023-07)
   collectors/reddit_hockey.py       r/hockey Atom feeds: post titles quoting insiders (last week only)
-  collectors/wayback_capfriendly.py Internet Archive snapshots of CapFriendly team and player pages
+  collectors/wayback_capfriendly.py Internet Archive snapshots of CapFriendly team and player pages,
+                                    and team pages before the 2019-20..2023-24 deadlines
   normalize/model.py                Claim, SeasonClaim, ClauseClaim, Source, tiers
   normalize/contracts.py            NHL.com + ESPN regex extraction, incl. per-season breakdowns
   normalize/puckpedia.py            post text -> claims, seasons, clauses
   normalize/reddit.py               r/hockey titles -> claims (rumours and non-NHL leagues rejected)
   normalize/capfriendly.py          archived HTML -> contract history, seasons, clauses
+  normalize/deadline_rosters.py     archived pre-deadline team pages -> deadline_rosters / deadline_teams
   normalize/contributed.py          hand-read claims from data/contributed/claims.csv
   normalize/merge.py                cross-source merge; conflicts named, never resolved
   normalize/llm_fallback.py         OpenRouter extractor for stories the regex cannot read (off without a key)
@@ -440,9 +442,51 @@ One-off history (resumable; the Wayback crawl is slow by design):
 .venv/bin/python -m nhl_contracts.run backfill --sources wayback
 ```
 
+Rosters before past trade deadlines (2019-20 to 2023-24; not part of `dist/`
+yet, see below):
+
+```bash
+.venv/bin/python -m nhl_contracts.run deadline
+```
+
 ```bash
 .venv/bin/pytest
 ```
+
+### Deadline rosters (historical team pages)
+
+`run deadline` stores, per team, the last valid CapFriendly team page captured
+before each of these dates, 2019-20 to 2023-24: Jan 1, Feb 1, 14 days before the
+trade deadline, and the deadline. The dates are the trade-candidacy backtest's
+as-of dates, so a consumer can always use a roster captured before its own
+as-of date. One CDX query per team lists the captures. A capture counts only
+when it carries the roster table, Wayback served it before the target date
+(`id_` can redirect to a neighbouring capture), and its first season column is
+the target's season. Pages go into `wayback_pages` as kind `team_deadline`, keyed
+`<team url>#before=<date>`, apart from the July 2024 pages. The step is
+resumable; `--offline` only re-parses.
+
+It writes `data/deadline_rosters/deadline_rosters.csv`, with one row per player
+per stored page. Each row has the season, `target`, `as_of` (capture date), team
+(the Coyotes are `ARI` through 2023-24), name, birth date, CapFriendly path, a
+`player_id` when the name matches one player on today's rosters, position,
+group (Forwards / Defense / Goalies / LTIR / IR / Taxi Squad) and roster or
+non-roster section. It also has the season's cap hit and AAV, `years_remaining`
+as the page states it (this season included, plus any extension already
+signed; `extension_years` keeps the extension's length), `years_left` after this season,
+`end_season`, expiry status, the season's clause label, `clause_status`
+(`clause` or `none`: the page lists clauses per season, so a blank cell means
+none), the clause tooltip, per-season clauses, LTIR / IR flags, tier `E` and the
+snapshot URL. `deadline_teams.csv` has one row per page: player counts,
+"PROJECTED CAP HIT", "PROJECTED LTIR USED", "PROJECTED CAP SPACE", and the LTIR
+players with their summed cap hit.
+
+The 2019-20 to 2022-23 pages use the older layout, a single `table#team`.
+Its upper-case group header rows open each group, and non-roster groups are
+either named "NON-ROSTER ..." or follow an `<h3>NON-ROSTER</h3>`. 2019-20 pages
+spell "Modified NTC", which is normalized to `M-NTC`. 2023-24 pages use the
+2024 layout. `tests/test_deadline_rosters.py` checks one real Carolina capture
+per season.
 
 ### LLM fallback
 

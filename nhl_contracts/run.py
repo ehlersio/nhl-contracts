@@ -7,6 +7,8 @@
     python -m nhl_contracts.run normalize      # rebuild dist/ from the raw store (offline)
     python -m nhl_contracts.run load           # rebuild data/raw.sqlite from data/raw/*.jsonl + wayback_pages.sqlite
     python -m nhl_contracts.run dump           # write data/raw/*.jsonl (and the wayback file with --sources wayback)
+    python -m nhl_contracts.run deadline       # CapFriendly team pages before the 2019-20..2023-24 deadlines
+                                               # -> data/deadline_rosters/ (not part of dist/)
 
 The working store (data/raw.sqlite) is a cache. Its portable copies are the JSONL
 files under data/raw/ (committed) and data/wayback_pages.sqlite (a release
@@ -24,7 +26,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from .collectors import espn_transactions, nhl_forge
-from .config import CONTRIBUTED_CLAIMS, DIST_DIR, RAW_JSONL_DIR, STORE_PATH, WAYBACK_STORE
+from .config import CONTRIBUTED_CLAIMS, DEADLINE_DIR, DIST_DIR, RAW_JSONL_DIR, STORE_PATH, WAYBACK_STORE
 from .http import Client
 from .normalize import dead_cap as dead_cap_mod
 from .normalize import llm_fallback
@@ -48,7 +50,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="nhl-contracts", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("step", nargs="?", default="all",
-                   choices=["collect", "backfill", "normalize", "export", "all", "load", "dump"])
+                   choices=["collect", "backfill", "normalize", "export", "all", "load", "dump", "deadline"])
     p.add_argument("--store", default=str(STORE_PATH), help="SQLite raw store path")
     p.add_argument("--dist", default=str(DIST_DIR), help="output directory")
     p.add_argument("--raw-dir", default=str(RAW_JSONL_DIR), help="JSONL copies of the live-source tables")
@@ -65,6 +67,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--max-players", type=int, default=None, help="cap players polled by backfill")
     p.add_argument("--max-pages", type=int, default=None, help="cap Wayback/Bluesky pages per run")
     p.add_argument("--wayback-pause", type=float, default=2.5, help="seconds between Wayback requests")
+    p.add_argument("--deadline-out", default=str(DEADLINE_DIR),
+                   help="output directory of the deadline step (deadline_rosters.csv, deadline_teams.csv)")
+    p.add_argument("--offline", action="store_true", help="deadline step: parse stored pages only, fetch nothing")
     p.add_argument("--refresh-players", action="store_true",
                    help="also refresh the roster/prospect player-id list during collect")
     p.add_argument("--no-llm", action="store_true", help="ignore OPENROUTER_API_KEY; regex only")
@@ -261,6 +266,27 @@ def normalize_store(store: Store, contributed: Path = CONTRIBUTED_CLAIMS) -> dic
             "dead_cap": dead_cap, "dead_cap_claims": dc_claims, "clause_status": statuses}
 
 
+def do_deadline(store: Store, args: argparse.Namespace) -> None:
+    """Historical CapFriendly team pages (kind team_deadline) -> deadline_rosters.csv and
+    deadline_teams.csv in --deadline-out. Kept out of dist/ until publishing them is decided."""
+    from .normalize import deadline_rosters
+
+    if not args.offline:
+        from .collectors import wayback_capfriendly
+
+        with Client(retries=1, pause=0) as wb_client:
+            wayback_capfriendly.collect_deadline(store, wb_client, max_pages=args.max_pages,
+                                                 pause=args.wayback_pause)
+    players, teams, problems = deadline_rosters.rows_from_store(store)
+    for p in problems:
+        log.warning("deadline: %s", p)
+    counts = deadline_rosters.write(players, teams, Path(args.deadline_out))
+    log.info("deadline: %s -> %s", json.dumps(counts), args.deadline_out)
+    if not args.offline and not args.no_dump:
+        n = store.dump_wayback(args.wayback_store)
+        log.info("dump: %d archived pages -> %s", n, args.wayback_store)
+
+
 def do_export(store: Store, args: argparse.Namespace) -> None:
     n = normalize_store(store)
     stamp = export(n["contracts"], n["claims"], n["sources"], Path(args.dist),  # type: ignore[arg-type]
@@ -291,8 +317,10 @@ def main(argv: list[str] | None = None) -> int:
             do_load(store, args)
         if args.step == "dump":
             do_dump(store, args, wayback="wayback" in _sources(args))
-        if args.step in ("collect", "backfill", "all"):
+        if args.step in ("collect", "backfill", "all", "deadline"):
             do_load(store, args, only_if_empty=True)
+        if args.step == "deadline":
+            do_deadline(store, args)
         if args.step == "collect" or args.step == "all":
             do_collect(store, args)
         if args.step == "backfill":
