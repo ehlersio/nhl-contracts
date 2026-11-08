@@ -488,6 +488,13 @@ spell "Modified NTC", which is normalized to `M-NTC`. 2023-24 pages use the
 2024 layout. `tests/test_deadline_rosters.py` checks one real Carolina capture
 per season.
 
+First crawl (2026-11-08): 626 of 628 team-target pairs have a valid capture,
+440 distinct snapshots, 29,817 player rows. Los Angeles has none between July
+2023 and Jan 2024, so its Jan 1 and Feb 1, 2024 targets are `missing`. 2019-20
+captures are stale: most teams' last capture before the deadline is from late
+2019, a median 94 days before it, so that season's rows show the roster as of
+then. Median lag in later seasons is 1 to 37 days.
+
 ### LLM fallback
 
 Stories where the regex finds a signing but cannot attach a stated dollar
