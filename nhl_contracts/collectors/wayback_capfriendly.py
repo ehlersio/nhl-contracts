@@ -27,10 +27,11 @@ from __future__ import annotations
 import gzip
 import json
 import logging
+import re
 import time
 from collections import Counter
 from collections.abc import Callable, Iterable
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime, timedelta
 from typing import Any
 
 from ..http import Client
@@ -149,9 +150,9 @@ class Wayback:
                 self._last = self.clock()
         raise WaybackUnavailable(f"{url} failed after {len(self.backoff) + 1} attempts") from last
 
-    def captures(self, url: str) -> list[tuple[str, str, int | None]]:
+    def captures(self, url: str, start: str = "2024", end: str = "2024") -> list[tuple[str, str, int | None]]:
         bare = url.split("://", 1)[-1].removeprefix("www.")
-        params = {"url": bare, "output": "json", "from": "2024", "to": "2024", "filter": "statuscode:200",
+        params = {"url": bare, "output": "json", "from": start, "to": end, "filter": "statuscode:200",
                   "fl": "timestamp,original,length", "collapse": "timestamp:8"}
         status, body, _final = self.get(CDX, params)
         if status != 200 or not body.strip():
@@ -294,3 +295,184 @@ def collect(store: Store, client: Client, *, kinds: Iterable[str] = ("team", "pl
     log.info("wayback: %d pages stored (%s), %d requests%s", processed, dict(statuses), wb.requests,
              f"; {note}" if note else "")
     return {"requests": wb.requests, "new": processed, "statuses": dict(statuses), "note": note}
+
+
+# --------------------------------------------------------------------------
+# Historical mode: team pages before past trade deadlines (2019-20 .. 2023-24).
+#
+# For each team and each target date, the last valid capture strictly before
+# that date (UTC midnight) is stored as kind ``team_deadline`` under the key
+# ``<team url>#before=<YYYY-MM-DD>``, apart from the July 2024 ``team`` pages.
+# Targets per season are the candidacy backtest's as-of dates (Jan 1, Feb 1,
+# deadline - 14 days) and the deadline itself, so a consumer can always pick a
+# roster captured on or before its own as-of date (no look-ahead).
+#
+# One CDX query per team lists every capture since July 2019; snapshots are
+# fetched with the same pacing and back-off as the 2024 crawl. A capture is
+# valid when it carries the roster header ("Years Remaining", upper case on the
+# 2019-2023 layout), Wayback served a capture before the target (``id_`` can
+# redirect to a neighbouring one), and its first season column is the target's
+# season. A snapshot fetched for one target is reused for the others.
+
+DEADLINE_KIND = "team_deadline"
+# Published NHL trade deadlines, by season start year.
+DEADLINES: dict[int, date] = {
+    2019: date(2020, 2, 24),
+    2020: date(2021, 4, 12),
+    2021: date(2022, 3, 21),
+    2022: date(2023, 3, 3),
+    2023: date(2024, 3, 8),
+}
+FIRST_SEASON: dict[str, int] = {"kraken": 2021}  # Seattle's first NHL season
+HISTORICAL_SLUGS = tuple(s for s in TEAM_SLUGS if s != "utah")  # Utah's page starts in 2024
+SEASON_HEADER_RE = re.compile(r"years remaining.*?(20\d\d)-(\d\d)", re.I | re.S)
+
+
+def deadline_targets(season: int) -> list[date]:
+    """The dates a capture must precede for one season, earliest first."""
+    dl = DEADLINES[season]
+    return sorted({date(season + 1, 1, 1), date(season + 1, 2, 1), dl - timedelta(days=14), dl})
+
+
+def deadline_key(team_url: str, target: date) -> str:
+    return f"{team_url}#before={target.isoformat()}"
+
+
+def target_of(key: str) -> date | None:
+    m = re.search(r"#before=(\d{4}-\d\d-\d\d)$", key)
+    return date.fromisoformat(m.group(1)) if m else None
+
+
+def season_of(target: date) -> int:
+    """Season start year a target date falls in (July 1 boundary)."""
+    return target.year if target.month >= 7 else target.year - 1
+
+
+def page_season(html: str) -> int | None:
+    """Start year of the first season column after the roster header."""
+    m = SEASON_HEADER_RE.search(html)
+    return int(m.group(1)) if m else None
+
+
+def classify_deadline(html: str, served_ts: str, target: date) -> str:
+    """ok | stale (a capture of an earlier season) | late (served at or after the target) | error."""
+    if served_ts[:8] >= target.strftime("%Y%m%d"):
+        return "late"
+    if "years remaining" not in html.lower():
+        return "error"
+    season = page_season(html)
+    if season is None:
+        return "error"
+    return "ok" if season == season_of(target) else "stale"
+
+
+def deadline_plan(seasons: Iterable[int], slugs: Iterable[str]) -> dict[str, list[date]]:
+    """{team url: [target dates]} for the seasons each team played."""
+    plan: dict[str, list[date]] = {}
+    for slug in slugs:
+        targets = [t for s in sorted(seasons) if s >= FIRST_SEASON.get(slug, 0) for t in deadline_targets(s)]
+        if targets:
+            plan[page_url(f"/teams/{slug}")] = targets
+    return plan
+
+
+def collect_deadline(store: Store, client: Client, *, seasons: Iterable[int] = tuple(DEADLINES),
+                     teams: Iterable[str] | None = None, max_pages: int | None = None, pause: float = 2.5,
+                     backoff: tuple[float, ...] = (10, 30, 90), max_attempts: int = 4,
+                     retry_statuses: Iterable[str] = ("error",),
+                     sleep: Callable[[float], None] = time.sleep) -> dict[str, Any]:
+    """Fetch the last valid team page before every target date (see above). Resumable: a key
+    already stored with ok or missing is skipped; ``retry_statuses`` are tried again.
+    ``max_pages`` caps the snapshots fetched in one run."""
+    started = datetime.now(UTC).isoformat()
+    run_id = store.start_run("wayback_capfriendly_deadline", started)
+    wb = Wayback(client, pause=pause, backoff=backoff, sleep=sleep)
+    retry = set(retry_statuses)
+    plan = deadline_plan(seasons, teams or HISTORICAL_SLUGS)
+    statuses: Counter[str] = Counter()
+    fetched = 0
+    failures = 0
+    note = None
+
+    def done(key: str) -> bool:
+        st = store.wayback_page_status(key)
+        return st is not None and (st == "ok" or (st not in retry and st in ("ok", "missing")))
+
+    for url, targets in plan.items():
+        todo = [t for t in targets if not done(deadline_key(url, t))]
+        if not todo:
+            continue
+        # snapshots already stored for this team, reused across targets and runs
+        cache: dict[str, str] = {}
+        for p in store.wayback_pages(kind=DEADLINE_KIND):
+            if p["url"].startswith(url + "#") and p["snapshot_ts"]:
+                cache[p["snapshot_ts"]] = gzip.decompress(p["html"]).decode("utf-8", "replace")
+        lo = f"{season_of(min(todo))}0701"
+        hi = (max(todo) - timedelta(days=1)).strftime("%Y%m%d")
+        try:
+            caps = wb.captures(url, lo, hi)
+        except WaybackUnavailable as exc:
+            failures += 1
+            log.error("wayback deadline CDX %s: %s", url, exc)
+            if failures >= 3:
+                note = "stopped: archive unavailable (3 requests failed after back-off)"
+                break
+            continue
+        caps.sort(key=lambda r: r[0], reverse=True)
+        stop = False
+        for target in todo:
+            key = deadline_key(url, target)
+            cutoff = target.strftime("%Y%m%d")
+            floor = f"{season_of(target)}0701"
+            cands = [c for c in caps if floor <= c[0][:8] < cutoff]
+            row: dict[str, Any] = {"status": "missing", "snapshot_ts": "", "snapshot_url": "", "html": ""}
+            tried = 0
+            for ts, original, _length in cands:
+                if tried >= max_attempts:
+                    break
+                if ts in cache:
+                    served, html, status = ts, cache[ts], 200
+                else:
+                    if max_pages is not None and fetched >= max_pages:
+                        note = f"stopped at max_pages={max_pages}"
+                        stop = True
+                        break
+                    tried += 1
+                    try:
+                        status, html, served = wb.snapshot(ts, original)
+                    except WaybackUnavailable as exc:
+                        failures += 1
+                        log.error("wayback %s @%s: %s", url, ts, exc)
+                        if failures >= 3:
+                            note = "stopped: archive unavailable (3 requests failed after back-off)"
+                            stop = True
+                            break
+                        continue
+                    failures = 0
+                    fetched += 1
+                    if status == 200:
+                        cache[served] = html
+                verdict = classify_deadline(html, served, target) if status == 200 else "error"
+                if verdict == "ok":
+                    row = {"status": "ok", "snapshot_ts": served,
+                           "snapshot_url": snapshot_url_for(served, url.removeprefix(CF_BASE)), "html": html}
+                    break
+                if verdict == "stale":
+                    break  # older captures are older still
+                row = {"status": "error", "snapshot_ts": "", "snapshot_url": "", "html": ""}
+            if stop:
+                break
+            statuses[row["status"]] += 1
+            store.upsert_wayback_page(key, DEADLINE_KIND, row["snapshot_ts"], row["snapshot_url"],
+                                      gzip.compress(row["html"].encode("utf-8")), row["status"],
+                                      datetime.now(UTC).isoformat())
+            store.commit()
+        log.info("wayback deadline %s: %s so far, %d snapshots fetched, %d requests", url.removeprefix(CF_BASE),
+                 dict(statuses), fetched, wb.requests)
+        if stop:
+            break
+    store.finish_run(run_id, datetime.now(UTC).isoformat(), wb.requests, fetched, note)
+    store.commit()
+    log.info("wayback deadline: %s, %d snapshots fetched, %d requests%s", dict(statuses), fetched, wb.requests,
+             f"; {note}" if note else "")
+    return {"requests": wb.requests, "fetched": fetched, "statuses": dict(statuses), "note": note}
