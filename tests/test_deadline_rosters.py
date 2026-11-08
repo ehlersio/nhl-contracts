@@ -2,7 +2,8 @@
 
 Fixtures are real Carolina captures, one per season:
 2019-11-19 (2019-20), 2021-03-06 (2020-21), 2022-02-26 (2021-22), 2023-02-27 (2022-23)
-on the 2019-2023 layout, and 2024-01-05 (2023-24) on the 2024 layout.
+on the 2019-2023 layout, and 2024-01-05 (2023-24) on the 2024 layout. Their <script>
+blocks are removed (the parser never reads them; CodeQL flagged the archived page's JS).
 """
 
 import csv
