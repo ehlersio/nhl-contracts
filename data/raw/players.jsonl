@@ -564,6 +564,7 @@
 {"full_name": "Matt Boldy", "kind": "roster", "player_id": 8481557, "team": "MIN", "updated_at": "2026-11-08"}
 {"full_name": "Jack Hughes", "kind": "roster", "player_id": 8481559, "team": "NJD", "updated_at": "2026-11-08"}
 {"full_name": "Drew Helleson", "kind": "roster", "player_id": 8481563, "team": "ANA", "updated_at": "2026-11-08"}
+{"full_name": "Henry Thrun", "kind": "roster", "player_id": 8481567, "team": "WPG", "updated_at": "2026-11-08"}
 {"full_name": "Alex Vlasic", "kind": "roster", "player_id": 8481568, "team": "CHI", "updated_at": "2026-11-08"}
 {"full_name": "Ville Heinola", "kind": "roster", "player_id": 8481572, "team": "VGK", "updated_at": "2026-11-01"}
 {"full_name": "Ryan Suzuki", "kind": "prospect", "player_id": 8481576, "team": "OTT", "updated_at": "2026-11-08"}
@@ -828,7 +829,7 @@
 {"full_name": "Ryan Chesley", "kind": "prospect", "player_id": 8483430, "team": "WSH", "updated_at": "2026-11-08"}
 {"full_name": "Logan Cooley", "kind": "roster", "player_id": 8483431, "team": "UTA", "updated_at": "2026-11-08"}
 {"full_name": "Luca Del Bel Belluz", "kind": "roster", "player_id": 8483432, "team": "CBJ", "updated_at": "2026-11-08"}
-{"full_name": "Jack Devine", "kind": "prospect", "player_id": 8483433, "team": "FLA", "updated_at": "2026-11-08"}
+{"full_name": "Jack Devine", "kind": "roster", "player_id": 8483433, "team": "FLA", "updated_at": "2026-11-08"}
 {"full_name": "Kirill Dolzhenkov", "kind": "prospect", "player_id": 8483434, "team": "CBJ", "updated_at": "2026-11-08"}
 {"full_name": "Jorian Donovan", "kind": "prospect", "player_id": 8483435, "team": "OTT", "updated_at": "2026-11-08"}
 {"full_name": "Josh Filmon", "kind": "prospect", "player_id": 8483439, "team": "NJD", "updated_at": "2026-11-08"}
