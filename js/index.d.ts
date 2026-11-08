@@ -5,7 +5,7 @@ export interface LoadOptions { fetch?: typeof fetch }
 export interface Timestamp {
   updated_at: string; version: string; n_contracts: number; n_claims: number; n_sources: number;
   n_conflicts: number; n_contract_seasons: number; n_clauses: number; n_dead_cap?: number;
-  n_bought_out?: number; n_clause_status?: number;
+  n_bought_out?: number; n_clause_status?: number; n_ltir?: number; n_ltir_active?: number;
   clause_status?: { clause: number; none: number; none_likely: number; unknown: number };
   tiers: Record<string, number>; files: string[]; license: { data: string; code: string };
 }
@@ -40,10 +40,18 @@ export interface ClauseStatus {
   contract_key: string; season: string; status: "clause" | "none" | "none_likely" | "unknown";
   basis: "source" | "stated" | "capfriendly_2024" | "breakdown_without_clause" | null; source_ids: string;
 }
+export interface Ltir {
+  player_id: number | null; player_name: string; team: string | null; season: string;
+  since: string | null; since_basis: "espn_transactions" | "bluesky_puckpedia" | null; first_seen: string;
+  until: string | null; until_basis: "espn_transactions" | "bluesky_puckpedia" | "espn_injuries" | "later_team" | null;
+  active: boolean; stated_relief_usd: number | null; stated_at: string | null; stated_source: string | null;
+  sources: string; conflicts: string; flags: string;
+}
 export function load(table: "contracts", options?: LoadOptions): Promise<Contract[]>;
 export function load(table: "contract_seasons", options?: LoadOptions): Promise<ContractSeason[]>;
 export function load(table: "clauses", options?: LoadOptions): Promise<Clause[]>;
 export function load(table: "dead_cap", options?: LoadOptions): Promise<DeadCap[]>;
 export function load(table: "clause_status", options?: LoadOptions): Promise<ClauseStatus[]>;
+export function load(table: "ltir", options?: LoadOptions): Promise<Ltir[]>;
 export function load(table: string, options?: LoadOptions): Promise<Record<string, unknown>[]>;
 export function parseCsv(text: string): Record<string, string>[];

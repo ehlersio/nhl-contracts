@@ -47,7 +47,7 @@ HASHTAG_TEAMS: dict[str, str] = {
     "nhlbruins": "BOS", "nhlbuins": "BOS",
     "sabres": "BUF", "sabrehood": "BUF", "letsgobuffalo": "BUF",
     "flames": "CGY",
-    "canes": "CAR", "carolinaculture": "CAR", "soundthesiren": "CAR",   # 2026 Cup winners
+    "canes": "CAR", "carolinaculture": "CAR", "soundthesiren": "CAR", "raiseup": "CAR",   # 2026 Cup winners
     "blackhawks": "CHI",
     "goavsgo": "COL",
     "cbj": "CBJ",

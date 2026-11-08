@@ -9,7 +9,8 @@
 [![code: MIT](https://img.shields.io/badge/code-MIT-blue)](LICENSE)
 
 An open, provenance-first dataset of NHL player contracts: term, cap hit, total
-value, year-by-year salary and signing-bonus structure, and trade clauses, with
+value, year-by-year salary and signing-bonus structure, trade clauses, dead cap
+and long-term injured reserve, with
 every number tied to the public document it came from and a confidence tier that
 says what kind of document that was. Conflicting reports are kept side by side,
 never silently resolved.
@@ -50,7 +51,8 @@ version bump; `timestamp.json` tells you how fresh the files are.
 |---|---|---|---|
 | A | Club press releases on NHL.com | term, type, often AAV or cap hit, sometimes a full breakdown (New Jersey, Carolina) | NHL.com Forge content API |
 | B | NHL.com staff stories | term, total value, AAV, NHL player id | Forge content API |
-| C | ESPN transaction wire | term, type, two-way, PTO; almost never money | ESPN site API |
+| C | ESPN transaction wire | term, type, two-way, PTO; almost never money; LTIR placements and activations | ESPN site API |
+| C | ESPN injury list | who is on long-term injured reserve now (`IR-LT`) | ESPN site API, snapshotted hourly |
 | D | PuckPedia's public Bluesky posts | cap hit, year-by-year salary and signing bonus, clauses with list sizes, agent, expiry status | Bluesky public API (no account) |
 | D | r/hockey post titles quoting insiders and club accounts | term, AAV, cap hit or total as quoted, type, one/two-way; the bracket tag (`[Friedman]`, `[NY Rangers PR]`) is the author | Reddit's public Atom feeds (new posts and a signings search), no account; titles quoting PuckPedia, CapWages or Spotrac are skipped |
 | E | CapFriendly pages as preserved by the Internet Archive (site closed July 2024) | full contract history to July 2024: per-season cap hit, base salary, signing and performance bonuses, minors salary, clauses | Wayback Machine, one paced request at a time |
@@ -84,9 +86,17 @@ thestanleycap.com, and nothing from a paid API.
   dropped (the charges are in `dead_cap`). The archived team pages show
   charges from 2024-25 on only, so a buyout known from them alone gives an
   end of 2023-24 at the latest (flag `buyout_season_upper_bound`; Parise's and
-  Suter's 2021 buyouts really ended their deals in 2020-21). Not covered: LTIR,
+  Suter's 2021 buyouts really ended their deals in 2020-21). Not covered:
   performance-bonus overages, recapture penalties, and retentions that only
   the trade call itself announced.
+- LTIR (`ltir`): who is on long-term injured reserve, for which team, since
+  when, and until when, from ESPN's injury list, ESPN's transaction wire (from
+  2016) and PuckPedia's LTIR posts (from mid-2023), with the relief PuckPedia
+  stated when it did. Sources disagree now and then (a player ESPN no longer
+  lists, a team that differs); those rows say so in `conflicts`. The relief a
+  team actually gets is the player's cap hit minus the team's cap space when he
+  was placed, which no free source states for every case, so the dataset never
+  computes it.
 - Not covered: contracts signed after July 2024 that no tier A–D source
   described; performance-bonus achievement; anything the sources got wrong
   (figures are kept as written and flagged when they fail a sanity check).
@@ -104,6 +114,7 @@ thestanleycap.com, and nothing from a paid API.
 | `clause_status.*` | one row per (contract, season) | whether the season has a clause, none, or isn't known, and from what (`clauses` alone can't tell "none" from "not reported") |
 | `dead_cap.*` | one row per (team, kind, player, season) | cap charges that are not roster contracts: `retained` salary on a traded player and `buyout` charges, with the retained `pct` and the acquiring `counterparty` when stated; merged with `conflicts` |
 | `dead_cap_claims.*` | one row per (source, team, player, season) | the per-source dead-cap rows with evidence and flags |
+| `ltir.*` | one row per LTIR stint (player, team, placement to activation) | whether it's active now, the placement date, the relief PuckPedia stated, and where sources disagree; history from 2016 is kept |
 | `sources.csv` | one row per source document | URL, publisher, author, published time, tier |
 | `gaps.csv` / `.json` | one row per current NHL roster player the dataset does not fully cover | `gap` = `no_contract` / `no_money` / `no_structure`; `status` says whether the player has older rows, is mentioned in the raw store (a parsing or matching gap) or is absent from every source; hints quote the latest ESPN row, NHL.com headline and Bluesky post that name them |
 | `timestamp.json` | run metadata | `updated_at`, counts per table and tier, file list, licence |
@@ -200,6 +211,26 @@ The CBA settles more seasons for a reader with birth dates: a no-trade or no-mov
 | `contract_key` | the player's contract in `contracts`: the one a retention's span was filled from, or the one a buyout ended |
 | `event_date` | the trade or buyout date, when a dated post is the source |
 | flags | `end_season_unknown` (the post did not say how many seasons remain) with `derived:span_from_contract` once filled; `retainer_unknown` (a three-team deal the parser could not attribute); `charge_unknown` (a percentage with no cap hit on the line); `team_page_dead_cap` (tier E rows) |
+
+### `ltir`
+
+One row per stint: a player on long-term injured reserve with one team, from placement (or first mention) to activation. Past stints stay in the table.
+
+| column | meaning |
+|---|---|
+| `player_id`, `player_name` | the player; the id when a roster list or contract gives it. PuckPedia mostly writes surnames, matched to the one player with that surname on that team that season (`name_unresolved` when there are two, e.g. Jack and Luke Hughes) |
+| `team` | the team the source names |
+| `season` | the cap season of `since`, or of `first_seen` (seasons turn on July 1) |
+| `since`, `since_basis` | the placement date: ESPN's transaction (`espn_transactions`) when there is one, else PuckPedia's post (`bluesky_puckpedia`); null when no source dates the placement |
+| `first_seen` | the earliest date any source has the player on LTIR. ESPN's injury list is snapshotted from 2026-11-08, so a player only it lists has that date |
+| `until`, `until_basis` | the end: an activation on ESPN's wire or in a PuckPedia post, ESPN's list dropping the player (`espn_injuries`), or a later source putting him on LTIR with another team (`later_team`) |
+| `active` | true when ESPN's injury list has the player as IR-LT with that team now, or when the stint has no end and its last mention is in the current season |
+| `stated_relief_usd`, `stated_at`, `stated_source` | the relief PuckPedia stated with the placement ("They can exceed the cap by $3.85M", "gaining his $1.64M cap hit as available space"), as written. One post placing two players states one figure for both (`stated_relief_shared`): count each `stated_source` once when summing a team |
+| `sources` | every row the stint rests on: `espn:` (transactions), `espn_injuries:`, `bsky:` |
+| `conflicts` | `espn_not_listed` (active by ESPN's wire or PuckPedia, but ESPN's current injury list doesn't have him), `espn_status:IR` (ESPN lists him with another status), `team:A\|B` (sources put him on LTIR with two teams; an LTIR player traded, or a source with the wrong team. The later-dated stint stays active) |
+| flags | `activation_from_ir` (ended by a plain "activated from injured reserve", which is how ESPN writes most LTIR activations), `placement_not_found` (an activation with no placement on record), `end_not_found` (no source recorded the end; the stint is from an earlier season), `retroactive` (the placement was back-dated), `offseason` (placed in July or August: summer LTIR works against the offseason cap), `name_unresolved` |
+
+Relief is the injured player's cap hit minus the team's cap space when he was placed: Washington had $125K of space when Sandin ($3.975M) went on LTIR, so they could exceed the cap by $3.85M. A team under the cap gets less than the cap hit, so the sum of LTIR cap hits is only an upper bound.
 
 ### Flags
 
@@ -357,6 +388,7 @@ value column adds maximum bonuses on entry-level deals, 578 rows),
 nhl_contracts/
   collectors/nhl_forge.py           poll Forge lists per team (and per player for backfill), store raw stories
   collectors/espn_transactions.py   ESPN transactions by date range
+  collectors/espn_injuries.py       ESPN's injury list, one snapshot per run, kept as stints per player
   collectors/bluesky_puckpedia.py   PuckPedia's public Bluesky feed (incremental or back to 2023-07)
   collectors/reddit_hockey.py       r/hockey Atom feeds: post titles quoting insiders (last week only)
   collectors/wayback_capfriendly.py Internet Archive snapshots of CapFriendly team and player pages,
@@ -369,6 +401,7 @@ nhl_contracts/
   normalize/deadline_rosters.py     archived pre-deadline team pages -> deadline_rosters / deadline_teams
   normalize/contributed.py          hand-read claims from data/contributed/claims.csv
   normalize/merge.py                cross-source merge; conflicts named, never resolved
+  normalize/ltir.py                 LTIR stints from ESPN's list and wire and PuckPedia's posts
   normalize/llm_fallback.py         OpenRouter extractor for stories the regex cannot read (off without a key)
   publish/export.py                 parquet / csv / json / timestamp.json
   store.py                          SQLite raw store (idempotent upserts)
@@ -390,6 +423,16 @@ nhl_contracts/
 - **ESPN** `https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/transactions?dates=YYYYMMDD-YYYYMMDD&limit=1000`.
   Term and type for nearly every signing, dollars for almost none. Used as a
   cross-check and as a net for clubs whose NHL.com tagging misses a release.
+  It also lists LTIR placements ("Placed D Rasmus Sandin on long-term injured
+  reserve"); most LTIR activations only say "activated from injured reserve".
+- **ESPN injuries** `https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/injuries`.
+  Every injured player by team; `details.fantasyStatus.abbreviation` is `IR-LT`
+  for long-term injured reserve. Its `date` is the latest news item, not the
+  placement. The list has no history, so the collector keeps one: a stint
+  (player, team, status) opens at the first snapshot that lists it and closes
+  at the first that doesn't (`espn_injuries.jsonl`), and one row a day in
+  `espn_injury_snapshots.jsonl` records when the list was last read. An empty
+  list while stints are open is skipped as an ESPN hiccup.
 - Team ids come from `https://api.nhle.com/stats/rest/en/team` filtered to the
   abbreviations in `https://api-web.nhle.com/v1/standings/now`. Utah appears
   under two ids (59 and 68); both map to `UTA`. Player ids for name matching
@@ -555,7 +598,7 @@ because the hourly workflow commits the refreshed raw rows.
 `data/raw.sqlite` is a working cache. Its portable copies are:
 
 - `data/raw/*.jsonl`, committed to this repository: every NHL.com story, ESPN
-  row, Bluesky post, player and team ever collected, one sorted file per table
+  row and injury stint, Bluesky post, player and team ever collected, one sorted file per table
   so each run is a readable diff. These are the only copies of stories that have
   aged out of Forge's 25-item lists. About 30 MB today, growing roughly 1 MB a
   month.

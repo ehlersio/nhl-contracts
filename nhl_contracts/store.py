@@ -42,6 +42,29 @@ CREATE TABLE IF NOT EXISTS espn_transactions (
     raw TEXT NOT NULL,           -- original JSON row (logos stripped)
     fetched_at TEXT NOT NULL
 );
+-- ESPN's injury list, one row per stint of a player in one status with one team:
+-- a stint opens the first hourly snapshot that lists it and closes (ended_at) at the
+-- first snapshot that no longer does. Rows only change when a stint opens or closes,
+-- or ESPN's news date moves, so the committed JSONL does not churn hourly.
+CREATE TABLE IF NOT EXISTS espn_injuries (
+    key TEXT PRIMARY KEY,        -- sha1 of athlete_id|team|fantasy_status|first_seen
+    athlete_id TEXT NOT NULL,    -- ESPN athlete id
+    athlete_name TEXT NOT NULL,
+    team_abbrev TEXT,            -- ESPN abbreviation (NJ, TB, LA, SJ ...)
+    status TEXT,                 -- "Injured Reserve", "Out", "Day-To-Day"
+    fantasy_status TEXT,         -- IR | IR-LT (long-term IR) | IR-NR | OUT | Day-To-Day
+    news_date TEXT,              -- ESPN's date: the latest news item, not the placement date
+    first_seen TEXT NOT NULL,    -- snapshot time that first listed the stint
+    ended_at TEXT,               -- first snapshot without it; NULL while listed
+    raw TEXT NOT NULL,           -- the injury row when first seen (links and logos stripped)
+    fetched_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS espn_injury_snapshots (
+    taken_at TEXT PRIMARY KEY,   -- one row per day: the day's latest snapshot
+    day TEXT NOT NULL UNIQUE,
+    n_rows INTEGER NOT NULL,
+    n_ir_lt INTEGER NOT NULL
+);
 CREATE TABLE IF NOT EXISTS reddit_posts (
     id TEXT PRIMARY KEY,         -- t3_...
     created_at TEXT NOT NULL,
@@ -240,6 +263,44 @@ class Store:
         row = self.conn.execute("SELECT MIN(created_at) FROM bsky_posts WHERE author=?", (author,)).fetchone()
         return row[0] if row else None
 
+    # -- espn injuries -----------------------------------------------------
+    def open_injuries(self) -> list[dict[str, Any]]:
+        return [dict(r) for r in self.conn.execute("SELECT * FROM espn_injuries WHERE ended_at IS NULL")]
+
+    def insert_injury(self, row: dict[str, Any]) -> None:
+        self.conn.execute(
+            """INSERT OR IGNORE INTO espn_injuries (key, athlete_id, athlete_name, team_abbrev, status,
+                   fantasy_status, news_date, first_seen, ended_at, raw, fetched_at)
+               VALUES (?,?,?,?,?,?,?,?,NULL,?,?)""",
+            (row["key"], row["athlete_id"], row["athlete_name"], row.get("team_abbrev"), row.get("status"),
+             row.get("fantasy_status"), row.get("news_date"), row["first_seen"],
+             json.dumps(row["raw"], ensure_ascii=False), row["fetched_at"]),
+        )
+
+    def update_injury(self, key: str, *, news_date: str | None = None, status: str | None = None,
+                      ended_at: str | None = None) -> None:
+        if ended_at is not None:
+            self.conn.execute("UPDATE espn_injuries SET ended_at=? WHERE key=?", (ended_at, key))
+        else:
+            self.conn.execute("UPDATE espn_injuries SET news_date=?, status=? WHERE key=?", (news_date, status, key))
+
+    def record_injury_snapshot(self, taken_at: str, n_rows: int, n_ir_lt: int) -> None:
+        """Keep one row per day (the latest snapshot), so the JSONL grows by a line a day."""
+        day = taken_at[:10]
+        self.conn.execute("DELETE FROM espn_injury_snapshots WHERE day=?", (day,))
+        self.conn.execute("INSERT INTO espn_injury_snapshots (taken_at, day, n_rows, n_ir_lt) VALUES (?,?,?,?)",
+                          (taken_at, day, n_rows, n_ir_lt))
+
+    def latest_injury_snapshot(self) -> str | None:
+        row = self.conn.execute("SELECT MAX(taken_at) FROM espn_injury_snapshots").fetchone()
+        return row[0] if row else None
+
+    def injuries(self) -> Iterator[dict[str, Any]]:
+        for r in self.conn.execute("SELECT * FROM espn_injuries ORDER BY first_seen, key"):
+            d = dict(r)
+            d["raw"] = json.loads(d["raw"])
+            yield d
+
     # -- wayback -----------------------------------------------------------
     def upsert_wayback_page(self, url: str, kind: str, snapshot_ts: str, snapshot_url: str,
                             html_gz: bytes, status: str, fetched_at: str) -> None:
@@ -323,7 +384,7 @@ class Store:
     def counts(self) -> dict[str, int]:
         out = {}
         for t in ("forge_stories", "forge_seen", "espn_transactions", "bsky_posts", "wayback_pages", "players",
-                  "teams", "llm_cache", "reddit_posts"):
+                  "teams", "llm_cache", "reddit_posts", "espn_injuries", "espn_injury_snapshots"):
             out[t] = self.conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
         return out
 
@@ -332,7 +393,11 @@ class Store:
     # diffable, and the only copy of stories that have aged out of Forge's 25-item
     # lists). The archived CapFriendly pages are a one-off 50 MB blob kept as a
     # release asset in their own SQLite file. The working store is rebuilt from both.
-    JSONL_TABLES = ("forge_stories", "espn_transactions", "bsky_posts", "players", "teams", "llm_cache", "reddit_posts")
+    JSONL_TABLES = ("forge_stories", "espn_transactions", "bsky_posts", "players", "teams", "llm_cache", "reddit_posts",
+                    "espn_injuries", "espn_injury_snapshots")
+    JSONL_KEYS = {"forge_stories": "slug", "espn_transactions": "key", "bsky_posts": "uri", "players": "player_id",
+                  "teams": "team_id", "llm_cache": "key", "reddit_posts": "id", "espn_injuries": "key",
+                  "espn_injury_snapshots": "taken_at"}
 
     def dump_jsonl(self, directory: Path | str) -> dict[str, int]:
         """Write one sorted JSONL file per live-source table. Returns row counts."""
@@ -340,8 +405,7 @@ class Store:
         directory.mkdir(parents=True, exist_ok=True)
         counts = {}
         for table in self.JSONL_TABLES:
-            key = {"forge_stories": "slug", "espn_transactions": "key", "bsky_posts": "uri",
-                   "players": "player_id", "teams": "team_id", "llm_cache": "key", "reddit_posts": "id"}[table]
+            key = self.JSONL_KEYS[table]
             rows = self.conn.execute(f"SELECT * FROM {table} ORDER BY {key}").fetchall()
             with (directory / f"{table}.jsonl").open("w", encoding="utf-8") as f:
                 for r in rows:
@@ -373,8 +437,7 @@ class Store:
                     cols = ", ".join(d.keys())
                     marks = ", ".join("?" for _ in d)
                     updates = ", ".join(f"{c}=excluded.{c}" for c in d)
-                    pk = {"forge_stories": "slug", "espn_transactions": "key", "bsky_posts": "uri",
-                          "players": "player_id", "teams": "team_id", "llm_cache": "key", "reddit_posts": "id"}[table]
+                    pk = self.JSONL_KEYS[table]
                     self.conn.execute(
                         f"INSERT INTO {table} ({cols}) VALUES ({marks}) ON CONFLICT({pk}) DO UPDATE SET {updates}",
                         tuple(d.values()),
