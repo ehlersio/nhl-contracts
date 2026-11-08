@@ -488,7 +488,7 @@ spell "Modified NTC", which is normalized to `M-NTC`. 2023-24 pages use the
 2024 layout. `tests/test_deadline_rosters.py` checks one real Carolina capture
 per season.
 
-First crawl (2026-11-08): 626 of 628 team-target pairs have a valid capture,
+First crawl (2026-11-08): 630 of 632 team-target pairs have a valid capture,
 440 distinct snapshots, 29,817 player rows. Los Angeles has none between July
 2023 and Jan 2024, so its Jan 1 and Feb 1, 2024 targets are `missing`. 2019-20
 captures are stale: most teams' last capture before the deadline is from late
