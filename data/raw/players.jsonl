@@ -62,7 +62,7 @@
 {"full_name": "Chris Tanev", "kind": "roster", "player_id": 8475690, "team": "TOR", "updated_at": "2026-11-09"}
 {"full_name": "Mats Zuccarello", "kind": "roster", "player_id": 8475692, "team": "LAK", "updated_at": "2026-11-09"}
 {"full_name": "Calvin Pickard", "kind": "roster", "player_id": 8475717, "team": "MIN", "updated_at": "2026-11-09"}
-{"full_name": "Justin Holl", "kind": "prospect", "player_id": 8475718, "team": "WSH", "updated_at": "2026-11-09"}
+{"full_name": "Justin Holl", "kind": "roster", "player_id": 8475718, "team": "WSH", "updated_at": "2026-11-09"}
 {"full_name": "Jason Zucker", "kind": "roster", "player_id": 8475722, "team": "BUF", "updated_at": "2026-11-09"}
 {"full_name": "Tyler Toffoli", "kind": "roster", "player_id": 8475726, "team": "SJS", "updated_at": "2026-11-09"}
 {"full_name": "Charlie Coyle", "kind": "roster", "player_id": 8475745, "team": "CBJ", "updated_at": "2026-11-09"}
@@ -447,7 +447,7 @@
 {"full_name": "Nick DeSimone", "kind": "roster", "player_id": 8480084, "team": "UTA", "updated_at": "2026-11-09"}
 {"full_name": "Alex Iafallo", "kind": "roster", "player_id": 8480113, "team": "WPG", "updated_at": "2026-11-09"}
 {"full_name": "Neal Pionk", "kind": "roster", "player_id": 8480145, "team": "WPG", "updated_at": "2026-11-09"}
-{"full_name": "Calle Rosen", "kind": "prospect", "player_id": 8480157, "team": "STL", "updated_at": "2026-11-09"}
+{"full_name": "Calle Rosen", "kind": "roster", "player_id": 8480157, "team": "STL", "updated_at": "2026-11-09"}
 {"full_name": "Eetu Luostarinen", "kind": "roster", "player_id": 8480185, "team": "FLA", "updated_at": "2026-11-09"}
 {"full_name": "Fabian Zetterlund", "kind": "roster", "player_id": 8480188, "team": "OTT", "updated_at": "2026-11-09"}
 {"full_name": "Johnathan Kovacevic", "kind": "roster", "player_id": 8480192, "team": "NJD", "updated_at": "2026-11-09"}
@@ -1020,7 +1020,7 @@
 {"full_name": "Rasmus Kumpulainen", "kind": "prospect", "player_id": 8484184, "team": "MIN", "updated_at": "2026-11-09"}
 {"full_name": "Nick Lardis", "kind": "prospect", "player_id": 8484185, "team": "CHI", "updated_at": "2026-11-09"}
 {"full_name": "Ryan Leonard", "kind": "roster", "player_id": 8484186, "team": "WSH", "updated_at": "2026-11-09"}
-{"full_name": "Theo Lindstein", "kind": "roster", "player_id": 8484188, "team": "STL", "updated_at": "2026-11-09"}
+{"full_name": "Theo Lindstein", "kind": "prospect", "player_id": 8484188, "team": "STL", "updated_at": "2026-11-09"}
 {"full_name": "Jaden Lipinski", "kind": "prospect", "player_id": 8484189, "team": "CGY", "updated_at": "2026-11-09"}
 {"full_name": "Aram Minnetian", "kind": "prospect", "player_id": 8484194, "team": "DAL", "updated_at": "2026-11-09"}
 {"full_name": "Martin Misiak", "kind": "prospect", "player_id": 8484195, "team": "CHI", "updated_at": "2026-11-09"}
@@ -1164,7 +1164,7 @@
 {"full_name": "Cole Beaudoin", "kind": "prospect", "player_id": 8484786, "team": "NYR", "updated_at": "2026-11-09"}
 {"full_name": "Aron Kiviharju", "kind": "prospect", "player_id": 8484787, "team": "MIN", "updated_at": "2026-11-09"}
 {"full_name": "Ollie Josephson", "kind": "prospect", "player_id": 8484789, "team": "SEA", "updated_at": "2026-11-09"}
-{"full_name": "Adam Jiricek", "kind": "roster", "player_id": 8484790, "team": "STL", "updated_at": "2026-11-09"}
+{"full_name": "Adam Jiricek", "kind": "prospect", "player_id": 8484790, "team": "STL", "updated_at": "2026-11-09"}
 {"full_name": "Raoul Boilard", "kind": "prospect", "player_id": 8484791, "team": "NYR", "updated_at": "2026-11-09"}
 {"full_name": "Adam Jecho", "kind": "prospect", "player_id": 8484792, "team": "STL", "updated_at": "2026-11-09"}
 {"full_name": "Michael Brandsegg-Nygård", "kind": "roster", "player_id": 8484794, "team": "DET", "updated_at": "2026-11-09"}
