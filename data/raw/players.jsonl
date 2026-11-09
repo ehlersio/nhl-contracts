@@ -692,7 +692,7 @@
 {"full_name": "Philippe Daoust", "kind": "prospect", "player_id": 8482458, "team": "OTT", "updated_at": "2026-11-09"}
 {"full_name": "Tyrel Bauer", "kind": "roster", "player_id": 8482459, "team": "WPG", "updated_at": "2026-11-09"}
 {"full_name": "Matt Rempe", "kind": "roster", "player_id": 8482460, "team": "NYR", "updated_at": "2026-11-09"}
-{"full_name": "Rémi Poirier", "kind": "roster", "player_id": 8482465, "team": "WSH", "updated_at": "2026-11-09"}
+{"full_name": "Rémi Poirier", "kind": "roster", "player_id": 8482465, "team": "DAL", "updated_at": "2026-11-09"}
 {"full_name": "Ilya Solovyov", "kind": "roster", "player_id": 8482470, "team": "PIT", "updated_at": "2026-11-09"}
 {"full_name": "Egor Chinakhov", "kind": "roster", "player_id": 8482475, "team": "PIT", "updated_at": "2026-11-09"}
 {"full_name": "Emil Heineman", "kind": "roster", "player_id": 8482476, "team": "NYI", "updated_at": "2026-11-09"}
@@ -826,7 +826,7 @@
 {"full_name": "Owen Beck", "kind": "roster", "player_id": 8483424, "team": "MTL", "updated_at": "2026-11-09"}
 {"full_name": "Lian Bichsel", "kind": "roster", "player_id": 8483425, "team": "DAL", "updated_at": "2026-11-09"}
 {"full_name": "Michael Buchinger", "kind": "prospect", "player_id": 8483427, "team": "STL", "updated_at": "2026-11-09"}
-{"full_name": "Filip Bystedt", "kind": "roster", "player_id": 8483428, "team": "SJS", "updated_at": "2026-11-09"}
+{"full_name": "Filip Bystedt", "kind": "prospect", "player_id": 8483428, "team": "SJS", "updated_at": "2026-11-09"}
 {"full_name": "Seamus Casey", "kind": "prospect", "player_id": 8483429, "team": "NJD", "updated_at": "2026-11-09"}
 {"full_name": "Ryan Chesley", "kind": "prospect", "player_id": 8483430, "team": "WSH", "updated_at": "2026-11-09"}
 {"full_name": "Logan Cooley", "kind": "roster", "player_id": 8483431, "team": "UTA", "updated_at": "2026-11-09"}
