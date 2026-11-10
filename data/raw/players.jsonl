@@ -708,6 +708,7 @@
 {"full_name": "Artur Akhtyamov", "kind": "roster", "player_id": 8482515, "team": "TOR", "updated_at": "2026-11-10"}
 {"full_name": "Matthew Kessel", "kind": "roster", "player_id": 8482516, "team": "NYI", "updated_at": "2026-11-10"}
 {"full_name": "Mason Langenbrunner", "kind": "prospect", "player_id": 8482517, "team": "BOS", "updated_at": "2026-11-10"}
+{"full_name": "Ryan Tverberg", "kind": "roster", "player_id": 8482525, "team": "TOR", "updated_at": "2026-11-10"}
 {"full_name": "Josh Dunne", "kind": "prospect", "player_id": 8482623, "team": "WSH", "updated_at": "2026-11-10"}
 {"full_name": "Matt Kiersted", "kind": "roster", "player_id": 8482641, "team": "MIN", "updated_at": "2026-11-10"}
 {"full_name": "J.J. Moser", "kind": "roster", "player_id": 8482655, "team": "TBL", "updated_at": "2026-11-10"}
@@ -1152,6 +1153,7 @@
 {"full_name": "Lucas Pettersson", "kind": "prospect", "player_id": 8484767, "team": "ANA", "updated_at": "2026-11-10"}
 {"full_name": "Zayne Parekh", "kind": "roster", "player_id": 8484768, "team": "CGY", "updated_at": "2026-11-10"}
 {"full_name": "Terik Parascak", "kind": "prospect", "player_id": 8484769, "team": "WSH", "updated_at": "2026-11-10"}
+{"full_name": "Sam O'Reilly", "kind": "roster", "player_id": 8484770, "team": "TBL", "updated_at": "2026-11-10"}
 {"full_name": "John Mustard", "kind": "prospect", "player_id": 8484771, "team": "CHI", "updated_at": "2026-11-10"}
 {"full_name": "Leon Muggli", "kind": "prospect", "player_id": 8484772, "team": "WSH", "updated_at": "2026-11-10"}
 {"full_name": "Julius Miettinen", "kind": "prospect", "player_id": 8484773, "team": "SEA", "updated_at": "2026-11-10"}
