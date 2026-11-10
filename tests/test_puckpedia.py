@@ -381,3 +381,22 @@ def test_header_term_contradicted_by_its_own_schedule():
     (c,) = claims
     assert c.term_years == 2 and "term_vs_breakdown_mismatch:1" in c.flags and "derived:term_from_seasons" in c.flags
     assert sorted(by_season(seasons)) == ["2025-26", "2026-27"]
+
+
+def test_is_puckpedia_checks_the_host_not_a_substring():
+    from nhl_contracts.normalize.puckpedia import is_puckpedia
+
+    assert is_puckpedia("https://puckpedia.com/signing/10842")
+    assert is_puckpedia("https://www.puckpedia.com/player/connor-mcmichael")
+    assert not is_puckpedia("https://evil.example/?u=puckpedia.com/signing/1")
+    assert not is_puckpedia("https://puckpedia.com.evil.example/signing/1")
+    assert not is_puckpedia("javascript:alert('puckpedia.com')")
+    assert not is_puckpedia("http://[bad")
+
+
+def test_ref_link_ignores_lookalike_links():
+    from nhl_contracts.normalize.puckpedia import ref_link
+
+    links = ["https://evil.example/puckpedia.com/signing/1", "https://puckpedia.com/signing/10842?x=1"]
+    assert ref_link("", links) == "https://puckpedia.com/signing/10842"
+    assert ref_link("", ["https://puckpedia.com.evil.example/signing/1"]) is None

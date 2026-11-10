@@ -30,6 +30,7 @@ import re
 from collections.abc import Iterable
 from datetime import date
 from typing import Any
+from urllib.parse import urlsplit
 
 from .model import Claim, ClauseClaim, SeasonClaim, Source, claim_id, make_key
 from .text import NUMBER_WORDS, name_key, season_from_date, shift_season
@@ -245,9 +246,18 @@ def post_url(uri: str) -> str:
     return POST_URL.format(rkey=rkey_of(uri))
 
 
+def is_puckpedia(url: str) -> bool:
+    """True for an http(s) link whose host is puckpedia.com (or www.puckpedia.com)."""
+    try:
+        parts = urlsplit(url)
+    except ValueError:
+        return False
+    return parts.scheme in ("http", "https") and (parts.hostname or "") in ("puckpedia.com", "www.puckpedia.com")
+
+
 def ref_link(text: str, links: Iterable[str]) -> str | None:
     """The puckpedia.com link of a post (signing page preferred), query string dropped."""
-    found = [u for u in links if "puckpedia.com" in u]
+    found = [u for u in links if is_puckpedia(u)]
     found += [u for u in LINK.findall(text) if not u.endswith(("...", "…"))]
     found = [u.rstrip(").,") for u in found]
     if not found:
@@ -344,7 +354,8 @@ def player_name(head: str) -> str:
 
 def _expand_name(name: str, links: list[str], flags: list[str]) -> str:
     """Fill a missing first name from the post's puckpedia.com/player/<slug> link."""
-    slug = next((m for u in links for m in [re.search(r"puckpedia\.com/player/([a-z0-9\-]+)", u)] if m), None)
+    slug = next((m for u in links if is_puckpedia(u)
+                 for m in [re.match(r"/player/([a-z0-9\-]+)", urlsplit(u).path)] if m), None)
     if not name:
         if slug:
             flags.append("name_from_link")
