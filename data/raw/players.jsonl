@@ -1041,7 +1041,7 @@
 {"full_name": "Aaron Pionk", "kind": "prospect", "player_id": 8484215, "team": "MIN", "updated_at": "2026-11-15"}
 {"full_name": "Caden Price", "kind": "prospect", "player_id": 8484217, "team": "SEA", "updated_at": "2026-11-15"}
 {"full_name": "Carson Rehkopf", "kind": "prospect", "player_id": 8484219, "team": "SEA", "updated_at": "2026-11-15"}
-{"full_name": "David Reinbacher", "kind": "prospect", "player_id": 8484220, "team": "MTL", "updated_at": "2026-11-15"}
+{"full_name": "David Reinbacher", "kind": "roster", "player_id": 8484220, "team": "MTL", "updated_at": "2026-11-15"}
 {"full_name": "Calum Ritchie", "kind": "roster", "player_id": 8484221, "team": "NYI", "updated_at": "2026-11-15"}
 {"full_name": "Eduard Sale", "kind": "prospect", "player_id": 8484222, "team": "SEA", "updated_at": "2026-11-15"}
 {"full_name": "Axel Sandin-Pellikka", "kind": "roster", "player_id": 8484223, "team": "DET", "updated_at": "2026-10-30"}
