@@ -173,7 +173,7 @@
 {"full_name": "Scott Sabourin", "kind": "roster", "player_id": 8477149, "team": "TBL", "updated_at": "2026-11-15"}
 {"full_name": "Nate Schmidt", "kind": "roster", "player_id": 8477220, "team": "UTA", "updated_at": "2026-11-15"}
 {"full_name": "Anton Blidh", "kind": "prospect", "player_id": 8477320, "team": "NYR", "updated_at": "2026-11-15"}
-{"full_name": "Kyle Burroughs", "kind": "roster", "player_id": 8477335, "team": "DAL", "updated_at": "2026-10-26"}
+{"full_name": "Kyle Burroughs", "kind": "roster", "player_id": 8477335, "team": "DAL", "updated_at": "2026-11-15"}
 {"full_name": "MacKenzie Weegar", "kind": "roster", "player_id": 8477346, "team": "UTA", "updated_at": "2026-11-15"}
 {"full_name": "Connor Clifton", "kind": "roster", "player_id": 8477365, "team": "BOS", "updated_at": "2026-11-15"}
 {"full_name": "Carson Soucy", "kind": "roster", "player_id": 8477369, "team": "CBJ", "updated_at": "2026-10-29"}
@@ -694,7 +694,7 @@
 {"full_name": "Philippe Daoust", "kind": "prospect", "player_id": 8482458, "team": "OTT", "updated_at": "2026-11-15"}
 {"full_name": "Tyrel Bauer", "kind": "roster", "player_id": 8482459, "team": "WPG", "updated_at": "2026-11-15"}
 {"full_name": "Matt Rempe", "kind": "roster", "player_id": 8482460, "team": "NYR", "updated_at": "2026-11-15"}
-{"full_name": "Rémi Poirier", "kind": "roster", "player_id": 8482465, "team": "DAL", "updated_at": "2026-11-15"}
+{"full_name": "Rémi Poirier", "kind": "prospect", "player_id": 8482465, "team": "DAL", "updated_at": "2026-11-15"}
 {"full_name": "Ilya Solovyov", "kind": "prospect", "player_id": 8482470, "team": "PIT", "updated_at": "2026-11-15"}
 {"full_name": "Egor Chinakhov", "kind": "roster", "player_id": 8482475, "team": "PIT", "updated_at": "2026-11-15"}
 {"full_name": "Emil Heineman", "kind": "roster", "player_id": 8482476, "team": "NYI", "updated_at": "2026-11-15"}
@@ -1301,7 +1301,7 @@
 {"full_name": "Zeb Lindgren", "kind": "prospect", "player_id": 8485443, "team": "NYR", "updated_at": "2026-11-15"}
 {"full_name": "Mason Moe", "kind": "prospect", "player_id": 8485445, "team": "NJD", "updated_at": "2026-11-15"}
 {"full_name": "Elijah Neuenschwander", "kind": "prospect", "player_id": 8485446, "team": "ANA", "updated_at": "2026-11-15"}
-{"full_name": "Trey Taylor", "kind": "prospect", "player_id": 8485468, "team": "DAL", "updated_at": "2026-11-15"}
+{"full_name": "Trey Taylor", "kind": "roster", "player_id": 8485468, "team": "DAL", "updated_at": "2026-11-15"}
 {"full_name": "Jack Williams", "kind": "roster", "player_id": 8485469, "team": "CBJ", "updated_at": "2026-11-15"}
 {"full_name": "Tyler Kopff", "kind": "prospect", "player_id": 8485470, "team": "WSH", "updated_at": "2026-11-15"}
 {"full_name": "Harrison Scott", "kind": "prospect", "player_id": 8485485, "team": "DAL", "updated_at": "2026-11-15"}
