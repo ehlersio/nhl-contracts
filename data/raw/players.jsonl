@@ -99,7 +99,7 @@
 {"full_name": "Blake Coleman", "kind": "roster", "player_id": 8476399, "team": "MIN", "updated_at": "2026-11-15"}
 {"full_name": "Jordan Binnington", "kind": "roster", "player_id": 8476412, "team": "STL", "updated_at": "2026-11-15"}
 {"full_name": "Jean-Gabriel Pageau", "kind": "roster", "player_id": 8476419, "team": "NYI", "updated_at": "2026-11-15"}
-{"full_name": "Mike Reilly", "kind": "roster", "player_id": 8476422, "team": "CAR", "updated_at": "2026-11-14"}
+{"full_name": "Mike Reilly", "kind": "roster", "player_id": 8476422, "team": "COL", "updated_at": "2026-11-15"}
 {"full_name": "Scott Mayfield", "kind": "roster", "player_id": 8476429, "team": "NYI", "updated_at": "2026-11-15"}
 {"full_name": "Boone Jenner", "kind": "roster", "player_id": 8476432, "team": "WSH", "updated_at": "2026-11-15"}
 {"full_name": "John Gibson", "kind": "roster", "player_id": 8476434, "team": "DET", "updated_at": "2026-11-15"}
@@ -649,6 +649,7 @@
 {"full_name": "Quinton Byfield", "kind": "roster", "player_id": 8482124, "team": "LAK", "updated_at": "2026-11-15"}
 {"full_name": "Alexander Holtz", "kind": "roster", "player_id": 8482125, "team": "VGK", "updated_at": "2026-10-26"}
 {"full_name": "Emil Andrae", "kind": "roster", "player_id": 8482126, "team": "CBJ", "updated_at": "2026-11-05"}
+{"full_name": "Brett Berard", "kind": "roster", "player_id": 8482132, "team": "MTL", "updated_at": "2026-11-15"}
 {"full_name": "Yaroslav Askarov", "kind": "roster", "player_id": 8482137, "team": "SJS", "updated_at": "2026-11-15"}
 {"full_name": "Theodor Niederbach", "kind": "prospect", "player_id": 8482140, "team": "WSH", "updated_at": "2026-11-15"}
 {"full_name": "Lukas Cormier", "kind": "prospect", "player_id": 8482141, "team": "VGK", "updated_at": "2026-11-15"}
