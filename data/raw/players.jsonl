@@ -598,6 +598,7 @@
 {"full_name": "McKade Webster", "kind": "prospect", "player_id": 8481691, "team": "TBL", "updated_at": "2026-11-16"}
 {"full_name": "Dustin Wolf", "kind": "roster", "player_id": 8481692, "team": "CGY", "updated_at": "2026-11-16"}
 {"full_name": "Juuso Parssinen", "kind": "prospect", "player_id": 8481704, "team": "NYR", "updated_at": "2026-11-16"}
+{"full_name": "Zac Jones", "kind": "roster", "player_id": 8481708, "team": "UTA", "updated_at": "2026-11-16"}
 {"full_name": "Matias Maccelli", "kind": "roster", "player_id": 8481711, "team": "NYI", "updated_at": "2026-11-16"}
 {"full_name": "Dmitri Voronkov", "kind": "roster", "player_id": 8481716, "team": "CBJ", "updated_at": "2026-11-16"}
 {"full_name": "Semyon Chystyakov", "kind": "prospect", "player_id": 8481718, "team": "NSH", "updated_at": "2026-11-16"}
@@ -614,6 +615,7 @@
 {"full_name": "Nikita Nesterenko", "kind": "roster", "player_id": 8481754, "team": "ANA", "updated_at": "2026-11-16"}
 {"full_name": "Tye Kartye", "kind": "roster", "player_id": 8481789, "team": "NYR", "updated_at": "2026-11-16"}
 {"full_name": "Louis Crevier", "kind": "roster", "player_id": 8481806, "team": "BUF", "updated_at": "2026-11-16"}
+{"full_name": "Ben McCartney", "kind": "roster", "player_id": 8481827, "team": "UTA", "updated_at": "2026-11-16"}
 {"full_name": "Jacob Gaucher", "kind": "roster", "player_id": 8481848, "team": "PHI", "updated_at": "2026-10-29"}
 {"full_name": "Drew O'Connor", "kind": "roster", "player_id": 8482055, "team": "VAN", "updated_at": "2026-11-16"}
 {"full_name": "Cole Smith", "kind": "roster", "player_id": 8482062, "team": "CHI", "updated_at": "2026-11-16"}
@@ -838,6 +840,7 @@
 {"full_name": "Jack Devine", "kind": "prospect", "player_id": 8483433, "team": "FLA", "updated_at": "2026-11-16"}
 {"full_name": "Kirill Dolzhenkov", "kind": "prospect", "player_id": 8483434, "team": "CBJ", "updated_at": "2026-11-16"}
 {"full_name": "Jorian Donovan", "kind": "prospect", "player_id": 8483435, "team": "OTT", "updated_at": "2026-11-16"}
+{"full_name": "Artem Duda", "kind": "roster", "player_id": 8483436, "team": "UTA", "updated_at": "2026-11-16"}
 {"full_name": "Josh Filmon", "kind": "prospect", "player_id": 8483439, "team": "NJD", "updated_at": "2026-11-16"}
 {"full_name": "Jagger Firkus", "kind": "roster", "player_id": 8483442, "team": "SEA", "updated_at": "2026-11-16"}
 {"full_name": "Michael Fisher", "kind": "prospect", "player_id": 8483443, "team": "SJS", "updated_at": "2026-11-16"}
