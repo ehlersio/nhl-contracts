@@ -65,6 +65,9 @@ class Claim:
     expiry_status: str | None = None   # UFA | RFA | 10.2(c) ... when stated
     agent: str | None = None           # player representative when the source names one
     signing_date_stated: bool = False  # True when signed_at is the stated signing date, not the publication date
+    # Identity hints for telling namesakes apart (normalize/identity.py); not published.
+    position: str | None = None        # as the source writes it: D, RW, LW/C ...
+    birth_date: str | None = None      # YYYY-MM-DD when the source states it
 
     def to_dict(self) -> dict[str, Any]:
         d = asdict(self)

@@ -109,13 +109,16 @@ def test_jsonl_and_wayback_roundtrip(tmp_path, espn_payload):
                             "links": ["https://puckpedia.com/signing/10842"], "raw": {"text": "x"}}],
                          "2026-10-23T00:00:00+00:00")
     src.set_players({8482177: ("Marat Khusnutdinov", "BOS")}, "2026-10-23")
+    src.set_player_seasons([{"player_id": 8482177, "season": "2024-25", "team": "MIN",
+                             "full_name": "Marat Khusnutdinov", "position": "C", "birth_date": "2002-07-17"}],
+                           "2026-10-23")
     src.upsert_wayback_page("https://www.capfriendly.com/teams/oilers", "team", "20240704221225", "u",
                             gzip.compress(b"<html>Years Remaining</html>"), "ok", "2026-10-23T00:00:00+00:00")
     src.commit()
     counts = src.dump_jsonl(tmp_path / "raw")
     assert counts == {"forge_stories": 1, "espn_transactions": len(espn_payload["transactions"]), "bsky_posts": 1,
                       "players": 1, "teams": 0, "llm_cache": 0, "reddit_posts": 0, "espn_injuries": 0,
-                      "espn_injury_snapshots": 0}
+                      "espn_injury_snapshots": 0, "player_seasons": 1}
     first = (tmp_path / "raw" / "forge_stories.jsonl").read_text(encoding="utf-8")
     assert '"tags": [' in first  # JSON columns are expanded, not double-encoded
     assert src.dump_wayback(tmp_path / "wb.sqlite") == 1

@@ -52,6 +52,7 @@ from typing import Any
 
 from . import puckpedia as pp
 from .contracts import ESPN_ABBREV, ESPN_POS
+from .identity import PlayerIndex
 from .model import Source
 from .text import alias_key, clean, name_key, split_sentences
 
@@ -306,21 +307,22 @@ class Resolver:
     (contracts, the current roster list, ESPN's rows); one candidate or nothing."""
 
     def __init__(self, players: dict[int, tuple[str, str | None]], contracts: list[dict[str, Any]],
-                 full_name_events: list[Event], current_season: str) -> None:
-        self.ids_by_alias: dict[str, set[int]] = {}
-        self.team_of_id: dict[int, str | None] = {}
+                 full_name_events: list[Event], current_season: str,
+                 player_seasons: Iterable[dict[str, Any]] = ()) -> None:
+        # ids: the roster lists, every NHL player since 2005-06 and every contract's id,
+        # namesakes told apart by club and date (normalize/identity.py)
+        self.index = PlayerIndex(players, player_seasons, current_season)
         # (team, season) -> {alias_key: full name}
         self.names: dict[tuple[str | None, str], dict[str, str]] = {}
-        for pid, (name, team) in players.items():
-            self.ids_by_alias.setdefault(alias_key(name), set()).add(pid)
-            self.team_of_id[pid] = team
+        for _pid, (name, team) in players.items():
             self._add(team, current_season, name)
         for c in contracts:
             name = c.get("player_name") or ""
             if not name:
                 continue
             if c.get("player_id"):
-                self.ids_by_alias.setdefault(alias_key(name), set()).add(int(c["player_id"]))
+                self.index.add_contract(int(c["player_id"]), name, c.get("team"), c.get("start_season"),
+                                        c.get("end_season"))
             start, end = c.get("start_season"), c.get("end_season") or c.get("start_season")
             if start:
                 y0, y1 = int(start[:4]), int((end or start)[:4])
@@ -355,11 +357,8 @@ class Resolver:
                 return None          # two players with that surname: don't pick one
         return None
 
-    def player_id(self, full: str, team: str | None) -> int | None:
-        ids = self.ids_by_alias.get(alias_key(full), set())
-        if len(ids) > 1 and team:
-            ids = {i for i in ids if self.team_of_id.get(i) == team} or ids
-        return next(iter(ids)) if len(ids) == 1 else None
+    def player_id(self, full: str, team: str | None, day: str | None = None) -> int | None:
+        return self.index.resolve(full, team, day).player_id
 
 
 # --- stints -----------------------------------------------------------------------------
@@ -506,18 +505,19 @@ def ltir_rows(stints: list[Stint], current: dict[str, list[tuple[str | None, str
 def normalize(espn_rows: Iterable[dict[str, Any]], posts: Iterable[dict[str, Any]],
               injury_stints: Iterable[dict[str, Any]], latest_snapshot: str | None,
               players: dict[int, tuple[str, str | None]], contracts: list[dict[str, Any]],
-              as_of: str | None = None) -> tuple[list[dict[str, Any]], list[Source]]:
+              as_of: str | None = None, player_seasons: Iterable[dict[str, Any]] = (),
+              ) -> tuple[list[dict[str, Any]], list[Source]]:
     """Rows of LTIR_COLUMNS and their sources."""
     as_of = as_of or latest_snapshot or datetime.now().date().isoformat()
     t_events, t_sources = espn_transaction_events(espn_rows)
     i_events, i_sources, current = espn_injury_events(injury_stints, latest_snapshot)
     p_events, p_sources = puckpedia_events(posts)
     full_events = t_events + i_events
-    resolver = Resolver(players, contracts, full_events, season_of(as_of))
+    resolver = Resolver(players, contracts, full_events, season_of(as_of), player_seasons)
     events = full_events + p_events
     for e in events:
         e.full_name = resolver.full_name(e.name, e.team, e.day)
-        e.player_id = resolver.player_id(e.full_name, e.team) if e.full_name else None
+        e.player_id = resolver.player_id(e.full_name, e.team, e.day) if e.full_name else None
         if e.player_id:
             e.player_key = f"id:{e.player_id}"
         elif e.full_name:

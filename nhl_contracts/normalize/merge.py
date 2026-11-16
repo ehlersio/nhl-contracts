@@ -12,8 +12,9 @@ from collections import Counter
 from datetime import date
 from typing import Any
 
+from .identity import FLAG_AMBIGUOUS, FLAG_SAME_CONTRACT, PlayerIndex
 from .model import TIER_ORDER, Claim, ClauseClaim, SeasonClaim
-from .text import alias_key, name_key, season_from_date, shift_season
+from .text import alias_key, season_from_date, shift_season
 
 MERGE_FIELDS = ("contract_type", "term_years", "aav_usd", "cap_hit_usd", "total_usd",
                 "nhl_salary_usd", "minors_salary_usd", "one_way", "start_season", "end_season",
@@ -89,31 +90,58 @@ def _same_contract(c: Claim, g0: Claim) -> bool:
     return False
 
 
-def assign_player_ids(claims: list[Claim], players: dict[int, tuple[str, str | None]]) -> int:
-    """Fill ``player_id`` on claims that lack one when exactly one known player has the
-    same name: first by the exact normalized name, then by the alias key (first name
-    folded through FIRST_NAME_ALIASES, middle names dropped, so "Zach Werenski" meets
-    "Zachary Werenski"). Returns the number of claims filled. A name shared by two
-    players is left alone unless the team disambiguates it."""
-    by_name: dict[str, list[tuple[int, str | None]]] = {}
-    by_alias: dict[str, list[tuple[int, str | None]]] = {}
-    for pid, (name, team) in players.items():
-        by_name.setdefault(name_key(name), []).append((pid, team))
-        by_alias.setdefault(alias_key(name), []).append((pid, team))
+def _claim_when(c: Any) -> tuple[str | None, str | None, str | None]:
+    """(day, first season, last season) a claim is about. A contract claim: its signing
+    date and stated seasons. A dead-cap row: its event date when known, and the eight
+    seasons up to its charge season (a buyout charge can run years past the player's
+    last game with the club that carries it)."""
+    if isinstance(c, Claim):
+        return c.signed_at, c.start_season, c.end_season
+    season = getattr(c, "season", None)
+    return (getattr(c, "event_date", None), shift_season(season, -8) if season else None, season)
+
+
+def assign_player_ids(claims: list[Any], players: PlayerIndex | dict[int, tuple]) -> int:
+    """Fill ``player_id`` on claims that lack one from the names they carry: first by the
+    exact normalized name, then by the alias key (first name folded through
+    FIRST_NAME_ALIASES, middle names dropped, so "Zach Werenski" meets "Zachary
+    Werenski"). A name one known player has goes to him (flag ``player_id_from_roster``,
+    ``player_id_from_nhl_seasons`` or ``player_id_by_alias``) unless a stated fact rules
+    him out (``player_id_ruled_out``). A name several players share goes to the one namesake
+    the claim's birth date, position, club and date fit (``player_id_by_namesake_keys``),
+    else to nobody (``player_name_ambiguous``); see normalize/identity.py. Returns the
+    number of claims filled."""
+    index = players if isinstance(players, PlayerIndex) else PlayerIndex(players)
     filled = 0
+    ambiguous: list[tuple[Any, set[int]]] = []
     for c in claims:
         if c.player_id:
             continue
-        for index, key, flag in ((by_name, name_key(c.player_name), "player_id_from_roster"),
-                                 (by_alias, alias_key(c.player_name), "player_id_by_alias")):
-            cands = index.get(key, [])
-            if len(cands) > 1 and c.team:
-                cands = [x for x in cands if x[1] == c.team] or cands
-            if len(cands) == 1:
-                c.player_id = cands[0][0]
-                c.flags.append(flag)
-                filled += 1
-                break
+        day, start, end = _claim_when(c)
+        m = index.resolve(c.player_name, c.team, day, position=getattr(c, "position", None),
+                          birth_date=getattr(c, "birth_date", None), start_season=start, end_season=end)
+        if m.flag and m.flag not in c.flags:
+            c.flags.append(m.flag)
+        if m.player_id:
+            c.player_id = m.player_id
+            filled += 1
+        elif m.flag == FLAG_AMBIGUOUS and isinstance(c, Claim):
+            ambiguous.append((c, set(m.candidates)))
+    # An ambiguous claim joins the id another source put on the same contract (CapFriendly
+    # states a birth date, ESPN's line of the same signing does not), when that id is one
+    # of its namesakes and only one such id is there.
+    with_id: dict[str, list[Any]] = {}
+    for c in claims:
+        if c.player_id and isinstance(c, Claim):
+            with_id.setdefault(alias_key(c.player_name), []).append(c)
+    for c, cands in ambiguous:
+        ids = {o.player_id for o in with_id.get(alias_key(c.player_name), [])
+               if o.player_id in cands and _same_contract(c, o)}
+        if len(ids) == 1:
+            c.player_id = ids.pop()
+            c.flags.remove(FLAG_AMBIGUOUS)
+            c.flags.append(FLAG_SAME_CONTRACT)
+            filled += 1
     return filled
 
 
@@ -215,18 +243,29 @@ def _surname_key_lookup(who: str, c: Claim, by_player: dict[str, list[Claim]]) -
 def group_claims(claims: list[Claim]) -> list[list[Claim]]:
     """Group claims that describe the same contract: same player (NHL id when both
     have one, else normalized name), same team, and the same signing window or the
-    same covered seasons."""
-    id_to_name: dict[int, str] = {}
+    same covered seasons.
+
+    Namesakes stay apart: each id is its own player key ("#8480222 sebastian aho", so
+    a surname lookup still sees the surname), and a claim without an id joins an id by
+    name only when one id carries that name and the claim is not flagged
+    ``player_name_ambiguous``."""
+    ids_by_name: dict[str, set[int]] = {}
+    first_name: dict[int, str] = {}
     for c in claims:
         if c.player_id:
-            id_to_name.setdefault(c.player_id, alias_key(c.player_name))
-    name_to_id: dict[str, int] = {v: k for k, v in id_to_name.items()}
+            first_name.setdefault(c.player_id, alias_key(c.player_name))
+            ids_by_name.setdefault(alias_key(c.player_name), set()).add(c.player_id)
+    shared = {pid for ids in ids_by_name.values() if len(ids) > 1 for pid in ids}
+    id_to_name = {pid: f"#{pid} {name}" if pid in shared else name for pid, name in first_name.items()}
+    name_to_id = {name: next(iter(ids)) for name, ids in ids_by_name.items() if len(ids) == 1}
     by_player: dict[str, list[Claim]] = {}
     deferred: list[Claim] = []
     for c in claims:
         who = alias_key(c.player_name)
         if c.player_id:
             who = id_to_name[c.player_id]
+        elif FLAG_AMBIGUOUS in c.flags:
+            who = f"? {who}"
         elif who in name_to_id:
             who = id_to_name[name_to_id[who]]
         elif "surname_only" in c.flags:

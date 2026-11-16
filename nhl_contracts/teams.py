@@ -4,7 +4,7 @@ the player ids on their current rosters and prospect lists."""
 from __future__ import annotations
 
 import logging
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 
 from .config import NHL_STANDINGS, NHL_TEAMS, STATIC_TEAMS
 from .http import Client
@@ -82,3 +82,55 @@ def fetch_player_ids(client: Client, teams: dict[int, str]) -> dict[int, tuple[s
             for pid, name in _people(payload or {}):
                 out.setdefault(pid, (name, abbr, kind))
     return out
+
+
+# -- who played where ------------------------------------------------------------------
+# Every player with an NHL game in a season, with the team(s) he played for, his
+# position and birth date, from the NHL stats API (one summary and one bios request
+# per season and player type). Name matching uses it to tell namesakes apart: two
+# NHL players called Sebastian Aho, one of them on no current roster or prospect list.
+
+NHL_STATS = "https://api.nhle.com/stats/rest/en/{kind}/{report}"
+FIRST_REGISTRY_SEASON = 2005          # 2005-06: older than any contract in the dataset
+
+
+def registry_seasons(today: date | None = None) -> list[str]:
+    """Every season from 2005-06 to the current one ("2026-27" style)."""
+    today = today or date.today()
+    last = today.year if today.month >= 7 else today.year - 1
+    return [f"{y}-{str(y + 1)[2:]}" for y in range(FIRST_REGISTRY_SEASON, last + 1)]
+
+
+def _season_id(season: str) -> str:
+    y = int(season[:4])
+    return f"{y}{y + 1}"
+
+
+def fetch_player_seasons(client: Client, seasons: list[str]) -> list[dict]:
+    """Rows {player_id, season, team, full_name, position, birth_date}, one per (player,
+    season, team), regular season only. A player traded mid-season gets a row for each
+    team. A failed request is logged and skipped, so the result can be partial."""
+    out: dict[tuple[int, str, str], dict] = {}
+    for season in seasons:
+        sid = _season_id(season)
+        params = {"isAggregate": "false", "isGame": "false", "limit": "-1",
+                  "cayenneExp": f"seasonId={sid} and gameTypeId=2"}
+        for kind, name_col in (("skater", "skaterFullName"), ("goalie", "goalieFullName")):
+            try:
+                summary = client.get_json(NHL_STATS.format(kind=kind, report="summary"), params=params) or {}
+                bios = client.get_json(NHL_STATS.format(kind=kind, report="bios"), params=params) or {}
+            except RuntimeError as exc:
+                log.warning("player seasons %s %s failed: %s", kind, season, exc)
+                continue
+            born = {int(b["playerId"]): b.get("birthDate") for b in bios.get("data", []) if b.get("playerId")}
+            for r in summary.get("data", []):
+                pid, name = r.get("playerId"), r.get(name_col)
+                if not pid or not name:
+                    continue
+                position = "G" if kind == "goalie" else r.get("positionCode")
+                for team in filter(None, (t.strip() for t in (r.get("teamAbbrevs") or "").split(","))):
+                    out[(int(pid), season, team)] = {
+                        "player_id": int(pid), "season": season, "team": team, "full_name": name,
+                        "position": position, "birth_date": born.get(int(pid)),
+                    }
+    return [out[k] for k in sorted(out)]

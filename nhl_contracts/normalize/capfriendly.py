@@ -944,6 +944,7 @@ def _player_contract_rows(page: dict[str, Any], c: dict[str, Any], i: int, sid: 
         source_url=page["snapshot_url"], publisher=PUBLISHER, published_at=ts_to_iso(page["snapshot_ts"]),
         confidence_tier=TIER, extracted_by="regex", flags=flags, evidence=c["summary"],
         expiry_status=c["expiry_status"], agent=None, signing_date_stated=stated,
+        birth_date=page.get("birth_date"),
     )
     srows = [SeasonClaim(claim_id=cid, contract_key=key, season=r["season"], clause=r.get("clause"),
                          source_id=sid, confidence_tier=TIER, evidence=r.get("raw", ""), **season_vals[r["season"]])
@@ -1034,6 +1035,7 @@ def _team_only_rows(r: dict[str, Any], seasons: list[dict[str, Any]], sid: str, 
         source_url=r["snapshot_url"], publisher=PUBLISHER, published_at=ts_to_iso(r["snapshot_ts"]),
         confidence_tier=TIER, extracted_by="regex", flags=flags, evidence=ev,
         expiry_status=r.get("expiry_status"), agent=None, signing_date_stated=False,
+        position=r.get("position"), birth_date=r.get("birth_date"),
     )
     srows = [SeasonClaim(claim_id=cid, contract_key=key, season=s["season"], clause=s["clause"], source_id=sid,
                          confidence_tier=TIER, evidence=_season_text(s), **_team_season_values(s)) for s in seasons]

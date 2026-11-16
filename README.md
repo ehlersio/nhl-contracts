@@ -63,6 +63,12 @@ of clauses and bonus schedules, so the dataset labels them rather than omitting
 them. Nothing is read from puckpedia.com, capwages.com, spotrac.com or
 thestanleycap.com, and nothing from a paid API.
 
+No source above states the NHL player id for every row. Names are matched to ids
+through the NHL's current rosters and prospect lists and, since 2026-11-16, the
+NHL stats API's season-by-season player list (every player with a regular-season
+game since 2005-06: club, position, birth date). That list is how two NHL players
+with one name are told apart; see [Who is who](#who-is-who).
+
 ## What you get, and what you will not
 
 - Every signing from the 2026 offseason on, with term and type, from the
@@ -135,7 +141,7 @@ thestanleycap.com, and nothing from a paid API.
 |---|---|---|
 | `contract_key` | string | stable grouping key: NHL player id when any claim in the group carries one (else normalized name) + team + signing month; a name key stays when another contract of the player, same team and month, holds the id key |
 | `player_name` | string | as written by the best-tier source |
-| `player_id` | int, nullable | NHL player id, when a source tags or links the player (about a third of club releases, nearly all NHL.com stories) |
+| `player_id` | int, nullable | NHL player id, when a source tags or links the player (about a third of club releases, nearly all NHL.com stories) or the name resolves to one player (flags `player_id_from_*`, see [Who is who](#who-is-who)) |
 | `team` | string | NHL tri-code (`BOS`, `UTA`, …), from the Forge `teamid-` tag or the club author tag |
 | `signed_at` | date | the contract's signing date when a source states one (`signing_date_stated` true, tier E), else the publication date of the earliest source |
 | `signing_date_stated` | bool | see above |
@@ -211,7 +217,7 @@ The CBA settles more seasons for a reader with birth dates: a no-trade or no-mov
 |---|---|
 | `team` | the team carrying the charge (the retaining team, or the team that bought the player out) |
 | `kind` | `retained` or `buyout` |
-| `player_name`, `player_id` | the player; the id when a roster list or a source gives it |
+| `player_name`, `player_id` | the player; the id when a source gives it or the name resolves to one player ([Who is who](#who-is-who)) |
 | `counterparty` | for a retention, the team that acquired the player, when the source names it (PuckPedia trade posts; the archived team pages do not) |
 | `season` | the season the charge applies to |
 | `cap_hit_usd` | the charge for that season, as stated, or the stated percentage of the player's cap hit on the trade line (`derived:charge_from_pct`) |
@@ -226,7 +232,7 @@ One row per stint: a player on long-term injured reserve with one team, from pla
 
 | column | meaning |
 |---|---|
-| `player_id`, `player_name` | the player; the id when a roster list or contract gives it. PuckPedia mostly writes surnames, matched to the one player with that surname on that team that season (`name_unresolved` when there are two, e.g. Jack and Luke Hughes) |
+| `player_id`, `player_name` | the player; the id when the name resolves to one player ([Who is who](#who-is-who)) or a contract gives it. PuckPedia mostly writes surnames, matched to the one player with that surname on that team that season (`name_unresolved` when there are two, e.g. Jack and Luke Hughes) |
 | `team` | the team the source names |
 | `season` | the cap season of `since`, or of `first_seen` (seasons turn on July 1) |
 | `since`, `since_basis` | the placement date: ESPN's transaction (`espn_transactions`) when there is one, else PuckPedia's post (`bluesky_puckpedia`); null when no source dates the placement |
@@ -248,7 +254,7 @@ Tier E, one row per player per archived CapFriendly team page. A page is the las
 |---|---|
 | `season`, `target`, `as_of` | the cap season; the date the capture was chosen to precede (Jan 1, Feb 1, deadline − 14 days, or the deadline); the capture date |
 | `team`, `team_slug` | tri-code in that season (the Coyotes are `ARI` through 2023-24) and CapFriendly's slug |
-| `player_id`, `player_name`, `birth_date`, `capfriendly_path` | the id only when the name matches one player on today's rosters; long-retired players stay null, so match on name + `birth_date` |
+| `player_id`, `player_name`, `birth_date`, `capfriendly_path` | the id when the name resolves to one player on today's lists or with an NHL game since 2005-06 (namesakes by birth date, position and club, [Who is who](#who-is-who)); others stay null, so match on name + `birth_date` |
 | `position`, `group`, `section`, `status` | CapFriendly's position; `Forwards` / `Defense` / `Goalies` / `LTIR` / `IR` / `Taxi Squad`; `ROSTER` or `NON-ROSTER`; the page's status (`NHL`, `Minor`, `LTIR`, `Loan`, ...) |
 | `cap_hit_usd`, `aav_usd`, `two_way` | this season's cell. In two-way (non-roster) cells the salary views show the minor-league figure; the cap hit is the NHL one |
 | `years_remaining`, `extension_years`, `years_left`, `end_season`, `expiry_status` | seasons left including this one and any extension already signed; the extension's length when the page lists it separately ("1 - 8 UFA"); seasons after this one; the last season; `UFA` / `RFA` / `10.2(c)` |
@@ -285,7 +291,11 @@ Flags are `;`-separated on claims and unioned on merged rows. The important ones
 | `retained_salary_adjusted` | tier E: the cap hit shown is after retention in a trade |
 | `unconfirmed` | tier E: the page said the contract details were not yet confirmed |
 | `35_plus`, `franchise_relocated`, `varying_cap_hit`, `two_way_minors_salary_shown` | tier E oddities kept as written |
-| `player_id_from_roster`, `player_id_by_alias` | the NHL id was attached by name (and team) from the current roster and prospect lists, not stated by the source; `by_alias` means the first name was folded ("Zach" for "Zachary") or a middle name dropped |
+| `player_id_from_roster`, `player_id_from_nhl_seasons`, `player_id_by_alias` | the NHL id was attached by name, not stated by the source: the one player with that name on a current roster or prospect list (`from_roster`) or with an NHL game since 2005-06 (`from_nhl_seasons`); `by_alias` means the first name was folded ("Zach" for "Zachary") or a middle name dropped |
+| `player_id_by_namesake_keys` | several NHL players share the name; the claim's birth date, position, club and date fit exactly one ([Who is who](#who-is-who)) |
+| `player_id_from_same_contract` | several NHL players share the name and the claim alone does not say which; another source's claim on the same contract (same club, same signing window) carries the id of one of them |
+| `player_name_ambiguous` | several NHL players share the name and nothing separates them: `player_id` is null, never guessed |
+| `player_id_ruled_out` | every NHL player with the name is ruled out by a stated fact (another birth date, goalie versus skater, an impossible age; between namesakes also four seasons away from the league): someone else, a misspelt name, or a source's typo (PuckPedia's "G Lane Pederson"); `player_id` is null |
 | `derived:aav_from_total` | merged rows: the sources state a total and term but neither AAV nor cap hit, so `aav_usd` = total / term; skipped when the total includes performance bonuses or the sources disagree on total or term |
 | `derived:aav_from_season_salaries` | a release gives the NHL salary of every season of the term, with no bonus and summing to any stated total, so `aav_usd` is their average |
 | `span_from_season_breakdown` | the release names every season of the term in a salary breakdown ("$775,000 in 2025-26 ... $775,000 in 2026-27"), and those set `start_season`/`end_season` |
@@ -308,7 +318,8 @@ Flags are `;`-separated on claims and unioned on merged rows. The important ones
 
 Claims are the same contract when they name the same player (NHL id when both
 have one, else the accent-folded first and last name with common short forms
-folded, so "Zach Werenski" meets "Zachary Werenski"; a surname-only post joins
+folded, so "Zach Werenski" meets "Zachary Werenski"; a claim without an id joins
+an id by name only when one id carries that name, so namesakes never merge; a surname-only post joins
 a same-team claim within 45 days) on the same team and were published within 45 days of each
 other, or cover the same seasons when one of them is an archived row with no
 signing date. Values are taken from every tier; a disagreement between any two
@@ -428,14 +439,48 @@ nhl_contracts/
   normalize/capfriendly.py          archived HTML -> contract history, seasons, clauses
   normalize/deadline_rosters.py     archived pre-deadline team pages -> deadline_rosters / deadline_teams
   normalize/contributed.py          hand-read claims from data/contributed/claims.csv
+  normalize/identity.py             name -> NHL player id; namesakes told apart, never guessed
   normalize/merge.py                cross-source merge; conflicts named, never resolved
   normalize/ltir.py                 LTIR stints from ESPN's list and wire and PuckPedia's posts
   normalize/llm_fallback.py         OpenRouter extractor for stories the regex cannot read (off without a key)
   publish/export.py                 parquet / csv / json / timestamp.json
   store.py                          SQLite raw store (idempotent upserts)
-  teams.py                          team ids, roster and prospect player ids
+  teams.py                          team ids, roster and prospect player ids, who played where (player_seasons)
   run.py                            python -m nhl_contracts.run [collect|backfill|normalize|export|all]
 ```
+
+### Who is who
+
+Most sources write names, not NHL ids. `normalize/identity.py` turns a name into an
+id for every table (contracts, dead cap, LTIR, deadline rosters). It knows the
+current roster and prospect lists (`players`) and every player with an NHL
+regular-season game since 2005-06 (`player_seasons`: club per season, position,
+birth date; NHL stats API, two requests per season and player type, the current
+season refreshed with `--refresh-players`, all seasons on `backfill` or when one is
+missing). Candidates are every id with the name, exact or by alias key.
+
+- One candidate: he gets the id unless a stated fact rules him out (a birth date
+  more than a year off (CapFriendly misprints some, swapping day and month),
+  goalie versus skater, under 17 or over 46 at signing).
+  His club is not checked: sources disagree about a player's club now and then,
+  and that is a conflict to keep; journeymen sign tryouts and two-way deals with
+  clubs they never play for, and come back years after their last NHL game.
+- Several candidates (namesakes): the id goes to the one who fits every fact the
+  source states and fits at least one positively. The facts are birth date
+  (CapFriendly pages), position group (ESPN writes "D Sebastian Aho", PuckPedia
+  "UFA F Colin White"), club (named in his seasons around the signing, and not
+  only other clubs in the signing season and the next; a current listing counts),
+  and age (and four seasons since his last NHL game while on no current list
+  rules a namesake out). Otherwise `player_name_ambiguous`, unless another source's claim on the
+  same contract carries one of the namesakes' ids.
+
+Namesakes in the data on 2026-11-16: Sebastian Aho (CAR centre 8478427, NYI/PIT
+defenceman 8480222), Elias Pettersson (VAN forward 8480012, VAN defenceman
+8483678), Matt Murray (goalies 8476899 and 8483575), Colin White, Erik
+Gustafsson, Jonas Johansson, Daniil Tarasov, Ryan Johnson, Nathan / Nate Smith.
+Not covered: a namesake with no NHL game and on no current list is invisible, so a
+name that matches one NHL player can still be someone else when no birth date or
+position says so.
 
 ### Sources and their quirks
 
@@ -542,7 +587,7 @@ per stored page. Every export publishes the same rows as `deadline_rosters.*` an
 `deadline_teams.*` in `dist/` (columns in the data dictionary), as long as the
 store has the pages, i.e. the release's `wayback_pages.sqlite` carries them. Each row has the season, `target`, `as_of` (capture date), team
 (the Coyotes are `ARI` through 2023-24), name, birth date, CapFriendly path, a
-`player_id` when the name matches one player on today's rosters, position,
+`player_id` when the name resolves to one player (see Who is who), position,
 group (Forwards / Defense / Goalies / LTIR / IR / Taxi Squad) and roster or
 non-roster section. It also has the season's cap hit and AAV, `years_remaining`
 as the page states it (this season included, plus any extension already
@@ -628,9 +673,10 @@ because the hourly workflow commits the refreshed raw rows.
 `data/raw.sqlite` is a working cache. Its portable copies are:
 
 - `data/raw/*.jsonl`, committed to this repository: every NHL.com story, ESPN
-  row and injury stint, Bluesky post, player and team ever collected, one sorted file per table
+  row and injury stint, Bluesky post, player and team ever collected, and who
+  played where (`player_seasons.jsonl`, 4.5 MB), one sorted file per table
   so each run is a readable diff. These are the only copies of stories that have
-  aged out of Forge's 25-item lists. About 30 MB today, growing roughly 1 MB a
+  aged out of Forge's 25-item lists. About 35 MB today, growing roughly 1 MB a
   month.
 - `data/wayback_pages.sqlite` (25 MB), the one-off CapFriendly archive crawl,
   kept as an asset on the `contracts` release rather than in git.

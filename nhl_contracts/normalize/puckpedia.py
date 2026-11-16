@@ -352,6 +352,15 @@ def player_name(head: str) -> str:
     return _name_run(rest.split(), trailing=False)
 
 
+def position_before(head: str, name: str) -> str | None:
+    """The position PuckPedia writes before the name ("28 y/o UFA F Colin White"), used
+    only to tell namesakes apart."""
+    if not name:
+        return None
+    m = re.search(rf"\b(F|D|G|C|LW|RW|W)\s+{re.escape(name)}\b", head)
+    return m.group(1) if m else None
+
+
 def _expand_name(name: str, links: list[str], flags: list[str]) -> str:
     """Fill a missing first name from the post's puckpedia.com/player/<slug> link."""
     slug = next((m for u in links if is_puckpedia(u)
@@ -864,6 +873,7 @@ def extract_post(post: dict[str, Any]) -> tuple[list[Claim], list[SeasonClaim], 
         source_id=source.source_id, source_url=source.url, publisher=PUBLISHER, published_at=created,
         confidence_tier=TIER, extracted_by="regex", flags=list(dict.fromkeys(flags)),
         evidence=_evidence(raw_text, ref), expiry_status=expiry, agent=agent, signing_date_stated=False,
+        position=position_before(head, name),
     )
     seasons = [
         SeasonClaim(

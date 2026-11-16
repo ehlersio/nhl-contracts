@@ -1140,10 +1140,32 @@ ESPN_ACTION2 = re.compile(
 ESPN_CONTACT_TYPO = re.compile(r"\bcontacts?\b", re.I)
 
 
+ESPN_POS_LEAD = re.compile(rf"^(?P<pos>{ESPN_POS})\s+(?=[A-Z])")
+
+
 def _espn_names(blob: str) -> list[str]:
-    blob = re.sub(rf"\b{ESPN_POS}\s+(?=[A-Z])", "", blob)
-    parts = re.split(r",\s*|\s+and\s+", blob)
-    return [p.strip() for p in parts if p.strip() and _valid_name(p.strip())]
+    return [name for name, _pos in _espn_names_with_position(blob)]
+
+
+def _espn_names_with_position(blob: str) -> list[tuple[str, str | None]]:
+    """[(name, position)] from "D Sebastian Aho" or "Fs A, B and Ds C". A plural position
+    ("Fs") carries to the names after it until the next position; a singular one names
+    one player only."""
+    out: list[tuple[str, str | None]] = []
+    carried: str | None = None
+    for part in re.split(r",\s*|\s+and\s+", blob):
+        part = part.strip()
+        m = ESPN_POS_LEAD.match(part)
+        pos = None
+        if m:
+            pos, part = m.group("pos"), part[m.end():].strip()
+            carried = pos if pos.split("/")[0].endswith("s") else None
+        else:
+            pos = carried
+        part = re.sub(rf"\b{ESPN_POS}\s+(?=[A-Z])", "", part).strip()
+        if part and _valid_name(part):
+            out.append((part, pos))
+    return out
 
 
 def extract_espn(row: dict[str, Any]) -> tuple[list[Claim], Source | None]:
@@ -1170,8 +1192,9 @@ def extract_espn(row: dict[str, Any]) -> tuple[list[Claim], Source | None]:
         ctype = contract_type(sent, "")  # "to a two-year contract extension": the deal phrase stops at "contract"
         one_way = True if ONE_WAY.search(deal) else (False if TWO_WAY.search(deal) else None)
         money = classify_money(deal)
-        names = _espn_names(m.group("names"))
-        for name in names:
+        named = _espn_names_with_position(m.group("names"))
+        names = [n for n, _ in named]
+        for name, position in named:
             flags = ["multi_player_story"] if len(names) > 1 else []
             if ESPN_CONTACT_TYPO.search(deal):
                 flags.append("source_typo:contact")
@@ -1188,7 +1211,7 @@ def extract_espn(row: dict[str, Any]) -> tuple[list[Claim], Source | None]:
                 re_signed=m.group("verb").lower().startswith("re-"),
                 source_id=source.source_id, source_url=source.url, publisher=source.publisher,
                 published_at=source.published_at, confidence_tier="C", extracted_by="regex",
-                flags=flags, evidence=sent[:400],
+                flags=flags, evidence=sent[:400], position=position,
             ))
     return claims, (source if claims else None)
 
