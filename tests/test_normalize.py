@@ -187,3 +187,12 @@ def test_one_year_season_stated_in_the_headline(teams):
     # headline: "... contract extension with Leevi Meriläinen for the 2026-27 season"
     assert (c.contract_type, c.term_years, c.aav_usd) == ("extension", 1, 1_100_000)
     assert (c.start_season, c.end_season) == ("2026-27", "2026-27")
+
+
+def test_espn_team_codes_become_nhl_tri_codes():
+    """ESPN's two-letter codes and its first-season "UTAH" map to NHL tri-codes."""
+    for espn, nhl in (("UTAH", "UTA"), ("UTA", "UTA"), ("NJ", "NJD"), ("TB", "TBL"), ("CAR", "CAR")):
+        row = {"key": f"k-{espn}", "date": "2025-04-29T07:00Z", "team_abbrev": espn,
+               "description": "Signed G Jaxson Stauber to a two-year, two-way contract."}
+        claims, _ = extract_espn(row)
+        assert [c.team for c in claims] == [nhl]

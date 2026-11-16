@@ -154,7 +154,9 @@ TEAM_ALIASES: dict[str, str] = {"Canes": "CAR", "Utah": "UTA", "Utah Hockey Club
                                 "Habs": "MTL", "Isles": "NYI", "Leafs": "TOR", "Bolts": "TBL",
                                 "Preds": "NSH", "Pens": "PIT", "Knights": "VGK", "Jackets": "CBJ",
                                 "Caps": "WSH", "Hawks": "CHI", "Wings": "DET", "Avs": "COL"}
-ESPN_ABBREV = {"NJ": "NJD", "LA": "LAK", "SJ": "SJS", "TB": "TBL", "WSH": "WSH", "MTL": "MTL"}
+# ESPN's codes that are not NHL tri-codes. ESPN wrote Utah as "UTAH" in its first season
+# (2024-06-25 to 2025-06-30), "UTA" since.
+ESPN_ABBREV = {"NJ": "NJD", "LA": "LAK", "SJ": "SJS", "TB": "TBL", "WSH": "WSH", "MTL": "MTL", "UTAH": "UTA"}
 
 
 # --- model: see model.py ---
