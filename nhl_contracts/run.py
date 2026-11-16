@@ -36,6 +36,7 @@ from .normalize.buyouts import apply_buyouts
 from .normalize.clause_status import clause_status
 from .normalize.contracts import normalize_all
 from .normalize.contributed import contributed_rows
+from .normalize.identity import FLAG_AMBIGUOUS, FLAG_NAMESAKE, FLAG_RULED_OUT, PlayerIndex
 from .normalize.merge import assign_player_ids, merge_clauses, merge_contracts, merge_seasons
 from .normalize.model import Claim, ClauseClaim, DeadCapClaim, SeasonClaim, Source
 from .publish.export import export
@@ -118,6 +119,7 @@ def do_collect(store: Store, args: argparse.Namespace) -> None:
 
                 store.set_players(fetch_player_ids(client, teams), date.today().isoformat())
                 store.commit()
+                refresh_player_seasons(store, client)
         if "espn" in chosen:
             start = args.espn_from or (date.today() - timedelta(days=args.espn_days))
             espn_transactions.collect(store, client, start, date.today())
@@ -133,6 +135,21 @@ def do_collect(store: Store, args: argparse.Namespace) -> None:
             _collect_reddit(store)
         if "wayback" in chosen:
             _collect_wayback(store, args)
+
+
+def refresh_player_seasons(store: Store, client: Client, *, full: bool = False) -> None:
+    """Who played where (normalize/identity.py tells namesakes apart with it): every season
+    since 2005-06 when the store lacks one of the finished ones (or ``full``), else the
+    current season only, the one whose rows still change."""
+    from .teams import fetch_player_seasons, registry_seasons
+
+    wanted = registry_seasons()
+    if not full and set(wanted[:-1]) <= store.player_season_seasons():
+        wanted = wanted[-1:]
+    rows = fetch_player_seasons(client, wanted)
+    n = store.set_player_seasons(rows, date.today().isoformat())
+    store.commit()
+    log.info("player seasons: %d rows for %d seasons", n, len(wanted))
 
 
 def _collect_reddit(store: Store) -> None:
@@ -163,6 +180,7 @@ def do_backfill(store: Store, args: argparse.Namespace) -> None:
             store.set_players(players, date.today().isoformat())
             store.commit()
             log.info("backfill: %d players on rosters and prospect lists", len(players))
+            refresh_player_seasons(store, client, full=True)
             nhl_forge.backfill_players(store, client, sorted(players), max_players=args.max_players)
         if "espn" in chosen:
             start = args.espn_from or date(2016, 7, 1)
@@ -250,13 +268,18 @@ def normalize_store(store: Store, contributed: Path = CONTRIBUTED_CLAIMS) -> dic
         sources += c_sources
         log.info("normalize: %d contributed claims from %s", len(c_claims), contributed)
 
-    filled = assign_player_ids(claims, store.players())
+    index = PlayerIndex.from_store(store)
+    filled = assign_player_ids(claims, index)
     if filled:
-        log.info("normalize: %d claims given an NHL player id from the roster lists", filled)
+        log.info("normalize: %d claims given an NHL player id by name", filled)
+    for flag in (FLAG_NAMESAKE, FLAG_AMBIGUOUS, FLAG_RULED_OUT):
+        n_flag = sum(1 for c in claims if flag in c.flags)
+        if n_flag:
+            log.info("normalize: %d claims %s", n_flag, flag)
     contracts, key_map = merge_contracts(claims)
     seasons = merge_seasons(season_claims, key_map)
     clauses = merge_clauses(clause_claims, key_map)
-    assign_player_ids(dc_claims, store.players())  # type: ignore[arg-type]
+    assign_player_ids(dc_claims, index)
     extended = dead_cap_mod.extend_retentions(dc_claims, contracts)
     dead_cap = dead_cap_mod.merge_dead_cap(dc_claims)
     log.info("normalize: %d dead-cap claims (%d seasons filled from contracts) -> %d rows",
@@ -267,7 +290,8 @@ def normalize_store(store: Store, contributed: Path = CONTRIBUTED_CLAIMS) -> dic
              "dropped", bo["n_bought_out"], bo["n_bought_out_before_start"], bo["n_seasons_dropped"])
     statuses = clause_status(contracts, clauses, season_claims, claims)
     ltir_rows, ltir_sources = ltir_mod.normalize(
-        espn_rows, posts, list(store.injuries()), store.latest_injury_snapshot(), store.players(), contracts)
+        espn_rows, posts, list(store.injuries()), store.latest_injury_snapshot(), store.players(), contracts,
+        player_seasons=store.player_seasons())
     sources += ltir_sources
     log.info("normalize: %d LTIR stints, %d active", len(ltir_rows), sum(1 for r in ltir_rows if r["active"]))
     log.info("normalize: clause status for %d contract-seasons: %s", len(statuses),

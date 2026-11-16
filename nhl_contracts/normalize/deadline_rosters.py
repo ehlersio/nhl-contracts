@@ -57,7 +57,7 @@ from .capfriendly import (
     path_of,
     ts_to_date,
 )
-from .text import alias_key, name_key
+from .identity import PlayerIndex
 
 # Groups kept, by the first header cell; anything else (Professional Tryout,
 # Retained Salary, Buyout History) is skipped.
@@ -286,23 +286,19 @@ def clause_kind(label: str | None) -> str | None:
     return None
 
 
-def assign_ids(rows: list[dict[str, Any]], players: dict[int, tuple[str, str | None]]) -> int:
-    """Fill ``player_id`` where exactly one known NHL player has the row's name (exact, then
-    alias key). ``players`` is the store's roster/prospect list, so long-retired players stay
-    unmatched; ``birth_date`` is there for consumers with their own player index."""
-    by_name: dict[str, set[int]] = {}
-    by_alias: dict[str, set[int]] = {}
-    for pid, (name, _team) in players.items():
-        by_name.setdefault(name_key(name), set()).add(pid)
-        by_alias.setdefault(alias_key(name), set()).add(pid)
+def assign_ids(rows: list[dict[str, Any]], players: PlayerIndex | dict[int, tuple]) -> int:
+    """Fill ``player_id`` from the row's name through the player index (exact name, then
+    alias key): the current roster/prospect lists and every player with an NHL game since
+    2005-06. A name several players share resolves only when the row's birth date,
+    position and club fit one of them (normalize/identity.py); otherwise it stays empty."""
+    index = players if isinstance(players, PlayerIndex) else PlayerIndex(players)
     n = 0
     for r in rows:
-        for index, key in ((by_name, name_key(r["player_name"])), (by_alias, alias_key(r["player_name"]))):
-            ids = index.get(key, set())
-            if len(ids) == 1:
-                r["player_id"] = next(iter(ids))
-                n += 1
-                break
+        m = index.resolve(r["player_name"], r.get("team"), r.get("target") or r.get("as_of"),
+                          position=r.get("position"), birth_date=r.get("birth_date"))
+        if m.player_id:
+            r["player_id"] = m.player_id
+            n += 1
     return n
 
 
@@ -328,7 +324,7 @@ def rows_from_store(store: Any, seasons: Iterable[int] | None = None
             continue
         players.extend(rows)
         teams.append(team)
-    assign_ids(players, store.players())
+    assign_ids(players, PlayerIndex.from_store(store))
     players.sort(key=lambda r: (r["season"], r["target"] or "", r["team"] or "", r["player_name"]))
     teams.sort(key=lambda r: (r["season"], r["target"] or "", r["team"] or ""))
     return players, teams, problems

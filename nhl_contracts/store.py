@@ -91,6 +91,18 @@ CREATE TABLE IF NOT EXISTS players (
     kind TEXT,                   -- roster | prospect
     updated_at TEXT NOT NULL
 );
+-- Who played where: one row per (player, season, team) with an NHL regular-season game,
+-- from the NHL stats API. Name matching uses it to tell namesakes apart.
+CREATE TABLE IF NOT EXISTS player_seasons (
+    key TEXT PRIMARY KEY,        -- player_id|season|team
+    player_id INTEGER NOT NULL,
+    season TEXT NOT NULL,        -- 2024-25
+    team TEXT NOT NULL,          -- NHL tri-code as the stats API writes it (ARI, PHX, UTA ...)
+    full_name TEXT NOT NULL,
+    position TEXT,               -- C | L | R | D | G
+    birth_date TEXT,
+    updated_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS teams (
     team_id INTEGER PRIMARY KEY,
     abbrev TEXT NOT NULL,
@@ -365,6 +377,27 @@ class Store:
         return {r["player_id"]: (r["full_name"], r["team"], r["kind"])
                 for r in self.conn.execute("SELECT * FROM players")}
 
+    def set_player_seasons(self, rows: Iterable[dict[str, Any]], updated_at: str) -> int:
+        """Upsert rows from teams.fetch_player_seasons; an unchanged row keeps its updated_at,
+        so the hourly refresh does not churn the committed JSONL. Returns the rows sent."""
+        data = [(f"{r['player_id']}|{r['season']}|{r['team']}", r["player_id"], r["season"], r["team"],
+                 r["full_name"], r.get("position"), r.get("birth_date"), updated_at) for r in rows]
+        self.conn.executemany(
+            """INSERT INTO player_seasons (key, player_id, season, team, full_name, position, birth_date, updated_at)
+               VALUES (?,?,?,?,?,?,?,?) ON CONFLICT(key) DO UPDATE SET full_name=excluded.full_name,
+               position=excluded.position, birth_date=excluded.birth_date, updated_at=excluded.updated_at
+               WHERE full_name IS NOT excluded.full_name OR position IS NOT excluded.position
+                  OR birth_date IS NOT excluded.birth_date""",
+            data,
+        )
+        return len(data)
+
+    def player_seasons(self) -> list[dict[str, Any]]:
+        return [dict(r) for r in self.conn.execute("SELECT * FROM player_seasons ORDER BY key")]
+
+    def player_season_seasons(self) -> set[str]:
+        return {r[0] for r in self.conn.execute("SELECT DISTINCT season FROM player_seasons")}
+
     def teams(self) -> dict[int, str]:
         return {r["team_id"]: r["abbrev"] for r in self.conn.execute("SELECT * FROM teams")}
 
@@ -384,7 +417,7 @@ class Store:
     def counts(self) -> dict[str, int]:
         out = {}
         for t in ("forge_stories", "forge_seen", "espn_transactions", "bsky_posts", "wayback_pages", "players",
-                  "teams", "llm_cache", "reddit_posts", "espn_injuries", "espn_injury_snapshots"):
+                  "teams", "llm_cache", "reddit_posts", "espn_injuries", "espn_injury_snapshots", "player_seasons"):
             out[t] = self.conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
         return out
 
@@ -394,10 +427,10 @@ class Store:
     # lists). The archived CapFriendly pages are a one-off 50 MB blob kept as a
     # release asset in their own SQLite file. The working store is rebuilt from both.
     JSONL_TABLES = ("forge_stories", "espn_transactions", "bsky_posts", "players", "teams", "llm_cache", "reddit_posts",
-                    "espn_injuries", "espn_injury_snapshots")
+                    "espn_injuries", "espn_injury_snapshots", "player_seasons")
     JSONL_KEYS = {"forge_stories": "slug", "espn_transactions": "key", "bsky_posts": "uri", "players": "player_id",
                   "teams": "team_id", "llm_cache": "key", "reddit_posts": "id", "espn_injuries": "key",
-                  "espn_injury_snapshots": "taken_at"}
+                  "espn_injury_snapshots": "taken_at", "player_seasons": "key"}
 
     def dump_jsonl(self, directory: Path | str) -> dict[str, int]:
         """Write one sorted JSONL file per live-source table. Returns row counts."""
