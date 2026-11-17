@@ -543,6 +543,7 @@
 {"full_name": "Kyle MacLean", "kind": "roster", "player_id": 8481237, "team": "NYI", "updated_at": "2026-11-14"}
 {"full_name": "Nico Sturm", "kind": "roster", "player_id": 8481477, "team": "MIN", "updated_at": "2026-11-17"}
 {"full_name": "Blake Lizotte", "kind": "roster", "player_id": 8481481, "team": "PIT", "updated_at": "2026-11-17"}
+{"full_name": "Brett Leason", "kind": "roster", "player_id": 8481517, "team": "SJS", "updated_at": "2026-11-17"}
 {"full_name": "Spencer Knight", "kind": "roster", "player_id": 8481519, "team": "CHI", "updated_at": "2026-11-17"}
 {"full_name": "Peyton Krebs", "kind": "roster", "player_id": 8481522, "team": "BUF", "updated_at": "2026-11-17"}
 {"full_name": "Kirby Dach", "kind": "roster", "player_id": 8481523, "team": "MTL", "updated_at": "2026-11-17"}
@@ -901,7 +902,7 @@
 {"full_name": "Cameron Whitehead", "kind": "prospect", "player_id": 8483523, "team": "VGK", "updated_at": "2026-11-17"}
 {"full_name": "Shane Wright", "kind": "roster", "player_id": 8483524, "team": "NSH", "updated_at": "2026-11-17"}
 {"full_name": "Danila Yurov", "kind": "roster", "player_id": 8483525, "team": "MIN", "updated_at": "2026-11-17"}
-{"full_name": "Danil Zhilkin", "kind": "prospect", "player_id": 8483526, "team": "WPG", "updated_at": "2026-11-17"}
+{"full_name": "Danil Zhilkin", "kind": "roster", "player_id": 8483526, "team": "WPG", "updated_at": "2026-11-17"}
 {"full_name": "Clay Stevenson", "kind": "roster", "player_id": 8483532, "team": "WPG", "updated_at": "2026-11-17"}
 {"full_name": "Marshall Rifai", "kind": "roster", "player_id": 8483546, "team": "TOR", "updated_at": "2026-11-17"}
 {"full_name": "Brandon Bussi", "kind": "roster", "player_id": 8483548, "team": "CAR", "updated_at": "2026-11-17"}
