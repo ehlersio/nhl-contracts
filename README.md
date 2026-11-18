@@ -45,6 +45,14 @@ Or download the files directly from the release; every table comes as
 parquet, CSV and JSON. Neither package ships data, so they rarely need a
 version bump; `timestamp.json` tells you how fresh the files are.
 
+Or query it over HTTP, no key needed: the
+[EyeWall API](https://api.eyewallanalytics.com/docs) serves the same data as
+JSON, by player (`/v1/nhl/players/{playerId}/contracts`), by team and season
+(`/v1/nhl/teams/{team}/contracts`), or league-wide (`/v1/nhl/contracts`,
+`/v1/nhl/contracts/teams` for cap totals). It is mirrored from this dataset
+and keeps the CC0 licence. OpenAPI 3.1 spec at
+[api.eyewallanalytics.com/openapi.json](https://api.eyewallanalytics.com/openapi.json).
+
 ## Sources and tiers
 
 | Tier | Source | What it gives | How it is read |
