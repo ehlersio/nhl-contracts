@@ -21818,6 +21818,7 @@
 {"birth_date": "2001-03-12", "full_name": "Henry Thrun", "key": "8481567|2023-24|SJS", "player_id": 8481567, "position": "D", "season": "2023-24", "team": "SJS", "updated_at": "2026-11-16"}
 {"birth_date": "2001-03-12", "full_name": "Henry Thrun", "key": "8481567|2024-25|SJS", "player_id": 8481567, "position": "D", "season": "2024-25", "team": "SJS", "updated_at": "2026-11-16"}
 {"birth_date": "2001-03-12", "full_name": "Henry Thrun", "key": "8481567|2025-26|TOR", "player_id": 8481567, "position": "D", "season": "2025-26", "team": "TOR", "updated_at": "2026-11-16"}
+{"birth_date": "2001-03-12", "full_name": "Henry Thrun", "key": "8481567|2026-27|WPG", "player_id": 8481567, "position": "D", "season": "2026-27", "team": "WPG", "updated_at": "2026-11-18"}
 {"birth_date": "2001-06-05", "full_name": "Alex Vlasic", "key": "8481568|2021-22|CHI", "player_id": 8481568, "position": "D", "season": "2021-22", "team": "CHI", "updated_at": "2026-11-16"}
 {"birth_date": "2001-06-05", "full_name": "Alex Vlasic", "key": "8481568|2022-23|CHI", "player_id": 8481568, "position": "D", "season": "2022-23", "team": "CHI", "updated_at": "2026-11-16"}
 {"birth_date": "2001-06-05", "full_name": "Alex Vlasic", "key": "8481568|2023-24|CHI", "player_id": 8481568, "position": "D", "season": "2023-24", "team": "CHI", "updated_at": "2026-11-16"}
@@ -22623,6 +22624,7 @@
 {"birth_date": "2002-11-22", "full_name": "Owen Power", "key": "8482671|2026-27|BUF", "player_id": 8482671, "position": "D", "season": "2026-27", "team": "BUF", "updated_at": "2026-11-16"}
 {"birth_date": "2002-10-22", "full_name": "Xavier Bourgault", "key": "8482673|2025-26|OTT", "player_id": 8482673, "position": "R", "season": "2025-26", "team": "OTT", "updated_at": "2026-11-16"}
 {"birth_date": "2002-10-22", "full_name": "Xavier Bourgault", "key": "8482673|2026-27|OTT", "player_id": 8482673, "position": "R", "season": "2026-27", "team": "OTT", "updated_at": "2026-11-16"}
+{"birth_date": null, "full_name": "Tyler Boucher", "key": "8482674|2026-27|OTT", "player_id": 8482674, "position": "R", "season": "2026-27", "team": "OTT", "updated_at": "2026-11-18"}
 {"birth_date": "2002-11-14", "full_name": "Matt Coronato", "key": "8482679|2022-23|CGY", "player_id": 8482679, "position": "R", "season": "2022-23", "team": "CGY", "updated_at": "2026-11-16"}
 {"birth_date": "2002-11-14", "full_name": "Matt Coronato", "key": "8482679|2023-24|CGY", "player_id": 8482679, "position": "R", "season": "2023-24", "team": "CGY", "updated_at": "2026-11-16"}
 {"birth_date": "2002-11-14", "full_name": "Matt Coronato", "key": "8482679|2024-25|CGY", "player_id": 8482679, "position": "R", "season": "2024-25", "team": "CGY", "updated_at": "2026-11-16"}
@@ -23016,6 +23018,7 @@
 {"birth_date": "2003-12-22", "full_name": "Danila Yurov", "key": "8483525|2025-26|MIN", "player_id": 8483525, "position": "R", "season": "2025-26", "team": "MIN", "updated_at": "2026-11-16"}
 {"birth_date": "2003-12-22", "full_name": "Danila Yurov", "key": "8483525|2026-27|MIN", "player_id": 8483525, "position": "R", "season": "2026-27", "team": "MIN", "updated_at": "2026-11-16"}
 {"birth_date": "2003-12-19", "full_name": "Danil Zhilkin", "key": "8483526|2025-26|WPG", "player_id": 8483526, "position": "C", "season": "2025-26", "team": "WPG", "updated_at": "2026-11-16"}
+{"birth_date": "2003-12-19", "full_name": "Danil Zhilkin", "key": "8483526|2026-27|WPG", "player_id": 8483526, "position": "C", "season": "2026-27", "team": "WPG", "updated_at": "2026-11-18"}
 {"birth_date": "1999-04-27", "full_name": "Jaxson Stauber", "key": "8483530|2022-23|CHI", "player_id": 8483530, "position": "G", "season": "2022-23", "team": "CHI", "updated_at": "2026-11-16"}
 {"birth_date": "1999-04-27", "full_name": "Jaxson Stauber", "key": "8483530|2024-25|UTA", "player_id": 8483530, "position": "G", "season": "2024-25", "team": "UTA", "updated_at": "2026-11-16"}
 {"birth_date": "1999-01-11", "full_name": "Brian Halonen", "key": "8483531|2023-24|NJD", "player_id": 8483531, "position": "L", "season": "2023-24", "team": "NJD", "updated_at": "2026-11-16"}
