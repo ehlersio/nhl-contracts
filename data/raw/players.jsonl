@@ -611,7 +611,7 @@
 {"full_name": "Isak Walther", "kind": "prospect", "player_id": 8481730, "team": "NSH", "updated_at": "2026-11-18"}
 {"full_name": "Andre Lee", "kind": "roster", "player_id": 8481732, "team": "LAK", "updated_at": "2026-11-18"}
 {"full_name": "Maxim Denezhkin", "kind": "prospect", "player_id": 8481734, "team": "EDM", "updated_at": "2026-11-18"}
-{"full_name": "Marc Del Gaizo", "kind": "roster", "player_id": 8481743, "team": "NYR", "updated_at": "2026-11-17"}
+{"full_name": "Marc Del Gaizo", "kind": "prospect", "player_id": 8481743, "team": "NYR", "updated_at": "2026-11-18"}
 {"full_name": "Tomas Mazura", "kind": "prospect", "player_id": 8481752, "team": "EDM", "updated_at": "2026-11-18"}
 {"full_name": "Nikita Nesterenko", "kind": "roster", "player_id": 8481754, "team": "ANA", "updated_at": "2026-11-18"}
 {"full_name": "Tye Kartye", "kind": "roster", "player_id": 8481789, "team": "NYR", "updated_at": "2026-11-18"}
@@ -1237,7 +1237,7 @@
 {"full_name": "Lucas Ellinas", "kind": "prospect", "player_id": 8485006, "team": "OTT", "updated_at": "2026-11-18"}
 {"full_name": "Owen Protz", "kind": "prospect", "player_id": 8485008, "team": "MTL", "updated_at": "2026-11-18"}
 {"full_name": "Alexandre Blais", "kind": "prospect", "player_id": 8485009, "team": "ANA", "updated_at": "2026-11-18"}
-{"full_name": "Gregor Biber", "kind": "roster", "player_id": 8485010, "team": "UTA", "updated_at": "2026-11-16"}
+{"full_name": "Gregor Biber", "kind": "roster", "player_id": 8485010, "team": "UTA", "updated_at": "2026-11-18"}
 {"full_name": "Jakub Milota", "kind": "prospect", "player_id": 8485011, "team": "NSH", "updated_at": "2026-11-18"}
 {"full_name": "Blake Montgomery", "kind": "prospect", "player_id": 8485016, "team": "OTT", "updated_at": "2026-11-18"}
 {"full_name": "Chase Pietila", "kind": "prospect", "player_id": 8485019, "team": "PIT", "updated_at": "2026-11-18"}
