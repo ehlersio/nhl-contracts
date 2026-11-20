@@ -16723,7 +16723,7 @@
 {"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2023-24|VGK", "player_id": 8477447, "position": "D", "season": "2023-24", "team": "VGK", "updated_at": "2026-11-16"}
 {"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2024-25|VGK", "player_id": 8477447, "position": "D", "season": "2024-25", "team": "VGK", "updated_at": "2026-11-16"}
 {"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2025-26|VGK", "player_id": 8477447, "position": "D", "season": "2025-26", "team": "VGK", "updated_at": "2026-11-16"}
-{"birth_date": null, "full_name": "Shea Theodore", "key": "8477447|2026-27|VGK", "player_id": 8477447, "position": "D", "season": "2026-27", "team": "VGK", "updated_at": "2026-11-20"}
+{"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2026-27|VGK", "player_id": 8477447, "position": "D", "season": "2026-27", "team": "VGK", "updated_at": "2026-11-20"}
 {"birth_date": "1994-11-30", "full_name": "Marko Dano", "key": "8477448|2014-15|CBJ", "player_id": 8477448, "position": "C", "season": "2014-15", "team": "CBJ", "updated_at": "2026-11-16"}
 {"birth_date": "1994-11-30", "full_name": "Marko Dano", "key": "8477448|2015-16|CHI", "player_id": 8477448, "position": "C", "season": "2015-16", "team": "CHI", "updated_at": "2026-11-16"}
 {"birth_date": "1994-11-30", "full_name": "Marko Dano", "key": "8477448|2015-16|WPG", "player_id": 8477448, "position": "C", "season": "2015-16", "team": "WPG", "updated_at": "2026-11-16"}
@@ -23407,5 +23407,5 @@
 {"birth_date": "2002-05-01", "full_name": "Owen Michaels", "key": "8486161|2026-27|EDM", "player_id": 8486161, "position": "R", "season": "2026-27", "team": "EDM", "updated_at": "2026-11-16"}
 {"birth_date": "2003-09-21", "full_name": "Viking Gustafsson Nyberg", "key": "8486166|2025-26|MIN", "player_id": 8486166, "position": "D", "season": "2025-26", "team": "MIN", "updated_at": "2026-11-16"}
 {"birth_date": "2004-05-06", "full_name": "Jake Livanavage", "key": "8486169|2025-26|PIT", "player_id": 8486169, "position": "D", "season": "2025-26", "team": "PIT", "updated_at": "2026-11-16"}
-{"birth_date": "2001-11-09", "full_name": "T.J. Hughes", "key": "8486171|2026-27|COL", "player_id": 8486171, "position": "R", "season": "2026-27", "team": "COL", "updated_at": "2026-11-16"}
+{"birth_date": null, "full_name": "T.J. Hughes", "key": "8486171|2026-27|COL", "player_id": 8486171, "position": "R", "season": "2026-27", "team": "COL", "updated_at": "2026-11-20"}
 {"birth_date": "2002-01-11", "full_name": "Vitali Pinchuk", "key": "8486189|2026-27|NSH", "player_id": 8486189, "position": "C", "season": "2026-27", "team": "NSH", "updated_at": "2026-11-16"}

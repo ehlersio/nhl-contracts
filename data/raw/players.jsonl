@@ -263,6 +263,7 @@
 {"full_name": "Igor Shesterkin", "kind": "roster", "player_id": 8478048, "team": "NYR", "updated_at": "2026-11-20"}
 {"full_name": "Gustav Forsling", "kind": "roster", "player_id": 8478055, "team": "FLA", "updated_at": "2026-11-20"}
 {"full_name": "Dakota Joshua", "kind": "roster", "player_id": 8478057, "team": "TOR", "updated_at": "2026-11-20"}
+{"full_name": "Sammy Blais", "kind": "roster", "player_id": 8478104, "team": "OTT", "updated_at": "2026-11-20"}
 {"full_name": "Victor Olofsson", "kind": "roster", "player_id": 8478109, "team": "VGK", "updated_at": "2026-11-20"}
 {"full_name": "Pierre Engvall", "kind": "roster", "player_id": 8478115, "team": "NYI", "updated_at": "2026-10-27"}
 {"full_name": "Jake Evans", "kind": "roster", "player_id": 8478133, "team": "MTL", "updated_at": "2026-11-20"}
@@ -574,7 +575,7 @@
 {"full_name": "Alex Vlasic", "kind": "roster", "player_id": 8481568, "team": "CHI", "updated_at": "2026-11-20"}
 {"full_name": "Ville Heinola", "kind": "roster", "player_id": 8481572, "team": "VGK", "updated_at": "2026-11-01"}
 {"full_name": "Ryan Suzuki", "kind": "prospect", "player_id": 8481576, "team": "OTT", "updated_at": "2026-11-20"}
-{"full_name": "Philip Tomasino", "kind": "prospect", "player_id": 8481577, "team": "OTT", "updated_at": "2026-11-20"}
+{"full_name": "Philip Tomasino", "kind": "roster", "player_id": 8481577, "team": "OTT", "updated_at": "2026-11-20"}
 {"full_name": "Connor McMichael", "kind": "roster", "player_id": 8481580, "team": "STL", "updated_at": "2026-11-20"}
 {"full_name": "Thomas Harley", "kind": "roster", "player_id": 8481581, "team": "DAL", "updated_at": "2026-11-20"}
 {"full_name": "Nick Robertson", "kind": "roster", "player_id": 8481582, "team": "PIT", "updated_at": "2026-11-20"}
@@ -731,7 +732,7 @@
 {"full_name": "William Eklund", "kind": "roster", "player_id": 8482667, "team": "OTT", "updated_at": "2026-11-20"}
 {"full_name": "Owen Power", "kind": "roster", "player_id": 8482671, "team": "BUF", "updated_at": "2026-11-20"}
 {"full_name": "Xavier Bourgault", "kind": "prospect", "player_id": 8482673, "team": "OTT", "updated_at": "2026-11-20"}
-{"full_name": "Tyler Boucher", "kind": "prospect", "player_id": 8482674, "team": "OTT", "updated_at": "2026-11-20"}
+{"full_name": "Tyler Boucher", "kind": "roster", "player_id": 8482674, "team": "OTT", "updated_at": "2026-11-20"}
 {"full_name": "Sean Behrens", "kind": "prospect", "player_id": 8482676, "team": "COL", "updated_at": "2026-11-20"}
 {"full_name": "Corson Ceulemans", "kind": "prospect", "player_id": 8482678, "team": "CBJ", "updated_at": "2026-11-20"}
 {"full_name": "Matt Coronato", "kind": "roster", "player_id": 8482679, "team": "CGY", "updated_at": "2026-11-20"}
