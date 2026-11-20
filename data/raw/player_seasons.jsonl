@@ -13137,7 +13137,7 @@
 {"birth_date": "1992-01-16", "full_name": "Jason Zucker", "key": "8475722|2023-24|NSH", "player_id": 8475722, "position": "L", "season": "2023-24", "team": "NSH", "updated_at": "2026-11-16"}
 {"birth_date": "1992-01-16", "full_name": "Jason Zucker", "key": "8475722|2024-25|BUF", "player_id": 8475722, "position": "L", "season": "2024-25", "team": "BUF", "updated_at": "2026-11-16"}
 {"birth_date": "1992-01-16", "full_name": "Jason Zucker", "key": "8475722|2025-26|BUF", "player_id": 8475722, "position": "L", "season": "2025-26", "team": "BUF", "updated_at": "2026-11-16"}
-{"birth_date": null, "full_name": "Jason Zucker", "key": "8475722|2026-27|BUF", "player_id": 8475722, "position": "L", "season": "2026-27", "team": "BUF", "updated_at": "2026-11-19"}
+{"birth_date": "1992-01-16", "full_name": "Jason Zucker", "key": "8475722|2026-27|BUF", "player_id": 8475722, "position": "L", "season": "2026-27", "team": "BUF", "updated_at": "2026-11-20"}
 {"birth_date": "1992-06-15", "full_name": "Petr Straka", "key": "8475723|2014-15|PHI", "player_id": 8475723, "position": "R", "season": "2014-15", "team": "PHI", "updated_at": "2026-11-16"}
 {"birth_date": "1992-04-24", "full_name": "Tyler Toffoli", "key": "8475726|2012-13|LAK", "player_id": 8475726, "position": "C", "season": "2012-13", "team": "LAK", "updated_at": "2026-11-16"}
 {"birth_date": "1992-04-24", "full_name": "Tyler Toffoli", "key": "8475726|2013-14|LAK", "player_id": 8475726, "position": "C", "season": "2013-14", "team": "LAK", "updated_at": "2026-11-16"}
@@ -17934,7 +17934,7 @@
 {"birth_date": "1996-03-13", "full_name": "Brayden Point", "key": "8478010|2023-24|TBL", "player_id": 8478010, "position": "C", "season": "2023-24", "team": "TBL", "updated_at": "2026-11-16"}
 {"birth_date": "1996-03-13", "full_name": "Brayden Point", "key": "8478010|2024-25|TBL", "player_id": 8478010, "position": "C", "season": "2024-25", "team": "TBL", "updated_at": "2026-11-16"}
 {"birth_date": "1996-03-13", "full_name": "Brayden Point", "key": "8478010|2025-26|TBL", "player_id": 8478010, "position": "C", "season": "2025-26", "team": "TBL", "updated_at": "2026-11-16"}
-{"birth_date": "1996-03-13", "full_name": "Brayden Point", "key": "8478010|2026-27|TBL", "player_id": 8478010, "position": "C", "season": "2026-27", "team": "TBL", "updated_at": "2026-11-16"}
+{"birth_date": null, "full_name": "Brayden Point", "key": "8478010|2026-27|TBL", "player_id": 8478010, "position": "C", "season": "2026-27", "team": "TBL", "updated_at": "2026-11-20"}
 {"birth_date": "1996-05-14", "full_name": "Louis Belpedio", "key": "8478011|2017-18|MIN", "player_id": 8478011, "position": "D", "season": "2017-18", "team": "MIN", "updated_at": "2026-11-16"}
 {"birth_date": "1996-05-14", "full_name": "Louis Belpedio", "key": "8478011|2018-19|MIN", "player_id": 8478011, "position": "D", "season": "2018-19", "team": "MIN", "updated_at": "2026-11-16"}
 {"birth_date": "1996-05-14", "full_name": "Louis Belpedio", "key": "8478011|2020-21|MIN", "player_id": 8478011, "position": "D", "season": "2020-21", "team": "MIN", "updated_at": "2026-11-16"}
@@ -22480,7 +22480,7 @@
 {"birth_date": "1996-08-07", "full_name": "Jeff Malott", "key": "8482408|2021-22|WPG", "player_id": 8482408, "position": "L", "season": "2021-22", "team": "WPG", "updated_at": "2026-11-16"}
 {"birth_date": "1996-08-07", "full_name": "Jeff Malott", "key": "8482408|2024-25|LAK", "player_id": 8482408, "position": "L", "season": "2024-25", "team": "LAK", "updated_at": "2026-11-16"}
 {"birth_date": "1996-08-07", "full_name": "Jeff Malott", "key": "8482408|2025-26|LAK", "player_id": 8482408, "position": "L", "season": "2025-26", "team": "LAK", "updated_at": "2026-11-16"}
-{"birth_date": null, "full_name": "Jeff Malott", "key": "8482408|2026-27|ANA", "player_id": 8482408, "position": "L", "season": "2026-27", "team": "ANA", "updated_at": "2026-11-19"}
+{"birth_date": "1996-08-07", "full_name": "Jeff Malott", "key": "8482408|2026-27|ANA", "player_id": 8482408, "position": "L", "season": "2026-27", "team": "ANA", "updated_at": "2026-11-20"}
 {"birth_date": "1995-11-07", "full_name": "Hunter Shepard", "key": "8482411|2023-24|WSH", "player_id": 8482411, "position": "G", "season": "2023-24", "team": "WSH", "updated_at": "2026-11-16"}
 {"birth_date": "1995-11-07", "full_name": "Hunter Shepard", "key": "8482411|2024-25|WSH", "player_id": 8482411, "position": "G", "season": "2024-25", "team": "WSH", "updated_at": "2026-11-16"}
 {"birth_date": "1995-11-07", "full_name": "Hunter Shepard", "key": "8482411|2025-26|OTT", "player_id": 8482411, "position": "G", "season": "2025-26", "team": "OTT", "updated_at": "2026-11-16"}
