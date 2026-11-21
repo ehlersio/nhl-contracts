@@ -16723,7 +16723,7 @@
 {"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2023-24|VGK", "player_id": 8477447, "position": "D", "season": "2023-24", "team": "VGK", "updated_at": "2026-11-16"}
 {"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2024-25|VGK", "player_id": 8477447, "position": "D", "season": "2024-25", "team": "VGK", "updated_at": "2026-11-16"}
 {"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2025-26|VGK", "player_id": 8477447, "position": "D", "season": "2025-26", "team": "VGK", "updated_at": "2026-11-16"}
-{"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2026-27|VGK", "player_id": 8477447, "position": "D", "season": "2026-27", "team": "VGK", "updated_at": "2026-11-21"}
+{"birth_date": null, "full_name": "Shea Theodore", "key": "8477447|2026-27|VGK", "player_id": 8477447, "position": "D", "season": "2026-27", "team": "VGK", "updated_at": "2026-11-21"}
 {"birth_date": "1994-11-30", "full_name": "Marko Dano", "key": "8477448|2014-15|CBJ", "player_id": 8477448, "position": "C", "season": "2014-15", "team": "CBJ", "updated_at": "2026-11-16"}
 {"birth_date": "1994-11-30", "full_name": "Marko Dano", "key": "8477448|2015-16|CHI", "player_id": 8477448, "position": "C", "season": "2015-16", "team": "CHI", "updated_at": "2026-11-16"}
 {"birth_date": "1994-11-30", "full_name": "Marko Dano", "key": "8477448|2015-16|WPG", "player_id": 8477448, "position": "C", "season": "2015-16", "team": "WPG", "updated_at": "2026-11-16"}
@@ -22976,7 +22976,7 @@
 {"birth_date": "2004-02-15", "full_name": "Simon Nemec", "key": "8483495|2026-27|CGY", "player_id": 8483495, "position": "D", "season": "2026-27", "team": "CGY", "updated_at": "2026-11-16"}
 {"birth_date": "2004-07-30", "full_name": "Jani Nyman", "key": "8483497|2024-25|SEA", "player_id": 8483497, "position": "R", "season": "2024-25", "team": "SEA", "updated_at": "2026-11-16"}
 {"birth_date": "2004-07-30", "full_name": "Jani Nyman", "key": "8483497|2025-26|SEA", "player_id": 8483497, "position": "R", "season": "2025-26", "team": "SEA", "updated_at": "2026-11-16"}
-{"birth_date": "2004-07-30", "full_name": "Jani Nyman", "key": "8483497|2026-27|SEA", "player_id": 8483497, "position": "R", "season": "2026-27", "team": "SEA", "updated_at": "2026-11-16"}
+{"birth_date": null, "full_name": "Jani Nyman", "key": "8483497|2026-27|SEA", "player_id": 8483497, "position": "R", "season": "2026-27", "team": "SEA", "updated_at": "2026-11-21"}
 {"birth_date": "2004-01-28", "full_name": "Liam Ohgren", "key": "8483499|2023-24|MIN", "player_id": 8483499, "position": "L", "season": "2023-24", "team": "MIN", "updated_at": "2026-11-16"}
 {"birth_date": "2004-01-28", "full_name": "Liam Ohgren", "key": "8483499|2024-25|MIN", "player_id": 8483499, "position": "L", "season": "2024-25", "team": "MIN", "updated_at": "2026-11-16"}
 {"birth_date": "2004-01-28", "full_name": "Liam Ohgren", "key": "8483499|2025-26|MIN", "player_id": 8483499, "position": "L", "season": "2025-26", "team": "MIN", "updated_at": "2026-11-16"}
