@@ -741,6 +741,7 @@
 {"full_name": "Jack Peart", "kind": "prospect", "player_id": 8482686, "team": "MIN", "updated_at": "2026-11-22"}
 {"full_name": "Luke Mittelstadt", "kind": "prospect", "player_id": 8482687, "team": "MTL", "updated_at": "2026-11-22"}
 {"full_name": "Ayrton Martino", "kind": "prospect", "player_id": 8482690, "team": "DAL", "updated_at": "2026-11-22"}
+{"full_name": "Aatu Räty", "kind": "roster", "player_id": 8482691, "team": "TOR", "updated_at": "2026-11-22"}
 {"full_name": "Guillaume Richard", "kind": "prospect", "player_id": 8482692, "team": "CBJ", "updated_at": "2026-11-22"}
 {"full_name": "Tristan Broz", "kind": "prospect", "player_id": 8482698, "team": "PIT", "updated_at": "2026-11-22"}
 {"full_name": "Dylan Guenther", "kind": "roster", "player_id": 8482699, "team": "UTA", "updated_at": "2026-11-22"}
@@ -1050,7 +1051,7 @@
 {"full_name": "Aaron Pionk", "kind": "prospect", "player_id": 8484215, "team": "MIN", "updated_at": "2026-11-22"}
 {"full_name": "Caden Price", "kind": "prospect", "player_id": 8484217, "team": "SEA", "updated_at": "2026-11-22"}
 {"full_name": "Carson Rehkopf", "kind": "prospect", "player_id": 8484219, "team": "SEA", "updated_at": "2026-11-22"}
-{"full_name": "David Reinbacher", "kind": "roster", "player_id": 8484220, "team": "MTL", "updated_at": "2026-11-22"}
+{"full_name": "David Reinbacher", "kind": "prospect", "player_id": 8484220, "team": "MTL", "updated_at": "2026-11-22"}
 {"full_name": "Calum Ritchie", "kind": "roster", "player_id": 8484221, "team": "NYI", "updated_at": "2026-11-18"}
 {"full_name": "Eduard Sale", "kind": "prospect", "player_id": 8484222, "team": "SEA", "updated_at": "2026-11-22"}
 {"full_name": "Axel Sandin-Pellikka", "kind": "roster", "player_id": 8484223, "team": "DET", "updated_at": "2026-10-30"}
