@@ -13118,7 +13118,7 @@
 {"birth_date": "1992-01-30", "full_name": "Justin Holl", "key": "8475718|2023-24|DET", "player_id": 8475718, "position": "D", "season": "2023-24", "team": "DET", "updated_at": "2026-11-16"}
 {"birth_date": "1992-01-30", "full_name": "Justin Holl", "key": "8475718|2024-25|DET", "player_id": 8475718, "position": "D", "season": "2024-25", "team": "DET", "updated_at": "2026-11-16"}
 {"birth_date": "1992-01-30", "full_name": "Justin Holl", "key": "8475718|2025-26|STL", "player_id": 8475718, "position": "D", "season": "2025-26", "team": "STL", "updated_at": "2026-11-16"}
-{"birth_date": "1992-01-30", "full_name": "Justin Holl", "key": "8475718|2026-27|WSH", "player_id": 8475718, "position": "D", "season": "2026-27", "team": "WSH", "updated_at": "2026-11-16"}
+{"birth_date": null, "full_name": "Justin Holl", "key": "8475718|2026-27|WSH", "player_id": 8475718, "position": "D", "season": "2026-27", "team": "WSH", "updated_at": "2026-11-23"}
 {"birth_date": "1992-03-26", "full_name": "Kent Simpson", "key": "8475720|2013-14|CHI", "player_id": 8475720, "position": "G", "season": "2013-14", "team": "CHI", "updated_at": "2026-11-16"}
 {"birth_date": "1992-01-16", "full_name": "Jason Zucker", "key": "8475722|2011-12|MIN", "player_id": 8475722, "position": "L", "season": "2011-12", "team": "MIN", "updated_at": "2026-11-16"}
 {"birth_date": "1992-01-16", "full_name": "Jason Zucker", "key": "8475722|2012-13|MIN", "player_id": 8475722, "position": "L", "season": "2012-13", "team": "MIN", "updated_at": "2026-11-16"}
@@ -17127,7 +17127,7 @@
 {"birth_date": "1995-03-28", "full_name": "Josh Morrissey", "key": "8477504|2023-24|WPG", "player_id": 8477504, "position": "D", "season": "2023-24", "team": "WPG", "updated_at": "2026-11-16"}
 {"birth_date": "1995-03-28", "full_name": "Josh Morrissey", "key": "8477504|2024-25|WPG", "player_id": 8477504, "position": "D", "season": "2024-25", "team": "WPG", "updated_at": "2026-11-16"}
 {"birth_date": "1995-03-28", "full_name": "Josh Morrissey", "key": "8477504|2025-26|WPG", "player_id": 8477504, "position": "D", "season": "2025-26", "team": "WPG", "updated_at": "2026-11-16"}
-{"birth_date": "1995-03-28", "full_name": "Josh Morrissey", "key": "8477504|2026-27|WPG", "player_id": 8477504, "position": "D", "season": "2026-27", "team": "WPG", "updated_at": "2026-11-16"}
+{"birth_date": null, "full_name": "Josh Morrissey", "key": "8477504|2026-27|WPG", "player_id": 8477504, "position": "D", "season": "2026-27", "team": "WPG", "updated_at": "2026-11-23"}
 {"birth_date": "1994-09-22", "full_name": "Alexander Wennberg", "key": "8477505|2014-15|CBJ", "player_id": 8477505, "position": "C", "season": "2014-15", "team": "CBJ", "updated_at": "2026-11-16"}
 {"birth_date": "1994-09-22", "full_name": "Alexander Wennberg", "key": "8477505|2015-16|CBJ", "player_id": 8477505, "position": "C", "season": "2015-16", "team": "CBJ", "updated_at": "2026-11-16"}
 {"birth_date": "1994-09-22", "full_name": "Alexander Wennberg", "key": "8477505|2016-17|CBJ", "player_id": 8477505, "position": "C", "season": "2016-17", "team": "CBJ", "updated_at": "2026-11-16"}
@@ -21446,7 +21446,7 @@
 {"birth_date": "1999-11-19", "full_name": "Martin Pospisil", "key": "8481028|2023-24|CGY", "player_id": 8481028, "position": "C", "season": "2023-24", "team": "CGY", "updated_at": "2026-11-16"}
 {"birth_date": "1999-11-19", "full_name": "Martin Pospisil", "key": "8481028|2024-25|CGY", "player_id": 8481028, "position": "C", "season": "2024-25", "team": "CGY", "updated_at": "2026-11-16"}
 {"birth_date": "1999-11-19", "full_name": "Martin Pospisil", "key": "8481028|2025-26|CGY", "player_id": 8481028, "position": "C", "season": "2025-26", "team": "CGY", "updated_at": "2026-11-16"}
-{"birth_date": "1999-11-19", "full_name": "Martin Pospisil", "key": "8481028|2026-27|CGY", "player_id": 8481028, "position": "C", "season": "2026-27", "team": "CGY", "updated_at": "2026-11-16"}
+{"birth_date": null, "full_name": "Martin Pospisil", "key": "8481028|2026-27|CGY", "player_id": 8481028, "position": "C", "season": "2026-27", "team": "CGY", "updated_at": "2026-11-23"}
 {"birth_date": "1999-07-22", "full_name": "Jack St. Ivany", "key": "8481030|2023-24|PIT", "player_id": 8481030, "position": "D", "season": "2023-24", "team": "PIT", "updated_at": "2026-11-16"}
 {"birth_date": "1999-07-22", "full_name": "Jack St. Ivany", "key": "8481030|2024-25|PIT", "player_id": 8481030, "position": "D", "season": "2024-25", "team": "PIT", "updated_at": "2026-11-16"}
 {"birth_date": "1999-07-22", "full_name": "Jack St. Ivany", "key": "8481030|2025-26|PIT", "player_id": 8481030, "position": "D", "season": "2025-26", "team": "PIT", "updated_at": "2026-11-16"}
@@ -22143,7 +22143,7 @@
 {"birth_date": "1997-05-18", "full_name": "Jack Ahcan", "key": "8482072|2021-22|BOS", "player_id": 8482072, "position": "D", "season": "2021-22", "team": "BOS", "updated_at": "2026-11-16"}
 {"birth_date": "1997-05-18", "full_name": "Jack Ahcan", "key": "8482072|2024-25|COL", "player_id": 8482072, "position": "D", "season": "2024-25", "team": "COL", "updated_at": "2026-11-16"}
 {"birth_date": "1997-05-18", "full_name": "Jack Ahcan", "key": "8482072|2025-26|COL", "player_id": 8482072, "position": "D", "season": "2025-26", "team": "COL", "updated_at": "2026-11-16"}
-{"birth_date": "1997-05-18", "full_name": "Jack Ahcan", "key": "8482072|2026-27|NSH", "player_id": 8482072, "position": "D", "season": "2026-27", "team": "NSH", "updated_at": "2026-11-16"}
+{"birth_date": null, "full_name": "Jack Ahcan", "key": "8482072|2026-27|NSH", "player_id": 8482072, "position": "D", "season": "2026-27", "team": "NSH", "updated_at": "2026-11-23"}
 {"birth_date": "2001-09-20", "full_name": "Braden Schneider", "key": "8482073|2021-22|NYR", "player_id": 8482073, "position": "D", "season": "2021-22", "team": "NYR", "updated_at": "2026-11-16"}
 {"birth_date": "2001-09-20", "full_name": "Braden Schneider", "key": "8482073|2022-23|NYR", "player_id": 8482073, "position": "D", "season": "2022-23", "team": "NYR", "updated_at": "2026-11-16"}
 {"birth_date": "2001-09-20", "full_name": "Braden Schneider", "key": "8482073|2023-24|NYR", "player_id": 8482073, "position": "D", "season": "2023-24", "team": "NYR", "updated_at": "2026-11-16"}
@@ -23033,7 +23033,7 @@
 {"birth_date": "1997-09-23", "full_name": "Owen Sillinger", "key": "8483538|2024-25|CBJ", "player_id": 8483538, "position": "C", "season": "2024-25", "team": "CBJ", "updated_at": "2026-11-16"}
 {"birth_date": "1998-03-16", "full_name": "Marshall Rifai", "key": "8483546|2023-24|TOR", "player_id": 8483546, "position": "D", "season": "2023-24", "team": "TOR", "updated_at": "2026-11-16"}
 {"birth_date": "1998-03-16", "full_name": "Marshall Rifai", "key": "8483546|2025-26|TOR", "player_id": 8483546, "position": "D", "season": "2025-26", "team": "TOR", "updated_at": "2026-11-16"}
-{"birth_date": "1998-03-16", "full_name": "Marshall Rifai", "key": "8483546|2026-27|TOR", "player_id": 8483546, "position": "D", "season": "2026-27", "team": "TOR", "updated_at": "2026-11-16"}
+{"birth_date": null, "full_name": "Marshall Rifai", "key": "8483546|2026-27|TOR", "player_id": 8483546, "position": "D", "season": "2026-27", "team": "TOR", "updated_at": "2026-11-23"}
 {"birth_date": "1998-06-25", "full_name": "Brandon Bussi", "key": "8483548|2025-26|CAR", "player_id": 8483548, "position": "G", "season": "2025-26", "team": "CAR", "updated_at": "2026-11-16"}
 {"birth_date": "1998-06-25", "full_name": "Brandon Bussi", "key": "8483548|2026-27|CAR", "player_id": 8483548, "position": "G", "season": "2026-27", "team": "CAR", "updated_at": "2026-11-16"}
 {"birth_date": "1997-11-06", "full_name": "Lucas Condotta", "key": "8483549|2022-23|MTL", "player_id": 8483549, "position": "L", "season": "2022-23", "team": "MTL", "updated_at": "2026-11-16"}
@@ -23225,7 +23225,7 @@
 {"birth_date": "2005-05-29", "full_name": "Otto Stenberg", "key": "8484230|2026-27|STL", "player_id": 8484230, "position": "C", "season": "2026-27", "team": "STL", "updated_at": "2026-11-16"}
 {"birth_date": "2004-11-16", "full_name": "Aydar Suniev", "key": "8484234|2024-25|CGY", "player_id": 8484234, "position": "L", "season": "2024-25", "team": "CGY", "updated_at": "2026-11-16"}
 {"birth_date": "2004-11-16", "full_name": "Aydar Suniev", "key": "8484234|2025-26|CGY", "player_id": 8484234, "position": "L", "season": "2025-26", "team": "CGY", "updated_at": "2026-11-16"}
-{"birth_date": null, "full_name": "Aydar Suniev", "key": "8484234|2026-27|CGY", "player_id": 8484234, "position": "L", "season": "2026-27", "team": "CGY", "updated_at": "2026-11-23"}
+{"birth_date": "2004-11-16", "full_name": "Aydar Suniev", "key": "8484234|2026-27|CGY", "player_id": 8484234, "position": "L", "season": "2026-27", "team": "CGY", "updated_at": "2026-11-23"}
 {"birth_date": "2005-02-09", "full_name": "Tom Willander", "key": "8484240|2025-26|VAN", "player_id": 8484240, "position": "D", "season": "2025-26", "team": "VAN", "updated_at": "2026-11-16"}
 {"birth_date": "2005-02-09", "full_name": "Tom Willander", "key": "8484240|2026-27|VAN", "player_id": 8484240, "position": "D", "season": "2026-27", "team": "VAN", "updated_at": "2026-11-16"}
 {"birth_date": "2005-02-06", "full_name": "Matthew Wood", "key": "8484241|2024-25|NSH", "player_id": 8484241, "position": "R", "season": "2024-25", "team": "NSH", "updated_at": "2026-11-16"}
