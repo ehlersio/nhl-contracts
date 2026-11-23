@@ -13288,7 +13288,7 @@
 {"birth_date": "1991-11-01", "full_name": "Tyler Pitlick", "key": "8475752|2022-23|STL", "player_id": 8475752, "position": "C", "season": "2022-23", "team": "STL", "updated_at": "2026-11-16"}
 {"birth_date": "1991-11-01", "full_name": "Tyler Pitlick", "key": "8475752|2023-24|NYR", "player_id": 8475752, "position": "C", "season": "2023-24", "team": "NYR", "updated_at": "2026-11-16"}
 {"birth_date": "1991-11-01", "full_name": "Tyler Pitlick", "key": "8475752|2025-26|MIN", "player_id": 8475752, "position": "C", "season": "2025-26", "team": "MIN", "updated_at": "2026-11-16"}
-{"birth_date": null, "full_name": "Tyler Pitlick", "key": "8475752|2026-27|MIN", "player_id": 8475752, "position": "C", "season": "2026-27", "team": "MIN", "updated_at": "2026-11-23"}
+{"birth_date": "1991-11-01", "full_name": "Tyler Pitlick", "key": "8475752|2026-27|MIN", "player_id": 8475752, "position": "C", "season": "2026-27", "team": "MIN", "updated_at": "2026-11-23"}
 {"birth_date": "1992-03-20", "full_name": "Justin Faulk", "key": "8475753|2011-12|CAR", "player_id": 8475753, "position": "D", "season": "2011-12", "team": "CAR", "updated_at": "2026-11-16"}
 {"birth_date": "1992-03-20", "full_name": "Justin Faulk", "key": "8475753|2012-13|CAR", "player_id": 8475753, "position": "D", "season": "2012-13", "team": "CAR", "updated_at": "2026-11-16"}
 {"birth_date": "1992-03-20", "full_name": "Justin Faulk", "key": "8475753|2013-14|CAR", "player_id": 8475753, "position": "D", "season": "2013-14", "team": "CAR", "updated_at": "2026-11-16"}
@@ -22958,7 +22958,7 @@
 {"birth_date": "2004-07-05", "full_name": "Fraser Minten", "key": "8483489|2024-25|BOS", "player_id": 8483489, "position": "C", "season": "2024-25", "team": "BOS", "updated_at": "2026-11-16"}
 {"birth_date": "2004-07-05", "full_name": "Fraser Minten", "key": "8483489|2024-25|TOR", "player_id": 8483489, "position": "C", "season": "2024-25", "team": "TOR", "updated_at": "2026-11-16"}
 {"birth_date": "2004-07-05", "full_name": "Fraser Minten", "key": "8483489|2025-26|BOS", "player_id": 8483489, "position": "C", "season": "2025-26", "team": "BOS", "updated_at": "2026-11-16"}
-{"birth_date": "2004-07-05", "full_name": "Fraser Minten", "key": "8483489|2026-27|BOS", "player_id": 8483489, "position": "C", "season": "2026-27", "team": "BOS", "updated_at": "2026-11-16"}
+{"birth_date": null, "full_name": "Fraser Minten", "key": "8483489|2026-27|BOS", "player_id": 8483489, "position": "C", "season": "2026-27", "team": "BOS", "updated_at": "2026-11-23"}
 {"birth_date": "2003-11-25", "full_name": "Pavel Mintyukov", "key": "8483490|2023-24|ANA", "player_id": 8483490, "position": "D", "season": "2023-24", "team": "ANA", "updated_at": "2026-11-16"}
 {"birth_date": "2003-11-25", "full_name": "Pavel Mintyukov", "key": "8483490|2024-25|ANA", "player_id": 8483490, "position": "D", "season": "2024-25", "team": "ANA", "updated_at": "2026-11-16"}
 {"birth_date": "2003-11-25", "full_name": "Pavel Mintyukov", "key": "8483490|2025-26|ANA", "player_id": 8483490, "position": "D", "season": "2025-26", "team": "ANA", "updated_at": "2026-11-16"}
