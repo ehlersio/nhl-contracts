@@ -230,7 +230,7 @@
 {"full_name": "William Nylander", "kind": "roster", "player_id": 8477939, "team": "TOR", "updated_at": "2026-11-23"}
 {"full_name": "Nikolaj Ehlers", "kind": "roster", "player_id": 8477940, "team": "CAR", "updated_at": "2026-11-23"}
 {"full_name": "Kevin Fiala", "kind": "roster", "player_id": 8477942, "team": "LAK", "updated_at": "2026-11-23"}
-{"full_name": "Dylan Larkin", "kind": "roster", "player_id": 8477946, "team": "DET", "updated_at": "2026-10-29"}
+{"full_name": "Dylan Larkin", "kind": "roster", "player_id": 8477946, "team": "MTL", "updated_at": "2026-11-23"}
 {"full_name": "Travis Sanheim", "kind": "roster", "player_id": 8477948, "team": "PHI", "updated_at": "2026-11-23"}
 {"full_name": "Alex Tuch", "kind": "roster", "player_id": 8477949, "team": "WSH", "updated_at": "2026-11-23"}
 {"full_name": "Tony DeAngelo", "kind": "roster", "player_id": 8477950, "team": "NYI", "updated_at": "2026-11-23"}
@@ -310,7 +310,7 @@
 {"full_name": "Guillaume Brisebois", "kind": "roster", "player_id": 8478465, "team": "VAN", "updated_at": "2026-11-23"}
 {"full_name": "Jeremy Lauzon", "kind": "roster", "player_id": 8478468, "team": "VGK", "updated_at": "2026-11-23"}
 {"full_name": "Thomas Chabot", "kind": "roster", "player_id": 8478469, "team": "OTT", "updated_at": "2026-11-23"}
-{"full_name": "Samuel Montembeault", "kind": "roster", "player_id": 8478470, "team": "MTL", "updated_at": "2026-11-23"}
+{"full_name": "Samuel Montembeault", "kind": "roster", "player_id": 8478470, "team": "DET", "updated_at": "2026-11-23"}
 {"full_name": "Mathieu Joseph", "kind": "roster", "player_id": 8478472, "team": "EDM", "updated_at": "2026-11-23"}
 {"full_name": "Lawson Crouse", "kind": "roster", "player_id": 8478474, "team": "UTA", "updated_at": "2026-11-23"}
 {"full_name": "Kyle Capobianco", "kind": "roster", "player_id": 8478476, "team": "DAL", "updated_at": "2026-11-23"}
@@ -549,7 +549,7 @@
 {"full_name": "Brett Leason", "kind": "roster", "player_id": 8481517, "team": "SJS", "updated_at": "2026-11-23"}
 {"full_name": "Spencer Knight", "kind": "roster", "player_id": 8481519, "team": "CHI", "updated_at": "2026-11-23"}
 {"full_name": "Peyton Krebs", "kind": "roster", "player_id": 8481522, "team": "BUF", "updated_at": "2026-11-23"}
-{"full_name": "Kirby Dach", "kind": "roster", "player_id": 8481523, "team": "MTL", "updated_at": "2026-11-23"}
+{"full_name": "Kirby Dach", "kind": "roster", "player_id": 8481523, "team": "DET", "updated_at": "2026-11-23"}
 {"full_name": "Bowen Byram", "kind": "roster", "player_id": 8481524, "team": "CHI", "updated_at": "2026-11-23"}
 {"full_name": "Matthew Robertson", "kind": "roster", "player_id": 8481525, "team": "NYR", "updated_at": "2026-11-23"}
 {"full_name": "Taylor Gauthier", "kind": "prospect", "player_id": 8481526, "team": "PIT", "updated_at": "2026-11-23"}
