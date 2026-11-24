@@ -1059,7 +1059,7 @@
 {"full_name": "Jayson Shaugabay", "kind": "prospect", "player_id": 8484226, "team": "TBL", "updated_at": "2026-11-24"}
 {"full_name": "Will Smith", "kind": "roster", "player_id": 8484227, "team": "SJS", "updated_at": "2026-11-24"}
 {"full_name": "Jakub Stancl", "kind": "prospect", "player_id": 8484229, "team": "STL", "updated_at": "2026-11-24"}
-{"full_name": "Otto Stenberg", "kind": "prospect", "player_id": 8484230, "team": "STL", "updated_at": "2026-11-24"}
+{"full_name": "Otto Stenberg", "kind": "roster", "player_id": 8484230, "team": "STL", "updated_at": "2026-11-24"}
 {"full_name": "Charlie Stramel", "kind": "prospect", "player_id": 8484231, "team": "MIN", "updated_at": "2026-11-24"}
 {"full_name": "Andrew Strathmann", "kind": "prospect", "player_id": 8484232, "team": "CBJ", "updated_at": "2026-11-24"}
 {"full_name": "Aydar Suniev", "kind": "roster", "player_id": 8484234, "team": "CGY", "updated_at": "2026-11-24"}
@@ -1180,7 +1180,7 @@
 {"full_name": "Cole Beaudoin", "kind": "prospect", "player_id": 8484786, "team": "NYR", "updated_at": "2026-11-24"}
 {"full_name": "Aron Kiviharju", "kind": "prospect", "player_id": 8484787, "team": "MIN", "updated_at": "2026-11-24"}
 {"full_name": "Ollie Josephson", "kind": "prospect", "player_id": 8484789, "team": "SEA", "updated_at": "2026-11-24"}
-{"full_name": "Adam Jiricek", "kind": "prospect", "player_id": 8484790, "team": "STL", "updated_at": "2026-11-24"}
+{"full_name": "Adam Jiricek", "kind": "roster", "player_id": 8484790, "team": "STL", "updated_at": "2026-11-24"}
 {"full_name": "Raoul Boilard", "kind": "prospect", "player_id": 8484791, "team": "NYR", "updated_at": "2026-11-24"}
 {"full_name": "Adam Jecho", "kind": "prospect", "player_id": 8484792, "team": "STL", "updated_at": "2026-11-24"}
 {"full_name": "Michael Brandsegg-Nygård", "kind": "roster", "player_id": 8484794, "team": "DET", "updated_at": "2026-11-24"}
