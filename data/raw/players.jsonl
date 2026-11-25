@@ -659,7 +659,7 @@
 {"full_name": "Brett Berard", "kind": "roster", "player_id": 8482132, "team": "MTL", "updated_at": "2026-11-25"}
 {"full_name": "Yaroslav Askarov", "kind": "roster", "player_id": 8482137, "team": "SJS", "updated_at": "2026-11-25"}
 {"full_name": "Theodor Niederbach", "kind": "prospect", "player_id": 8482140, "team": "WSH", "updated_at": "2026-11-25"}
-{"full_name": "Lukas Cormier", "kind": "roster", "player_id": 8482141, "team": "VGK", "updated_at": "2026-11-25"}
+{"full_name": "Lukas Cormier", "kind": "prospect", "player_id": 8482141, "team": "VGK", "updated_at": "2026-11-25"}
 {"full_name": "Jamie Drysdale", "kind": "roster", "player_id": 8482142, "team": "PHI", "updated_at": "2026-11-25"}
 {"full_name": "Mavrik Bourque", "kind": "roster", "player_id": 8482145, "team": "NSH", "updated_at": "2026-11-25"}
 {"full_name": "Luke Evangelista", "kind": "roster", "player_id": 8482146, "team": "NJD", "updated_at": "2026-11-25"}
@@ -810,6 +810,7 @@
 {"full_name": "Kirill Gerasimyuk", "kind": "prospect", "player_id": 8482914, "team": "FLA", "updated_at": "2026-11-25"}
 {"full_name": "Nikita Guslistov", "kind": "prospect", "player_id": 8482917, "team": "CAR", "updated_at": "2026-11-25"}
 {"full_name": "Justin Ertel", "kind": "prospect", "player_id": 8482919, "team": "DAL", "updated_at": "2026-11-25"}
+{"full_name": "Kirill Kirsanov", "kind": "roster", "player_id": 8482922, "team": "LAK", "updated_at": "2026-11-25"}
 {"full_name": "Taige Harding", "kind": "prospect", "player_id": 8482923, "team": "CHI", "updated_at": "2026-11-25"}
 {"full_name": "Brody Lamb", "kind": "prospect", "player_id": 8482928, "team": "NYR", "updated_at": "2026-11-25"}
 {"full_name": "Emil Lilleberg", "kind": "roster", "player_id": 8482929, "team": "TBL", "updated_at": "2026-11-25"}
