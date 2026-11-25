@@ -13288,7 +13288,7 @@
 {"birth_date": "1991-11-01", "full_name": "Tyler Pitlick", "key": "8475752|2022-23|STL", "player_id": 8475752, "position": "C", "season": "2022-23", "team": "STL", "updated_at": "2026-11-16"}
 {"birth_date": "1991-11-01", "full_name": "Tyler Pitlick", "key": "8475752|2023-24|NYR", "player_id": 8475752, "position": "C", "season": "2023-24", "team": "NYR", "updated_at": "2026-11-16"}
 {"birth_date": "1991-11-01", "full_name": "Tyler Pitlick", "key": "8475752|2025-26|MIN", "player_id": 8475752, "position": "C", "season": "2025-26", "team": "MIN", "updated_at": "2026-11-16"}
-{"birth_date": null, "full_name": "Tyler Pitlick", "key": "8475752|2026-27|MIN", "player_id": 8475752, "position": "C", "season": "2026-27", "team": "MIN", "updated_at": "2026-11-25"}
+{"birth_date": "1991-11-01", "full_name": "Tyler Pitlick", "key": "8475752|2026-27|MIN", "player_id": 8475752, "position": "C", "season": "2026-27", "team": "MIN", "updated_at": "2026-11-25"}
 {"birth_date": "1992-03-20", "full_name": "Justin Faulk", "key": "8475753|2011-12|CAR", "player_id": 8475753, "position": "D", "season": "2011-12", "team": "CAR", "updated_at": "2026-11-16"}
 {"birth_date": "1992-03-20", "full_name": "Justin Faulk", "key": "8475753|2012-13|CAR", "player_id": 8475753, "position": "D", "season": "2012-13", "team": "CAR", "updated_at": "2026-11-16"}
 {"birth_date": "1992-03-20", "full_name": "Justin Faulk", "key": "8475753|2013-14|CAR", "player_id": 8475753, "position": "D", "season": "2013-14", "team": "CAR", "updated_at": "2026-11-16"}
@@ -16723,7 +16723,7 @@
 {"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2023-24|VGK", "player_id": 8477447, "position": "D", "season": "2023-24", "team": "VGK", "updated_at": "2026-11-16"}
 {"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2024-25|VGK", "player_id": 8477447, "position": "D", "season": "2024-25", "team": "VGK", "updated_at": "2026-11-16"}
 {"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2025-26|VGK", "player_id": 8477447, "position": "D", "season": "2025-26", "team": "VGK", "updated_at": "2026-11-16"}
-{"birth_date": null, "full_name": "Shea Theodore", "key": "8477447|2026-27|VGK", "player_id": 8477447, "position": "D", "season": "2026-27", "team": "VGK", "updated_at": "2026-11-25"}
+{"birth_date": "1995-08-03", "full_name": "Shea Theodore", "key": "8477447|2026-27|VGK", "player_id": 8477447, "position": "D", "season": "2026-27", "team": "VGK", "updated_at": "2026-11-25"}
 {"birth_date": "1994-11-30", "full_name": "Marko Dano", "key": "8477448|2014-15|CBJ", "player_id": 8477448, "position": "C", "season": "2014-15", "team": "CBJ", "updated_at": "2026-11-16"}
 {"birth_date": "1994-11-30", "full_name": "Marko Dano", "key": "8477448|2015-16|CHI", "player_id": 8477448, "position": "C", "season": "2015-16", "team": "CHI", "updated_at": "2026-11-16"}
 {"birth_date": "1994-11-30", "full_name": "Marko Dano", "key": "8477448|2015-16|WPG", "player_id": 8477448, "position": "C", "season": "2015-16", "team": "WPG", "updated_at": "2026-11-16"}
@@ -23226,7 +23226,7 @@
 {"birth_date": "2005-05-29", "full_name": "Otto Stenberg", "key": "8484230|2026-27|STL", "player_id": 8484230, "position": "C", "season": "2026-27", "team": "STL", "updated_at": "2026-11-16"}
 {"birth_date": "2004-11-16", "full_name": "Aydar Suniev", "key": "8484234|2024-25|CGY", "player_id": 8484234, "position": "L", "season": "2024-25", "team": "CGY", "updated_at": "2026-11-16"}
 {"birth_date": "2004-11-16", "full_name": "Aydar Suniev", "key": "8484234|2025-26|CGY", "player_id": 8484234, "position": "L", "season": "2025-26", "team": "CGY", "updated_at": "2026-11-16"}
-{"birth_date": null, "full_name": "Aydar Suniev", "key": "8484234|2026-27|CGY", "player_id": 8484234, "position": "L", "season": "2026-27", "team": "CGY", "updated_at": "2026-11-25"}
+{"birth_date": "2004-11-16", "full_name": "Aydar Suniev", "key": "8484234|2026-27|CGY", "player_id": 8484234, "position": "L", "season": "2026-27", "team": "CGY", "updated_at": "2026-11-25"}
 {"birth_date": "2005-02-09", "full_name": "Tom Willander", "key": "8484240|2025-26|VAN", "player_id": 8484240, "position": "D", "season": "2025-26", "team": "VAN", "updated_at": "2026-11-16"}
 {"birth_date": "2005-02-09", "full_name": "Tom Willander", "key": "8484240|2026-27|VAN", "player_id": 8484240, "position": "D", "season": "2026-27", "team": "VAN", "updated_at": "2026-11-16"}
 {"birth_date": "2005-02-06", "full_name": "Matthew Wood", "key": "8484241|2024-25|NSH", "player_id": 8484241, "position": "R", "season": "2024-25", "team": "NSH", "updated_at": "2026-11-16"}
