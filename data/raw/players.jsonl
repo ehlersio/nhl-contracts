@@ -602,7 +602,7 @@
 {"full_name": "Mikhail Shalagin", "kind": "prospect", "player_id": 8481684, "team": "TBL", "updated_at": "2026-11-26"}
 {"full_name": "McKade Webster", "kind": "prospect", "player_id": 8481691, "team": "TBL", "updated_at": "2026-11-26"}
 {"full_name": "Dustin Wolf", "kind": "roster", "player_id": 8481692, "team": "CGY", "updated_at": "2026-11-26"}
-{"full_name": "Juuso Parssinen", "kind": "prospect", "player_id": 8481704, "team": "NYR", "updated_at": "2026-11-26"}
+{"full_name": "Juuso Parssinen", "kind": "roster", "player_id": 8481704, "team": "NYR", "updated_at": "2026-11-26"}
 {"full_name": "Zac Jones", "kind": "roster", "player_id": 8481708, "team": "UTA", "updated_at": "2026-11-26"}
 {"full_name": "Matias Maccelli", "kind": "roster", "player_id": 8481711, "team": "NYI", "updated_at": "2026-11-26"}
 {"full_name": "Dmitri Voronkov", "kind": "roster", "player_id": 8481716, "team": "CBJ", "updated_at": "2026-11-26"}
@@ -1340,6 +1340,7 @@
 {"full_name": "Parker Holmes", "kind": "prospect", "player_id": 8485585, "team": "CHI", "updated_at": "2026-11-26"}
 {"full_name": "Mads Kongsbak Klyvo", "kind": "prospect", "player_id": 8485588, "team": "FLA", "updated_at": "2026-11-26"}
 {"full_name": "Lirim Amidovski", "kind": "prospect", "player_id": 8485589, "team": "MIN", "updated_at": "2026-11-26"}
+{"full_name": "Yegor Borikov", "kind": "roster", "player_id": 8485594, "team": "UTA", "updated_at": "2026-11-26"}
 {"full_name": "Mikkel Eriksen", "kind": "prospect", "player_id": 8485596, "team": "NYR", "updated_at": "2026-11-26"}
 {"full_name": "Shea Busch", "kind": "prospect", "player_id": 8485597, "team": "FLA", "updated_at": "2026-11-26"}
 {"full_name": "John Mooney", "kind": "prospect", "player_id": 8485598, "team": "MTL", "updated_at": "2026-11-26"}
