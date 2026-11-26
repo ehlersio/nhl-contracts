@@ -821,7 +821,7 @@
 {"full_name": "Daniil Pylenkov", "kind": "prospect", "player_id": 8482944, "team": "TBL", "updated_at": "2026-11-26"}
 {"full_name": "Ivan Vorobyov", "kind": "prospect", "player_id": 8482945, "team": "STL", "updated_at": "2026-11-26"}
 {"full_name": "Arsenii Sergeev", "kind": "prospect", "player_id": 8482949, "team": "CGY", "updated_at": "2026-11-26"}
-{"full_name": "Taylor Makar", "kind": "prospect", "player_id": 8482953, "team": "COL", "updated_at": "2026-11-26"}
+{"full_name": "Taylor Makar", "kind": "roster", "player_id": 8482953, "team": "COL", "updated_at": "2026-11-26"}
 {"full_name": "Arber Xhekaj", "kind": "roster", "player_id": 8482964, "team": "MTL", "updated_at": "2026-11-26"}
 {"full_name": "Jet Greaves", "kind": "roster", "player_id": 8482982, "team": "CBJ", "updated_at": "2026-11-26"}
 {"full_name": "Avery Hayes", "kind": "roster", "player_id": 8482993, "team": "PIT", "updated_at": "2026-11-26"}
@@ -873,7 +873,7 @@
 {"full_name": "Jonathan Lekkerimäki", "kind": "roster", "player_id": 8483476, "team": "VAN", "updated_at": "2026-11-26"}
 {"full_name": "Rieger Lorenz", "kind": "roster", "player_id": 8483478, "team": "MIN", "updated_at": "2026-11-02"}
 {"full_name": "Paul Ludwinski", "kind": "prospect", "player_id": 8483480, "team": "CHI", "updated_at": "2026-11-26"}
-{"full_name": "Cam Lund", "kind": "prospect", "player_id": 8483481, "team": "SJS", "updated_at": "2026-11-26"}
+{"full_name": "Cam Lund", "kind": "roster", "player_id": 8483481, "team": "SJS", "updated_at": "2026-11-26"}
 {"full_name": "Tristan Luneau", "kind": "roster", "player_id": 8483482, "team": "ANA", "updated_at": "2026-11-26"}
 {"full_name": "Ben MacDonald", "kind": "prospect", "player_id": 8483484, "team": "SEA", "updated_at": "2026-11-26"}
 {"full_name": "Denton Mateychuk", "kind": "roster", "player_id": 8483485, "team": "CBJ", "updated_at": "2026-11-26"}
@@ -1009,7 +1009,7 @@
 {"full_name": "Oliver Bonk", "kind": "roster", "player_id": 8484148, "team": "PHI", "updated_at": "2026-11-26"}
 {"full_name": "Gavin Brindley", "kind": "roster", "player_id": 8484149, "team": "COL", "updated_at": "2026-11-26"}
 {"full_name": "Quinton Burns", "kind": "prospect", "player_id": 8484151, "team": "STL", "updated_at": "2026-11-26"}
-{"full_name": "Luca Cagnoni", "kind": "prospect", "player_id": 8484152, "team": "SJS", "updated_at": "2026-11-26"}
+{"full_name": "Luca Cagnoni", "kind": "roster", "player_id": 8484152, "team": "SJS", "updated_at": "2026-11-26"}
 {"full_name": "Leo Carlsson", "kind": "roster", "player_id": 8484153, "team": "ANA", "updated_at": "2026-11-26"}
 {"full_name": "Jonathan Castagna", "kind": "roster", "player_id": 8484154, "team": "CGY", "updated_at": "2026-11-26"}
 {"full_name": "Mathieu Cataford", "kind": "prospect", "player_id": 8484155, "team": "VGK", "updated_at": "2026-11-26"}
