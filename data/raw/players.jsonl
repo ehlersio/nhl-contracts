@@ -62,7 +62,7 @@
 {"full_name": "Chris Tanev", "kind": "roster", "player_id": 8475690, "team": "TOR", "updated_at": "2026-11-27"}
 {"full_name": "Mats Zuccarello", "kind": "roster", "player_id": 8475692, "team": "LAK", "updated_at": "2026-11-27"}
 {"full_name": "Calvin Pickard", "kind": "roster", "player_id": 8475717, "team": "MIN", "updated_at": "2026-11-27"}
-{"full_name": "Justin Holl", "kind": "roster", "player_id": 8475718, "team": "WSH", "updated_at": "2026-11-27"}
+{"full_name": "Justin Holl", "kind": "prospect", "player_id": 8475718, "team": "WSH", "updated_at": "2026-11-27"}
 {"full_name": "Jason Zucker", "kind": "roster", "player_id": 8475722, "team": "BUF", "updated_at": "2026-11-27"}
 {"full_name": "Tyler Toffoli", "kind": "roster", "player_id": 8475726, "team": "SJS", "updated_at": "2026-11-27"}
 {"full_name": "Charlie Coyle", "kind": "roster", "player_id": 8475745, "team": "CBJ", "updated_at": "2026-11-27"}
@@ -732,7 +732,7 @@
 {"full_name": "William Eklund", "kind": "roster", "player_id": 8482667, "team": "OTT", "updated_at": "2026-11-27"}
 {"full_name": "Owen Power", "kind": "roster", "player_id": 8482671, "team": "BUF", "updated_at": "2026-11-27"}
 {"full_name": "Xavier Bourgault", "kind": "prospect", "player_id": 8482673, "team": "OTT", "updated_at": "2026-11-27"}
-{"full_name": "Tyler Boucher", "kind": "roster", "player_id": 8482674, "team": "OTT", "updated_at": "2026-11-27"}
+{"full_name": "Tyler Boucher", "kind": "prospect", "player_id": 8482674, "team": "OTT", "updated_at": "2026-11-27"}
 {"full_name": "Sean Behrens", "kind": "prospect", "player_id": 8482676, "team": "COL", "updated_at": "2026-11-27"}
 {"full_name": "Corson Ceulemans", "kind": "prospect", "player_id": 8482678, "team": "CBJ", "updated_at": "2026-11-27"}
 {"full_name": "Matt Coronato", "kind": "roster", "player_id": 8482679, "team": "CGY", "updated_at": "2026-11-27"}
@@ -1323,7 +1323,7 @@
 {"full_name": "Quinn Hutson", "kind": "prospect", "player_id": 8485511, "team": "EDM", "updated_at": "2026-11-27"}
 {"full_name": "Tim Washe", "kind": "roster", "player_id": 8485512, "team": "ANA", "updated_at": "2026-11-27"}
 {"full_name": "Michal Postava", "kind": "roster", "player_id": 8485545, "team": "DET", "updated_at": "2026-11-08"}
-{"full_name": "Dillon Boucher", "kind": "roster", "player_id": 8485554, "team": "CHI", "updated_at": "2026-11-22"}
+{"full_name": "Dillon Boucher", "kind": "roster", "player_id": 8485554, "team": "CHI", "updated_at": "2026-11-27"}
 {"full_name": "Alexander Zharovsky", "kind": "prospect", "player_id": 8485562, "team": "MTL", "updated_at": "2026-11-27"}
 {"full_name": "Charlie Cerrato", "kind": "prospect", "player_id": 8485563, "team": "CAR", "updated_at": "2026-11-27"}
 {"full_name": "Will Reynolds", "kind": "prospect", "player_id": 8485566, "team": "SEA", "updated_at": "2026-11-27"}
