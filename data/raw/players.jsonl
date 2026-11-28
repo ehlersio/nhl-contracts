@@ -456,6 +456,7 @@
 {"full_name": "Fabian Zetterlund", "kind": "roster", "player_id": 8480188, "team": "OTT", "updated_at": "2026-11-28"}
 {"full_name": "Johnathan Kovacevic", "kind": "roster", "player_id": 8480192, "team": "NJD", "updated_at": "2026-11-28"}
 {"full_name": "Daniil Tarasov", "kind": "roster", "player_id": 8480193, "team": "DET", "updated_at": "2026-11-28"}
+{"full_name": "Jacob Bryson", "kind": "roster", "player_id": 8480196, "team": "DET", "updated_at": "2026-11-28"}
 {"full_name": "Drake Batherson", "kind": "roster", "player_id": 8480208, "team": "OTT", "updated_at": "2026-11-28"}
 {"full_name": "Noah Cates", "kind": "roster", "player_id": 8480220, "team": "PHI", "updated_at": "2026-11-28"}
 {"full_name": "Nick Perbix", "kind": "roster", "player_id": 8480246, "team": "NSH", "updated_at": "2026-11-28"}
@@ -556,6 +557,7 @@
 {"full_name": "Taylor Gauthier", "kind": "prospect", "player_id": 8481526, "team": "PIT", "updated_at": "2026-11-28"}
 {"full_name": "Kaedan Korczak", "kind": "roster", "player_id": 8481527, "team": "PIT", "updated_at": "2026-11-28"}
 {"full_name": "Dylan Cozens", "kind": "roster", "player_id": 8481528, "team": "OTT", "updated_at": "2026-11-28"}
+{"full_name": "Trent Miner", "kind": "roster", "player_id": 8481529, "team": "COL", "updated_at": "2026-11-28"}
 {"full_name": "Alex Turcotte", "kind": "roster", "player_id": 8481532, "team": "LAK", "updated_at": "2026-11-28"}
 {"full_name": "Trevor Zegras", "kind": "roster", "player_id": 8481533, "team": "PHI", "updated_at": "2026-11-28"}
 {"full_name": "Raphael Lavoie", "kind": "roster", "player_id": 8481534, "team": "VGK", "updated_at": "2026-11-28"}
@@ -720,6 +722,7 @@
 {"full_name": "Artur Akhtyamov", "kind": "roster", "player_id": 8482515, "team": "TOR", "updated_at": "2026-11-28"}
 {"full_name": "Matthew Kessel", "kind": "roster", "player_id": 8482516, "team": "NYI", "updated_at": "2026-11-28"}
 {"full_name": "Mason Langenbrunner", "kind": "prospect", "player_id": 8482517, "team": "BOS", "updated_at": "2026-11-28"}
+{"full_name": "Lucas Mercuri", "kind": "roster", "player_id": 8482518, "team": "TBL", "updated_at": "2026-11-28"}
 {"full_name": "Ryan Tverberg", "kind": "roster", "player_id": 8482525, "team": "TOR", "updated_at": "2026-11-24"}
 {"full_name": "Josh Dunne", "kind": "prospect", "player_id": 8482623, "team": "WSH", "updated_at": "2026-11-28"}
 {"full_name": "Matt Kiersted", "kind": "roster", "player_id": 8482641, "team": "MIN", "updated_at": "2026-11-28"}
