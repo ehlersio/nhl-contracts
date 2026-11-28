@@ -15903,7 +15903,7 @@
 {"birth_date": "1994-08-15", "full_name": "Teddy Blueger", "key": "8476927|2023-24|VAN", "player_id": 8476927, "position": "C", "season": "2023-24", "team": "VAN", "updated_at": "2026-11-16"}
 {"birth_date": "1994-08-15", "full_name": "Teddy Blueger", "key": "8476927|2024-25|VAN", "player_id": 8476927, "position": "C", "season": "2024-25", "team": "VAN", "updated_at": "2026-11-16"}
 {"birth_date": "1994-08-15", "full_name": "Teddy Blueger", "key": "8476927|2025-26|VAN", "player_id": 8476927, "position": "C", "season": "2025-26", "team": "VAN", "updated_at": "2026-11-16"}
-{"birth_date": null, "full_name": "Teddy Blueger", "key": "8476927|2026-27|TOR", "player_id": 8476927, "position": "C", "season": "2026-27", "team": "TOR", "updated_at": "2026-11-28"}
+{"birth_date": "1994-08-15", "full_name": "Teddy Blueger", "key": "8476927|2026-27|TOR", "player_id": 8476927, "position": "C", "season": "2026-27", "team": "TOR", "updated_at": "2026-11-28"}
 {"birth_date": "1993-10-12", "full_name": "Jake McCabe", "key": "8476931|2013-14|BUF", "player_id": 8476931, "position": "D", "season": "2013-14", "team": "BUF", "updated_at": "2026-11-16"}
 {"birth_date": "1993-10-12", "full_name": "Jake McCabe", "key": "8476931|2014-15|BUF", "player_id": 8476931, "position": "D", "season": "2014-15", "team": "BUF", "updated_at": "2026-11-16"}
 {"birth_date": "1993-10-12", "full_name": "Jake McCabe", "key": "8476931|2015-16|BUF", "player_id": 8476931, "position": "D", "season": "2015-16", "team": "BUF", "updated_at": "2026-11-16"}
@@ -21759,7 +21759,7 @@
 {"birth_date": "2001-01-05", "full_name": "Cam York", "key": "8481546|2023-24|PHI", "player_id": 8481546, "position": "D", "season": "2023-24", "team": "PHI", "updated_at": "2026-11-16"}
 {"birth_date": "2001-01-05", "full_name": "Cam York", "key": "8481546|2024-25|PHI", "player_id": 8481546, "position": "D", "season": "2024-25", "team": "PHI", "updated_at": "2026-11-16"}
 {"birth_date": "2001-01-05", "full_name": "Cam York", "key": "8481546|2025-26|PHI", "player_id": 8481546, "position": "D", "season": "2025-26", "team": "PHI", "updated_at": "2026-11-16"}
-{"birth_date": "2001-01-05", "full_name": "Cam York", "key": "8481546|2026-27|PHI", "player_id": 8481546, "position": "D", "season": "2026-27", "team": "PHI", "updated_at": "2026-11-28"}
+{"birth_date": null, "full_name": "Cam York", "key": "8481546|2026-27|PHI", "player_id": 8481546, "position": "D", "season": "2026-27", "team": "PHI", "updated_at": "2026-11-28"}
 {"birth_date": "2000-10-08", "full_name": "Simon Lundmark", "key": "8481547|2025-26|TBL", "player_id": 8481547, "position": "D", "season": "2025-26", "team": "TBL", "updated_at": "2026-11-16"}
 {"birth_date": "2001-05-10", "full_name": "Adam Beckman", "key": "8481550|2021-22|MIN", "player_id": 8481550, "position": "L", "season": "2021-22", "team": "MIN", "updated_at": "2026-11-16"}
 {"birth_date": "2001-05-10", "full_name": "Adam Beckman", "key": "8481550|2022-23|MIN", "player_id": 8481550, "position": "L", "season": "2022-23", "team": "MIN", "updated_at": "2026-11-16"}
@@ -22960,7 +22960,7 @@
 {"birth_date": "2004-07-05", "full_name": "Fraser Minten", "key": "8483489|2024-25|BOS", "player_id": 8483489, "position": "C", "season": "2024-25", "team": "BOS", "updated_at": "2026-11-16"}
 {"birth_date": "2004-07-05", "full_name": "Fraser Minten", "key": "8483489|2024-25|TOR", "player_id": 8483489, "position": "C", "season": "2024-25", "team": "TOR", "updated_at": "2026-11-16"}
 {"birth_date": "2004-07-05", "full_name": "Fraser Minten", "key": "8483489|2025-26|BOS", "player_id": 8483489, "position": "C", "season": "2025-26", "team": "BOS", "updated_at": "2026-11-16"}
-{"birth_date": null, "full_name": "Fraser Minten", "key": "8483489|2026-27|BOS", "player_id": 8483489, "position": "C", "season": "2026-27", "team": "BOS", "updated_at": "2026-11-28"}
+{"birth_date": "2004-07-05", "full_name": "Fraser Minten", "key": "8483489|2026-27|BOS", "player_id": 8483489, "position": "C", "season": "2026-27", "team": "BOS", "updated_at": "2026-11-28"}
 {"birth_date": "2003-11-25", "full_name": "Pavel Mintyukov", "key": "8483490|2023-24|ANA", "player_id": 8483490, "position": "D", "season": "2023-24", "team": "ANA", "updated_at": "2026-11-16"}
 {"birth_date": "2003-11-25", "full_name": "Pavel Mintyukov", "key": "8483490|2024-25|ANA", "player_id": 8483490, "position": "D", "season": "2024-25", "team": "ANA", "updated_at": "2026-11-16"}
 {"birth_date": "2003-11-25", "full_name": "Pavel Mintyukov", "key": "8483490|2025-26|ANA", "player_id": 8483490, "position": "D", "season": "2025-26", "team": "ANA", "updated_at": "2026-11-16"}
